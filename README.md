@@ -1,2 +1,2 @@
 # SPContracts
-Contracts for the SoupPunk project
+Contracts for the SoupPunk project.
