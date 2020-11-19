@@ -74,10 +74,9 @@ module.exports = {
     // network_id: 2111,   // This network is yours, in the cloud.
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
-    goerli: {
-        //provider: () => new HDWalletProvider(mnemonic, `https://rpc.goerli.mudit.blog/`),
-        provider: () => new HDWalletProvider(mnemonic, `https://goerli.infura.io/v3/`+infurakey),
-        network_id: 5,
+    mumbai: {
+        provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.matic.today`),
+        network_id: 80001,
         confirmations: 2,
         timeoutBlocks: 200,
         skipDryRun: true
