@@ -1,8 +1,8 @@
 pragma solidity 0.6.6;
 
-import {AccessControl} from "@openzeppelin/contracts/access/AccessControl.sol";
+import {AccessControlUpgradeable} from "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol";
 
-contract AccessControlMixin is AccessControl {
+contract AccessControlMixin is AccessControlUpgradeable {
     string private _revertMsg;
     function _setupContractId(string memory contractId) internal {
         _revertMsg = string(abi.encodePacked(contractId, ": INSUFFICIENT_PERMISSIONS"));

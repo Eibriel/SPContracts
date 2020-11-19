@@ -18,11 +18,13 @@
  *
  */
 
-// const HDWalletProvider = require('@truffle/hdwallet-provider');
+const HDWalletProvider = require('@truffle/hdwallet-provider');
 // const infuraKey = "fj4jll3k.....";
 //
-// const fs = require('fs');
-// const mnemonic = fs.readFileSync(".secret").toString().trim();
+const fs = require('fs');
+const mnemonic = fs.readFileSync(".secret").toString().trim();
+const ethkey = fs.readFileSync(".ethkey").toString().trim();
+const infurakey = fs.readFileSync(".infurakey").toString().trim();
 
 module.exports = {
   /**
@@ -72,6 +74,21 @@ module.exports = {
     // network_id: 2111,   // This network is yours, in the cloud.
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
+    mumbai: {
+        provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.matic.today`),
+        network_id: 80001,
+        confirmations: 2,
+        timeoutBlocks: 200,
+        skipDryRun: true
+    },
+    goerli: {
+        //provider: () => new HDWalletProvider(mnemonic, `https://rpc.goerli.mudit.blog/`),
+        provider: () => new HDWalletProvider(mnemonic, `https://goerli.infura.io/v3/`+infurakey),
+        network_id: 5,
+        confirmations: 2,
+        timeoutBlocks: 200,
+        skipDryRun: true
+    }
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -82,15 +99,23 @@ module.exports = {
   // Configure your compilers
   compilers: {
     solc: {
-      // version: "0.5.1",    // Fetch exact version from solc-bin (default: truffle's version)
+      version: "0.6.6",    // Fetch exact version from solc-bin (default: truffle's version)
       // docker: true,        // Use "0.5.1" you've installed locally with docker (default: false)
-      // settings: {          // See the solidity docs for advice about optimization and evmVersion
-      //  optimizer: {
-      //    enabled: false,
-      //    runs: 200
-      //  },
-      //  evmVersion: "byzantium"
-      // }
+      settings: {          // See the solidity docs for advice about optimization and evmVersion
+        optimizer: {
+          enabled: true,
+          runs: 200
+        },
+        evmVersion: "istanbul"
+      }
     }
+},
+
+  plugins: [
+    'truffle-plugin-verify'
+  ],
+
+  api_keys: {
+      etherscan: ethkey
   }
 };

@@ -1,10 +1,10 @@
 pragma solidity 0.6.6;
 
-import {SafeMath} from "@openzeppelin/contracts/math/SafeMath.sol";
+import {SafeMathUpgradeable} from "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import {EIP712Base} from "./EIP712Base.sol";
 
 contract NativeMetaTransaction is EIP712Base {
-    using SafeMath for uint256;
+    using SafeMathUpgradeable for uint256;
     bytes32 private constant META_TRANSACTION_TYPEHASH = keccak256(
         bytes(
             "MetaTransaction(uint256 nonce,address from,bytes functionSignature)"
