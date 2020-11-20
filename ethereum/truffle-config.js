@@ -81,7 +81,15 @@ module.exports = {
         confirmations: 2,
         timeoutBlocks: 200,
         skipDryRun: true
-    }
+    },
+    rinkeby: {
+        provider: () => new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/"+infurakey),
+        network_id: 4,
+        confirmations: 2,
+        timeoutBlocks: 200,
+        skipDryRun: true
+        //gas: 4600000
+    },
   },
 
   // Set default mocha options here, use special reporters etc.
@@ -97,7 +105,7 @@ module.exports = {
       settings: {          // See the solidity docs for advice about optimization and evmVersion
         optimizer: {
           enabled: true,
-          runs: 200
+          runs: 1
         },
         evmVersion: "istanbul"
       }
