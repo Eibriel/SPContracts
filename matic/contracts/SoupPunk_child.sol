@@ -1,8 +1,8 @@
 pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts-upgradeable/presets/ERC1155PresetMinterPauserUpgradeable.sol";
-import {NativeMetaTransaction} from "./common/NativeMetaTransaction.sol";
-import {ContextMixin} from "./common/ContextMixin.sol";
+import {NativeMetaTransaction} from "../../common/NativeMetaTransaction.sol";
+import {ContextMixin} from "../../common/ContextMixin.sol";
 
 contract SoapPunkCollectiblesChild is
     ERC1155PresetMinterPauserUpgradeable,
@@ -20,24 +20,24 @@ contract SoapPunkCollectiblesChild is
         _initializeEIP712("SoupPunkCollectibles");
      }
 
-     function setURI(string memory newuri) public {
+     function setURI(string memory newuri, uint256 id) public {
          require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "SoapPunkCollectibles: must have admin role to change uri");
+
+         emit URI(newuri, id);
 
          _setURI(newuri);
      }
 
 
      // Disable minting
-     function mint(address to, uint256 id, uint256 amount, bytes memory data) public virtual {
-         //require(hasRole(MINTER_ROLE, _msgSender()), "ERC1155PresetMinterPauser: must have minter role to mint");
-
-         //_mint(to, id, amount, data);
+     function mint(address to, uint256 id, uint256 amount, bytes memory data) public override {
+         // No account can mint
+         require(false, "SoapPunkCollectibles: cannot mint on child contract");
      }
 
-     function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) public virtual {
-         //require(hasRole(MINTER_ROLE, _msgSender()), "ERC1155PresetMinterPauser: must have minter role to mint");
-
-         //_mintBatch(to, ids, amounts, data);
+     function mintBatch(address to, uint256[] memory ids, uint256[] memory amounts, bytes memory data) public override {
+         // No account can mint
+         require(false, "SoapPunkCollectibles: cannot mint on child contract");
      }
 
 

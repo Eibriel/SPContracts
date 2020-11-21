@@ -1,7 +1,10 @@
 .secret
 .ethkey
 .infurakey
+.biconomy
 flat.sol
+
+dcltest/bin
 
 # Logs
 logs

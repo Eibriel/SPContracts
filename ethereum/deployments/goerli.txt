@@ -1,0 +1,116 @@
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'goerli'
+> Network id:      5
+> Block gas limit: 8000000 (0x7a1200)
+
+
+1_initial_migration.js
+======================
+goerli
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x9ad63e211414efb139b34f501023192b4d85096180b52089741be63596806598
+   > Blocks: 1            Seconds: 21
+   > contract address:    0x5d3B02cc74584cf8E1873f966DBdb463a20b5509
+   > block number:        3787727
+   > block timestamp:     1605888289
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.61734062
+   > gas used:            153706 (0x2586a)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00307412 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3787728)
+   > confirmation number: 2 (block: 3787729)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00307412 ETH
+
+
+2_sp_v1.js
+==========
+goerli
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'SoapPunkCollectibles'
+   --------------------------------
+   > transaction hash:    0x68697302dd6548582c9a1c7f13be107e1ce27da0b5ffc649fe19d117a5b269f4
+   > Blocks: 2            Seconds: 16
+   > contract address:    0x892A2f6BEf114C84c298AB535D864b6601E1430d
+   > block number:        3787733
+   > block timestamp:     1605888379
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.55442592
+   > gas used:            3103480 (0x2f5af8)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0620696 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3787734)
+   > confirmation number: 2 (block: 3787735)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0x4eda5aca1bd1783ddaaac57b05ec5568dfaf6554623397ddc9c85ef9dc96cd10
+   > Blocks: 1            Seconds: 8
+   > contract address:    0xa42f0F50C67064B11268D3a98df3630a8A960127
+   > block number:        3787736
+   > block timestamp:     1605888424
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.53682692
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.017599 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3787737)
+   > confirmation number: 2 (block: 3787738)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x342751d0ac1c2079e3aeeb2a5d1d46c3ed6ea42e1d7e48825592fa11275a0140
+   > Blocks: 1            Seconds: 12
+   > contract address:    0x496e6291f3AdC4b5c6255ca281A75520F54B9A08
+   > block number:        3787739
+   > block timestamp:     1605888469
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.5175555
+   > gas used:            963571 (0xeb3f3)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01927142 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3787740)
+   > confirmation number: 2 (block: 3787741)
+SoapPunkCollectibles Deployed 0x496e6291f3AdC4b5c6255ca281A75520F54B9A08
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.09894002 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.10201414 ETH
