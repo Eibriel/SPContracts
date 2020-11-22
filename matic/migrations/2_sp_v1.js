@@ -1,4 +1,4 @@
-const { deployProxy } = require('@openzeppelin/truffle-upgrades')
+const { admin, deployProxy } = require('@openzeppelin/truffle-upgrades')
 
 const SoapPunkCollectiblesChild = artifacts.require('SoapPunkCollectiblesChild')
 
@@ -27,6 +27,7 @@ module.exports = async function (deployer, network, accounts) {
     }
     console.log("Owner: " + owner)
 
+    // Set implementation ownership
     const DEFAULT_ADMIN_ROLE = "0x00"
     const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
     const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
@@ -37,4 +38,6 @@ module.exports = async function (deployer, network, accounts) {
     await instance.grantRole(DEFAULT_ADMIN_ROLE, owner)
     await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
 
+    // Set Proxy Admin ownership
+    await admin.transferProxyAdminOwnership(owner)
 };

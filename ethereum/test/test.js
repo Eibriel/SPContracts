@@ -1,19 +1,21 @@
 const SoapPunkCollectibles = artifacts.require("SoapPunkCollectibles");
 const truffleAssert = require('truffle-assertions');
+const { admin } = require('@openzeppelin/truffle-upgrades');
+
+const DEFAULT_ADMIN_ROLE = "0x00";
+const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
+const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
+const URI = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
 
 contract("SoapPunkCollectibles test", async accounts => {
     const owner = accounts[9];
-    const DEFAULT_ADMIN_ROLE = "0x00";
-    const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
-    const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
 
-    it("should have initial uri set to 'https://metadata.soappunk.com/sperc1155/v1/{id}.json'", async () => {
+    it("should have initial uri set to " + URI, async () => {
         let instance = await SoapPunkCollectibles.deployed();
         let uri = await instance.uri(0);
-        assert.equal(uri, "https://metadata.soappunk.com/sperc1155/v1/{id}.json");
+        assert.equal(uri, URI);
     });
 
-    // TODO this test fails
     it("should not let account 0 to set uri", async () => {
         let instance = await SoapPunkCollectibles.deployed();
         await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
@@ -27,7 +29,6 @@ contract("SoapPunkCollectibles test", async accounts => {
         let instance = await SoapPunkCollectibles.deployed();
         truffleAssert.passes(await instance.setURI("test", 0, { from: owner }));
         let uri = await instance.uri(0);
-        console.log(uri)
         assert.equal(uri, "test");
     });
 
@@ -39,13 +40,11 @@ contract("SoapPunkCollectibles test", async accounts => {
          );
     });
 
-    const name = "should have "+owner+" as DEFAULT_ADMIN_ROLE"
-    it(name, async () => {
+    it("should have "+owner+" as DEFAULT_ADMIN_ROLE", async () => {
         let instance = await SoapPunkCollectibles.deployed();
 
         const hasAdmin = await instance.hasRole(DEFAULT_ADMIN_ROLE, owner);
         assert.equal(hasAdmin, true);
-        assert.equal(true, true);
 
         const hasAdmin2 = await instance.hasRole(DEFAULT_ADMIN_ROLE, accounts[0]);
         assert.equal(hasAdmin2, false);
@@ -105,4 +104,33 @@ contract("SoapPunkCollectibles test", async accounts => {
         );
 
     });
+
+});
+
+// Proxy test block
+contract('SoapPunkCollectibles test (proxy)', async accounts => {
+    const owner = accounts[9];
+
+    it("should have " + owner + " as owner", async () => {
+        let test1_pass = true
+        try {
+            await admin.transferProxyAdminOwnership(accounts[1])
+        } catch {
+            console.log("Catch 1")
+            test1_pass = false
+        }
+        assert.equal(test1_pass, false)
+
+        // TODO test with owner account
+        /*
+        let test2_pass = true
+        try {
+            await admin.transferProxyAdminOwnership(accounts[1], { from: owner })
+        } catch {
+            console.log("Catch 2")
+            test2_pass = false
+        }
+        assert.equal(test2_pass, true)
+        */
+    })
 });
