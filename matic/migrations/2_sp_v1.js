@@ -19,10 +19,22 @@ module.exports = async function (deployer, network, accounts) {
     const instance = await deployProxy(SoapPunkCollectiblesChild, [uri, childChainManager], { deployer, unsafeAllowCustomTypes: true })
     console.log('SoapPunkCollectiblesChild Deployed', instance.address)
 
-    await instance.grantRole(web3.utils.sha3("MINTER_ROLE"), owner)
-    await instance.renounceRole(web3.utils.sha3("MINTER_ROLE"), accounts[0])
-    await instance.grantRole(web3.utils.sha3("PAUSER_ROLE"), owner)
-    await instance.renounceRole(web3.utils.sha3("PAUSER_ROLE"), accounts[0])
-    await instance.grantRole(web3.utils.sha3("DEFAULT_ADMIN_ROLE"), owner)
+    let owner
+    if (network === "test") {
+        owner = accounts[9]
+    } else {
+        owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+    }
+    console.log("Owner: " + owner)
+
+    const DEFAULT_ADMIN_ROLE = "0x00"
+    const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
+    const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
+    await instance.grantRole(MINTER_ROLE, owner)
+    await instance.renounceRole(MINTER_ROLE, accounts[0])
+    await instance.grantRole(PAUSER_ROLE, owner)
+    await instance.renounceRole(PAUSER_ROLE, accounts[0])
+    await instance.grantRole(DEFAULT_ADMIN_ROLE, owner)
+    await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
 
 };

@@ -1,9 +1,13 @@
 const SoapPunkCollectiblesChild = artifacts.require("SoapPunkCollectiblesChild");
 const truffleAssert = require('truffle-assertions');
 
-const owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
 
 contract("SoapPunkCollectiblesChild test", async accounts => {
+    const owner = accounts[9];
+    const DEFAULT_ADMIN_ROLE = "0x00";
+    const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
+    const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
+
     it("should set initial uri to 'https://metadata.soappunk.com/sperc1155/v1/{id}.json'", async () => {
         let instance = await SoapPunkCollectiblesChild.deployed();
         let uri = await instance.uri(0);
@@ -12,7 +16,7 @@ contract("SoapPunkCollectiblesChild test", async accounts => {
 
     it("should set uri correctly", async () => {
         let instance = await SoapPunkCollectiblesChild.deployed();
-        await instance.setURI("test", 0);
+        await instance.setURI("test", 0, { from: owner });
         let uri = await instance.uri(0);
         assert.equal(uri, "test");
     });
@@ -48,7 +52,6 @@ contract("SoapPunkCollectiblesChild test", async accounts => {
     });
 
     it("DEFAULT_ADMIN_ROLE should be " + owner, async () => {
-        const DEFAULT_ADMIN_ROLE = web3.utils.sha3("DEFAULT_ADMIN_ROLE");
         let instance = await SoapPunkCollectiblesChild.deployed();
 
         const hasAdmin = await instance.hasRole(DEFAULT_ADMIN_ROLE, owner);
@@ -67,7 +70,6 @@ contract("SoapPunkCollectiblesChild test", async accounts => {
     });
 
     it("MINTER_ROLE should be " + owner, async () => {
-        const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
         let instance = await SoapPunkCollectiblesChild.deployed();
 
         const hasMinter = await instance.hasRole(MINTER_ROLE, owner);
@@ -87,7 +89,6 @@ contract("SoapPunkCollectiblesChild test", async accounts => {
     });
 
     it("PAUSER_ROLE should be " + owner, async () => {
-        const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
         let instance = await SoapPunkCollectiblesChild.deployed();
 
         const hasMinter = await instance.hasRole(PAUSER_ROLE, owner);

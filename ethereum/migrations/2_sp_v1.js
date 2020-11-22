@@ -4,8 +4,6 @@ const SoapPunkCollectibles = artifacts.require('SoapPunkCollectibles')
 
 const uri = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
 
-const owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
-
 module.exports = async function (deployer, network, accounts) {
     console.log(network)
     console.log(accounts[0])
@@ -21,13 +19,25 @@ module.exports = async function (deployer, network, accounts) {
         proxyRegistryAddress = "0xa5409ec958c83c3f309868babaca7c86dcb077c1"
     }
 
-    const instance = await deployProxy(SoapPunkCollectibles, [uri], { deployer, unsafeAllowCustomTypes: true });
-    console.log('SoapPunkCollectibles Deployed', instance.address);
+    const instance = await deployProxy(SoapPunkCollectibles, [uri], { deployer, unsafeAllowCustomTypes: true })
+    console.log('SoapPunkCollectibles Deployed', instance.address)
 
-    await instance.grantRole(web3.utils.sha3("MINTER_ROLE"), owner)
-    await instance.renounceRole(web3.utils.sha3("MINTER_ROLE"), accounts[0])
-    await instance.grantRole(web3.utils.sha3("PAUSER_ROLE"), owner)
-    await instance.renounceRole(web3.utils.sha3("PAUSER_ROLE"), accounts[0])
-    await instance.grantRole(web3.utils.sha3("DEFAULT_ADMIN_ROLE"), owner)
+    let owner
+    if (network === "test") {
+        owner = accounts[9]
+    } else {
+        owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+    }
+    console.log("Owner: " + owner)
+
+    const DEFAULT_ADMIN_ROLE = "0x00"
+    const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
+    const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
+    await instance.grantRole(MINTER_ROLE, owner)
+    await instance.renounceRole(MINTER_ROLE, accounts[0])
+    await instance.grantRole(PAUSER_ROLE, owner)
+    await instance.renounceRole(PAUSER_ROLE, accounts[0])
+    await instance.grantRole(DEFAULT_ADMIN_ROLE, owner)
+    await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
 
 };

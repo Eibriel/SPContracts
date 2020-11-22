@@ -1,23 +1,37 @@
 const SoapPunkCollectibles = artifacts.require("SoapPunkCollectibles");
 const truffleAssert = require('truffle-assertions');
 
-const owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
-
 contract("SoapPunkCollectibles test", async accounts => {
-    it("should set initial uri to 'https://metadata.soappunk.com/sperc1155/v1/{id}.json'", async () => {
+    const owner = accounts[9];
+    const DEFAULT_ADMIN_ROLE = "0x00";
+    const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
+    const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
+
+    it("should have initial uri set to 'https://metadata.soappunk.com/sperc1155/v1/{id}.json'", async () => {
         let instance = await SoapPunkCollectibles.deployed();
         let uri = await instance.uri(0);
         assert.equal(uri, "https://metadata.soappunk.com/sperc1155/v1/{id}.json");
     });
 
-    it("should set uri correctly", async () => {
+    // TODO this test fails
+    it("should not let account 0 to set uri", async () => {
         let instance = await SoapPunkCollectibles.deployed();
-        await instance.setURI("test", 0);
+        await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
+        truffleAssert.fails(instance.setURI("test", 0, { from: accounts[0] }),
+            truffleAssert.ErrorType.revert,
+            'VM Exception while processing transaction: revert SoapPunkCollectibles: must have admin role to change uri'
+        );
+    });
+
+    it("should let "+owner+" set uri correctly", async () => {
+        let instance = await SoapPunkCollectibles.deployed();
+        truffleAssert.passes(await instance.setURI("test", 0, { from: owner }));
         let uri = await instance.uri(0);
+        console.log(uri)
         assert.equal(uri, "test");
     });
 
-    it("only admin role should be able to change uri", async () => {
+    it("should not let account 1 change uri", async () => {
         let instance = await SoapPunkCollectibles.deployed();
         truffleAssert.fails(instance.setURI("test", 0, { from: accounts[1] }),
            truffleAssert.ErrorType.revert,
@@ -25,12 +39,16 @@ contract("SoapPunkCollectibles test", async accounts => {
          );
     });
 
-    it("DEFAULT_ADMIN_ROLE should be " + owner, async () => {
-        const DEFAULT_ADMIN_ROLE = web3.utils.sha3("DEFAULT_ADMIN_ROLE");
+    const name = "should have "+owner+" as DEFAULT_ADMIN_ROLE"
+    it(name, async () => {
         let instance = await SoapPunkCollectibles.deployed();
 
         const hasAdmin = await instance.hasRole(DEFAULT_ADMIN_ROLE, owner);
         assert.equal(hasAdmin, true);
+        assert.equal(true, true);
+
+        const hasAdmin2 = await instance.hasRole(DEFAULT_ADMIN_ROLE, accounts[0]);
+        assert.equal(hasAdmin2, false);
 
         const has1Admin = await instance.getRoleMemberCount(DEFAULT_ADMIN_ROLE);
         assert.equal(has1Admin, 1);
@@ -44,12 +62,14 @@ contract("SoapPunkCollectibles test", async accounts => {
         );
     });
 
-    it("MINTER_ROLE should be " + owner, async () => {
-        const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
+    it("shold have " + owner + " as MINTER_ROLE", async () => {
         let instance = await SoapPunkCollectibles.deployed();
 
         const hasMinter = await instance.hasRole(MINTER_ROLE, owner);
         assert.equal(hasMinter, true);
+
+        const hasMinter2 = await instance.hasRole(MINTER_ROLE, accounts[0]);
+        assert.equal(hasMinter2, false);
 
         const has1Minter = await instance.getRoleMemberCount(MINTER_ROLE);
         assert.equal(has1Minter, 1);
@@ -64,15 +84,17 @@ contract("SoapPunkCollectibles test", async accounts => {
 
     });
 
-    it("PAUSER_ROLE should be " + owner, async () => {
-        const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
+    it("should have " + owner + " as PAUSER_ROLE", async () => {
         let instance = await SoapPunkCollectibles.deployed();
 
-        const hasMinter = await instance.hasRole(PAUSER_ROLE, owner);
-        assert.equal(hasMinter, true);
+        const hasPauser = await instance.hasRole(PAUSER_ROLE, owner);
+        assert.equal(hasPauser, true);
 
-        const has1Minter = await instance.getRoleMemberCount(PAUSER_ROLE);
-        assert.equal(has1Minter, 1);
+        const hasPauser2 = await instance.hasRole(PAUSER_ROLE, accounts[0]);
+        assert.equal(hasPauser2, false);
+
+        const has1Pauser = await instance.getRoleMemberCount(PAUSER_ROLE);
+        assert.equal(has1Pauser, 1);
 
         const getMinter0 = await instance.getRoleMember(PAUSER_ROLE, 0);
         assert.equal(getMinter0, owner);
