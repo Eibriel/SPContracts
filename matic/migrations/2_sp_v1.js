@@ -11,10 +11,12 @@ module.exports = async function (deployer, network, accounts) {
     console.log(accounts[0])
 
     let childChainManager
-    if (network === "mumbai" || network === "test") {
+    if (network === "mumbai") {
         childChainManager = "0xb5505a6d998549090530911180f38aC5130101c6" //Proxy Mumbai
     } else if (network === "matic") {
         childChainManager = "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa" //Proxy Matic
+    } else if (network === "test") {
+        childChainManager = accounts[5]
     }
     const instance = await deployProxy(SoapPunkCollectiblesChild, [uri, childChainManager], { deployer, unsafeAllowCustomTypes: true })
     console.log('SoapPunkCollectiblesChild Deployed', instance.address)
@@ -32,12 +34,19 @@ module.exports = async function (deployer, network, accounts) {
     const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
     const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
     await instance.grantRole(MINTER_ROLE, owner)
+    console.log("grantRole MINTER_ROLE")
     await instance.renounceRole(MINTER_ROLE, accounts[0])
+    console.log("renounceRole MINTER_ROLE")
     await instance.grantRole(PAUSER_ROLE, owner)
+    console.log("grantRole PAUSER_ROLE")
     await instance.renounceRole(PAUSER_ROLE, accounts[0])
+    console.log("renounceRole PAUSER_ROLE")
     await instance.grantRole(DEFAULT_ADMIN_ROLE, owner)
+    console.log("grantRole DEFAULT_ADMIN_ROLE")
     await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
+    console.log("renounceRole DEFAULT_ADMIN_ROLE")
 
     // Set Proxy Admin ownership
     await admin.transferProxyAdminOwnership(owner)
+    console.log("transferProxyAdminOwnership")
 };

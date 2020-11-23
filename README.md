@@ -24,8 +24,6 @@ await mycontract.grantRole(web3.utils.sha3("MINTER_ROLE"), "0x05C351382dB8D77020
 
 await mycontract.grantRole(web3.utils.sha3("DEFAULT_ADMIN_ROLE"), "0x05C351382dB8D770207F319D96ac1184c3717edE")
 
-await mycontract.transferOwnership("0x05C351382dB8D770207F319D96ac1184c3717edE")
-
 await mycontract.mint("0x05C351382dB8D770207F319D96ac1184c3717edE", 0, 10, [])
 
 (await mycontract.balanceOf("0x05C351382dB8D770207F319D96ac1184c3717edE", 0)).toString()
@@ -39,4 +37,8 @@ await mycontract.mint("0x05C351382dB8D770207F319D96ac1184c3717edE", 0, 10, [])
 truffle console --network mumbai
 
 migrate --reset --compile-all
+
+mycontract = await SoapPunkCollectiblesChild.deployed()
+
+truffle-flattener contracts/SoupPunk_child.sol > flat.sol
 ```

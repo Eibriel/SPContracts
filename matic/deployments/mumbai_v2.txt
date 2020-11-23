@@ -1,0 +1,110 @@
+ProxyAdmin:
+https://explorer-mumbai.maticvigil.com/address/0x8638deF019C9bfa1bC663faC8C7F8D7FE5376B25/read-contract
+
+SoapPunkCollectiblesChild:
+https://explorer-mumbai.maticvigil.com/address/0xB83B47ca885A5811a16801A3Fc48384A9A6aF894/contracts
+
+AdminUpgradeabilityProxy:
+https://explorer-mumbai.maticvigil.com/address/0x1f1be1FdD02D2B25424db2c042BcD02B95D3FF47/write-contract
+
+> Compiled successfully using:
+   - solc: 0.6.6+commit.6c089d02.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+mumbai
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x80437e860a31eb8b4e5aad663dc15365c5c7e2dc511676851bd07657dcc2b469
+   > Blocks: 2            Seconds: 5
+   > contract address:    0x57152eAE03962429E192C5279B19873eae89115A
+   > block number:        7182008
+   > block timestamp:     1606154724
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.24731824
+   > gas used:            153706 (0x2586a)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00307412 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7182012)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00307412 ETH
+
+
+2_sp_v1.js
+==========
+mumbai
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'SoapPunkCollectiblesChild'
+   -------------------------------------
+   > transaction hash:    0x3bc5c0034a3929b5ccfebb8490e5d219c7a6a36da9994eba2c2b40c1db399f58
+   > Blocks: 2            Seconds: 5
+   > contract address:    0xB83B47ca885A5811a16801A3Fc48384A9A6aF894
+   > block number:        7182023
+   > block timestamp:     1606154758
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.16773204
+   > gas used:            3937055 (0x3c131f)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0787411 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7182027)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0xfa4f8f404aa8d1a0354de8a08603de1f72c6cf1f7f08078d14eb96e00d1555d2
+   > Blocks: 2            Seconds: 5
+   > contract address:    0x8638deF019C9bfa1bC663faC8C7F8D7FE5376B25
+   > block number:        7182033
+   > block timestamp:     1606154778
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.15013304
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.017599 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 7182037)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x8526974e186c59b6599517972efe640a236fc0deccf5f20c4933f8c80e7579bd
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x1f1be1FdD02D2B25424db2c042BcD02B95D3FF47
+   > block number:        7182041
+   > block timestamp:     1606154794
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.1290906
+   > gas used:            1052122 (0x100dda)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.02104244 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7182047)
+SoapPunkCollectiblesChild Deployed 0x1f1be1FdD02D2B25424db2c042BcD02B95D3FF47
+Owner: 0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d

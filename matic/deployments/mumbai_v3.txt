@@ -1,0 +1,133 @@
+SoapPunkCollectiblesChild:
+0x01A2377B1Fa29c25363384Bd21e32239Cc3ccE1b
+https://explorer-mumbai.maticvigil.com/address/0x01A2377B1Fa29c25363384Bd21e32239Cc3ccE1b/contracts
+
+ProxyAdmin:
+0x232fd47e3c9975761B11A5f2B03eF6aecA7656B1
+https://explorer-mumbai.maticvigil.com/address/0x232fd47e3c9975761B11A5f2B03eF6aecA7656B1/contracts
+
+AdminUpgradeabilityProxy:
+0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5
+https://explorer-mumbai.maticvigil.com/address/0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5/read-proxy
+
+
+
+> Compiled successfully using:
+   - solc: 0.6.6+commit.6c089d02.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+mumbai
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0x9758d582d4b6d00fc23fb852dfd3fca64e579014b58868732c0729998dae4ba6
+   > Blocks: 3            Seconds: 4
+   > contract address:    0x5C54435965d377Ae3c462230E01F7543dEb7152D
+   > block number:        7190437
+   > block timestamp:     1606172256
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.21302008
+   > gas used:            153706 (0x2586a)
+   > gas price:           10 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00153706 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7190440)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00153706 ETH
+
+
+2_sp_v1.js
+==========
+mumbai
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'SoapPunkCollectiblesChild'
+   -------------------------------------
+   > transaction hash:    0x7c2570b484eb17e188bbcaecf8062722b170754d37b08411acf3c8dabbb0a7b0
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x01A2377B1Fa29c25363384Bd21e32239Cc3ccE1b
+   > block number:        7190446
+   > block timestamp:     1606172274
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.17322698
+   > gas used:            3937055 (0x3c131f)
+   > gas price:           10 gwei
+   > value sent:          0 ETH
+   > total cost:          0.03937055 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7190449)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0x3382c996031ec41186466080eabd39d1e450717190b48f07de12205024a8d24d
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x232fd47e3c9975761B11A5f2B03eF6aecA7656B1
+   > block number:        7190452
+   > block timestamp:     1606172286
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.16442748
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           10 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0087995 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7190455)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x43d74809dddd050435e0e797fbcea13218a9ab9e14a80406fd3137e2b7a2e980
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5
+   > block number:        7190458
+   > block timestamp:     1606172298
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             0.15390626
+   > gas used:            1052122 (0x100dda)
+   > gas price:           10 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01052122 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7190461)
+SoapPunkCollectiblesChild Deployed 0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5
+Owner: 0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d
+grantRole MINTER_ROLE
+renounceRole MINTER_ROLE
+grantRole PAUSER_ROLE
+renounceRole PAUSER_ROLE
+grantRole DEFAULT_ADMIN_ROLE
+renounceRole DEFAULT_ADMIN_ROLE
+transferProxyAdminOwnership
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.05869127 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.06022833 ETH

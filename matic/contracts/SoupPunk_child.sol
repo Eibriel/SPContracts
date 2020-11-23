@@ -17,7 +17,7 @@ contract SoapPunkCollectiblesChild is
 
         _setupRole(DEPOSITOR_ROLE, childChainManager);
 
-        _initializeEIP712("SoupPunkCollectibles");
+        _initializeEIP712(newuri);
      }
 
      function setURI(string memory newuri, uint256 id) public {
@@ -26,6 +26,7 @@ contract SoapPunkCollectiblesChild is
          emit URI(newuri, id);
 
          _setURI(newuri);
+         _setDomainSeperator(newuri);
      }
 
 
@@ -40,8 +41,29 @@ contract SoapPunkCollectiblesChild is
          require(false, "SoapPunkCollectibles: cannot mint on child contract");
      }
 
+     // Disable burning
+     function burn(address account, uint256 id, uint256 value) public override {
+         // No account can burn
+         require(false, "SoapPunkCollectibles: cannot burn on child contract");
+     }
+
+     function burnBatch(address account, uint256[] memory ids, uint256[] memory values) public override {
+         // No account can burn
+         require(false, "SoapPunkCollectibles: cannot burn on child contract");
+     }
 
      //Child
+
+    // This is to support Native meta transactions
+    // never use msg.sender directly, use _msgSender() instead
+    function _msgSender()
+        internal
+        override
+        view
+        returns (address payable sender)
+        {
+            return ContextMixin.msgSender();
+    }
 
      /**
      * @notice called when tokens are deposited on root chain

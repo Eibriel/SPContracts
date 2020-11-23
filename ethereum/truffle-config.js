@@ -78,15 +78,13 @@ module.exports = {
         //provider: () => new HDWalletProvider(mnemonic, `https://rpc.goerli.mudit.blog/`),
         provider: () => new HDWalletProvider(mnemonic, `https://goerli.infura.io/v3/`+infurakey),
         network_id: 5,
-        confirmations: 2,
-        timeoutBlocks: 200,
+        confirmations: 1,
         skipDryRun: true
     },
     rinkeby: {
         provider: () => new HDWalletProvider(mnemonic, "https://rinkeby.infura.io/v3/"+infurakey),
         network_id: 4,
-        confirmations: 2,
-        timeoutBlocks: 200,
+        confirmations: 1,
         skipDryRun: true
         //gas: 4600000
     },

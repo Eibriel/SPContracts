@@ -25,6 +25,7 @@ const fs = require('fs');
 const mnemonic = fs.readFileSync("../.secret").toString().trim();
 const ethkey = fs.readFileSync("../.ethkey").toString().trim();
 const infurakey = fs.readFileSync("../.infurakey").toString().trim();
+const maticvigil = fs.readFileSync("../.maticvigil").toString().trim();
 
 module.exports = {
   /**
@@ -75,9 +76,11 @@ module.exports = {
     // production: true    // Treats this network as if it was a public net. (default: false)
     // }
     mumbai: {
-        provider: () => new HDWalletProvider(mnemonic, `https://rpc-mumbai.matic.today`),
+        provider: () => new HDWalletProvider(mnemonic, 'https://rpc-mumbai.maticvigil.com/v1/'+maticvigil),
         network_id: 80001,
         confirmations: 2,
+        gas: 7000000,
+        gasPrice: 10000000000, // 10 gwei
         timeoutBlocks: 200,
         skipDryRun: true
     }

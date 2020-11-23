@@ -1,0 +1,127 @@
+Goerli SoapPunkCollectibles:
+https://goerli.etherscan.io/address/0x1E7bb78Ac6FB23E8EB1E80ed366Ed62e97f475c8#code
+
+Goerli ProxyAdmin:
+https://goerli.etherscan.io/address/0x9ef3544f61cf926ef71a8a251129e22dd31f7a59#code
+
+Goerli AdminUpgradeabilityProxy:
+0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD
+https://goerli.etherscan.io/address/0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD#code
+
+
+> Compiled successfully using:
+   - solc: 0.6.6+commit.6c089d02.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'goerli'
+> Network id:      5
+> Block gas limit: 8000000 (0x7a1200)
+
+
+1_initial_migration.js
+======================
+goerli
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xdc1dd5f887c9872512eaa60c008e47b6f31bd13ff92e18f1efbb3fb003ccc2ee
+   > Blocks: 1            Seconds: 9
+   > contract address:    0xA4b1cC67A76FFA690C0aeaF957e687f9f5DC26Ca
+   > block number:        3806210
+   > block timestamp:     1606165542
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.49275674
+   > gas used:            153706 (0x2586a)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00307412 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3806211)
+   > confirmation number: 2 (block: 3806212)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00307412 ETH
+
+
+2_sp_v1.js
+==========
+goerli
+0x2ED13b61a35f99B420eA15C34053af79503f275e
+
+   Deploying 'SoapPunkCollectibles'
+   --------------------------------
+   > transaction hash:    0x20abaa2640deaf67dafedb846193561ab28a7be2cabe4631744acff3a3ed9af6
+   > Blocks: 4            Seconds: 53
+   > contract address:    0x1E7bb78Ac6FB23E8EB1E80ed366Ed62e97f475c8
+   > block number:        3806218
+   > block timestamp:     1606165662
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.42676792
+   > gas used:            3103480 (0x2f5af8)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.0620696 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3806219)
+   > confirmation number: 2 (block: 3806220)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0xe89c918eefc592744843e393bd5e4fbb4de4bf4980faa22e53cf67cfa51c1749
+   > Blocks: 2            Seconds: 29
+   > contract address:    0x9Ef3544f61CF926EF71A8A251129e22Dd31f7a59
+   > block number:        3806222
+   > block timestamp:     1606165722
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.42676792
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.017599 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3806223)
+   > confirmation number: 2 (block: 3806224)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0xeab667b2b079a21d68672c46dade30f4ec60b0a8a66de40cb654e9d42e1f123f
+   > Blocks: 2            Seconds: 29
+   > contract address:    0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD
+   > block number:        3806226
+   > block timestamp:     1606165782
+   > account:             0x2ED13b61a35f99B420eA15C34053af79503f275e
+   > balance:             13.38989318
+   > gas used:            963787 (0xeb4cb)
+   > gas price:           20 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01927574 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 3806227)
+   > confirmation number: 2 (block: 3806228)
+SoapPunkCollectibles Deployed 0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD
+Owner: 0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.09894434 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.10201846 ETH
