@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<script src="https://cdn.jsdelivr.net/npm/@biconomy/mexa@1/dist/mexa.js"></script>
+<script type="text/javascript" src="./truffle-contract.min.js"></script>
+<script type="text/javascript" src="web3.min.js"></script>
+<script type="text/javascript" src="./SoapPunkCollectibles_abi.js"></script>
+<script type="text/javascript" src="./rootchain_abi.js"></script>
+<script type="text/javascript" src="./k.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@maticnetwork/maticjs@2.0.15/dist/matic.js"></script>
+<script>
+
+const ethEnabled = () => {
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        window.ethereum.enable();
+        return true;
+    }
+    return false;
+}
+
+console.log(ethEnabled());
+
+if (window.web3) {
+  web3Provider = window.web3.currentProvider;
+}
+
+web3 = new Web3(web3Provider);
+
+const maticProvider = 'https://rpc-mumbai.maticvigil.com/v1/' + maticvigilkey
+
+//console.log(Matic)
+//console.log(Matic.MaticPOSClient)
+
+let rootToken = "0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD"
+let tokenId = "0"
+let from = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+//let from = "0x05C351382dB8D770207F319D96ac1184c3717edE"
+let amount = "10"
+
+// for mumbai testnet
+const maticPOSClient = new Matic.MaticPOSClient({
+  network: "testnet",
+  version: "mumbai",
+  posRootChainManager: '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74',
+  parentProvider: web3Provider,
+  maticProvider: maticProvider,
+  parentDefaultOptions: {from, gasLimit: 7000000, gasPrice: "5000000000"}
+});
+
+//const maticPOSClient = m.MaticPOSClient;
+
+//console.log(maticPOSClient)
+
+async function goearli_to_mumbai() {
+
+
+    await maticPOSClient.approveERC1155ForDeposit(rootToken);
+    //await maticPOSClient.approveERC721ForDeposit(rootToken, 0);
+
+    await maticPOSClient.depositSingleERC1155ForUser(
+      rootToken,
+      from,
+      tokenId,
+      amount,
+      '0x0000000000000000',
+      {
+          from: from,
+          gasLimit: 7000000,
+          //gasPrice: "5000000000",
+          //nonce: 0,
+          //chainId: 4
+      }
+    );
+
+    /*const depositData = web3.eth.abi.encodeParameters(
+        ['uint256[]', 'uint256[]', 'bytes'],
+        [[0], [10], '0x0']
+    )
+
+    rootChainMC = '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74'
+    const posRootChainManager = new web3.eth.Contract(rootchain_abi, rootChainMC);
+    const txObject = posRootChainManager.methods.depositFor(from, rootToken, depositData)
+    const options = { from }
+    const web3Options = await web3.fillOptions(txObject, true , options)*/
+
+    /*let data_ = '0x'
+    for (let n=0; n < 20; n=n+1) {
+        console.log(n)
+        data_ += '0'
+        const depositData = web3.eth.abi.encodeParameters(
+            ['uint256[]', 'uint256[]', 'bytes'],
+            [[0], [10], data_]
+        )
+
+        //rootChainMC = "0x2890bA17EfE978480615e330ecB65333b880928e"
+        rootChainMC = '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74'
+        const rootChainManagerContract = new web3.eth.Contract(rootchain_abi, rootChainMC);
+        try {
+            await rootChainManagerContract.methods
+            .depositFor(from, rootToken, depositData)
+            .send({ from })
+        } catch {
+            console.log("Catch")
+        }
+
+    }*/
+
+}
+
+
+
+async function app() {
+    const accounts = await web3.eth.getAccounts();
+    let userAddress = accounts[0];
+    let to = "0x05C351382dB8D770207F319D96ac1184c3717edE";
+    web3.eth.defaultAccount = userAddress;
+    console.log(web3.eth.defaultAccount);
+
+    const contractAddress = "0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD";
+    const contract = new web3.eth.Contract(config.contract.abi, contractAddress);
+    contract.options.from = userAddress
+    console.log(contract)
+    await contract.methods.mint(to, 0, 100, "0x0").send()
+    console.log(await contract.methods.balanceOf(to, 0).call())
+}
+
+//app();
+goearli_to_mumbai();
+
+//0x731133e900000000000000000000000005c351382db8d770207f319d96ac1184c3717ede0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000006400000000000000000000000000000000000000000000000000000000000000800000000000000000000000000000000000000000000000000000000000000000
+//0x0000000000000000
+//0x000000000000000
+
+</script>
+
+</body>
+
+</html>

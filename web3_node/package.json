@@ -1,0 +1,15 @@
+{
+  "name": "web3_node",
+  "version": "1.0.0",
+  "description": "",
+  "main": "web3_node.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@maticnetwork/maticjs": "^2.0.15",
+    "@truffle/hdwallet-provider": "^1.2.0"
+  }
+}

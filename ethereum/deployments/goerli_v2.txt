@@ -1,7 +1,9 @@
 Goerli SoapPunkCollectibles:
+0x1E7bb78Ac6FB23E8EB1E80ed366Ed62e97f475c8
 https://goerli.etherscan.io/address/0x1E7bb78Ac6FB23E8EB1E80ed366Ed62e97f475c8#code
 
 Goerli ProxyAdmin:
+0x9ef3544f61cf926ef71a8a251129e22dd31f7a59
 https://goerli.etherscan.io/address/0x9ef3544f61cf926ef71a8a251129e22dd31f7a59#code
 
 Goerli AdminUpgradeabilityProxy:

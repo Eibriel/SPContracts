@@ -83,6 +83,13 @@ module.exports = {
         gasPrice: 10000000000, // 10 gwei
         timeoutBlocks: 200,
         skipDryRun: true
+    },
+    matic: {
+        provider: () => new HDWalletProvider(mnemonic, 'https://rpc-mainnet.maticvigil.com/v1/'+maticvigil),
+        network_id: 137,
+        confirmations: 2,
+        gasPrice: 5000000000, // 5 gwei
+        timeoutBlocks: 200
     }
   },
 

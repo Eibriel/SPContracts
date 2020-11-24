@@ -32,6 +32,11 @@ contract("SoapPunkCollectibles test", async accounts => {
         assert.equal(uri, "test");
     });
 
+    it("should let "+owner+" mint", async () => {
+        let instance = await SoapPunkCollectibles.deployed();
+        truffleAssert.passes(await instance.mint(accounts[2], 0, 100, [], { from: owner }));
+    });
+
     it("should not let account 1 change uri", async () => {
         let instance = await SoapPunkCollectibles.deployed();
         truffleAssert.fails(instance.setURI("test", 0, { from: accounts[1] }),
