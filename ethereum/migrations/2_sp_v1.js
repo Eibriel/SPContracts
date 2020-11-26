@@ -39,31 +39,33 @@ module.exports = async function (deployer, network, accounts) {
     }
     console.log("Owner: " + owner)
 
-    // Set implementation ownership
-    const DEFAULT_ADMIN_ROLE = "0x00"
-    const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
-    const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
-    await sleep(sleep_time)
-    await instance.grantRole(MINTER_ROLE, owner)
-    console.log("grantRole MINTER_ROLE")
-    await sleep(sleep_time)
-    await instance.renounceRole(MINTER_ROLE, accounts[0])
-    console.log("renounceRole MINTER_ROLE")
-    await sleep(sleep_time)
-    await instance.grantRole(PAUSER_ROLE, owner)
-    console.log("grantRole PAUSER_ROLE")
-    await sleep(sleep_time)
-    await instance.renounceRole(PAUSER_ROLE, accounts[0])
-    console.log("renounceRole PAUSER_ROLE")
-    await sleep(sleep_time)
-    await instance.grantRole(DEFAULT_ADMIN_ROLE, owner)
-    console.log("grantRole DEFAULT_ADMIN_ROLE")
-    await sleep(sleep_time)
-    await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
-    console.log("renounceRole DEFAULT_ADMIN_ROLE")
+    if (network != "mainnet-fork") {
+        // Set implementation ownership
+        const DEFAULT_ADMIN_ROLE = "0x00"
+        const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
+        const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
+        await sleep(sleep_time)
+        await instance.grantRole(MINTER_ROLE, owner)
+        console.log("grantRole MINTER_ROLE")
+        await sleep(sleep_time)
+        await instance.renounceRole(MINTER_ROLE, accounts[0])
+        console.log("renounceRole MINTER_ROLE")
+        await sleep(sleep_time)
+        await instance.grantRole(PAUSER_ROLE, owner)
+        console.log("grantRole PAUSER_ROLE")
+        await sleep(sleep_time)
+        await instance.renounceRole(PAUSER_ROLE, accounts[0])
+        console.log("renounceRole PAUSER_ROLE")
+        await sleep(sleep_time)
+        await instance.grantRole(DEFAULT_ADMIN_ROLE, owner)
+        console.log("grantRole DEFAULT_ADMIN_ROLE")
+        await sleep(sleep_time)
+        await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
+        console.log("renounceRole DEFAULT_ADMIN_ROLE")
 
-    // Set Proxy Admin ownership
-    await sleep(sleep_time)
-    await admin.transferProxyAdminOwnership(owner)
-    console.log("transferProxyAdminOwnership")
+        // Set Proxy Admin ownership
+        await sleep(sleep_time)
+        await admin.transferProxyAdminOwnership(owner)
+        console.log("transferProxyAdminOwnership")
+    }
 };
