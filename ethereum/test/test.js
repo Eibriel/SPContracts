@@ -1,11 +1,37 @@
 const SoapPunkCollectibles = artifacts.require("SoapPunkCollectibles");
+const SoapPunkCollectiblesV2 = artifacts.require("SoapPunkCollectiblesV2");
 const truffleAssert = require('truffle-assertions');
-const { admin } = require('@openzeppelin/truffle-upgrades');
+const { admin, deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades');
 
 const DEFAULT_ADMIN_ROLE = "0x00";
 const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE");
 const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE");
 const URI = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
+
+describe('SoapPunkCollectibles upgrades', () => {
+  it('should upgrade (expected to fail)', async () => {
+    const sp1 = await deployProxy(SoapPunkCollectibles, [URI], { unsafeAllowCustomTypes: true });
+    const sp2 = await upgradeProxy(sp1.address, SoapPunkCollectiblesV2, { unsafeAllowCustomTypes: true });
+
+    const uri = await sp2.uri(0);
+    assert.equal(uri, URI);
+  });
+});
+
+describe('SoapPunkCollectibles upgrades', () => {
+  it('should not let set uri (expected to fail)', async () => {
+    const sp1 = await deployProxy(SoapPunkCollectibles, [URI], { unsafeAllowCustomTypes: true });
+    const sp2 = await upgradeProxy(sp1.address, SoapPunkCollectiblesV2, { unsafeAllowCustomTypes: true });
+    
+    let failed = false;
+    try {
+        await sp2.setURI("test", 0)
+    } catch {
+        failed = true
+    };
+    assert.equal(failed, true);
+  });
+});
 
 contract("SoapPunkCollectibles test", async accounts => {
     const owner = accounts[9];
@@ -18,7 +44,6 @@ contract("SoapPunkCollectibles test", async accounts => {
 
     it("should not let account 0 to set uri", async () => {
         let instance = await SoapPunkCollectibles.deployed();
-        await instance.renounceRole(DEFAULT_ADMIN_ROLE, accounts[0])
         truffleAssert.fails(instance.setURI("test", 0, { from: accounts[0] }),
             truffleAssert.ErrorType.revert,
             'VM Exception while processing transaction: revert SoapPunkCollectibles: must have admin role to change uri'

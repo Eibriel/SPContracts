@@ -1,6 +1,7 @@
 const SoapPunkCollectiblesChild = artifacts.require("SoapPunkCollectiblesChild")
+const SoapPunkCollectiblesChildV2 = artifacts.require("SoapPunkCollectiblesChildV2")
 const truffleAssert = require('truffle-assertions')
-const { admin } = require('@openzeppelin/truffle-upgrades')
+const { admin, deployProxy, upgradeProxy } = require('@openzeppelin/truffle-upgrades')
 const sigUtils = require('eth-sig-util')
 const defaultAbiCoder = require('ethers/utils/abi-coder')
 const getTypedData = require('./meta-tx')
@@ -13,7 +14,33 @@ const DEFAULT_ADMIN_ROLE = "0x00"
 const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
 const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
 const URI = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
-const DOMAIN_SEPARATOR = "SoapPunk Collectibles V1"
+const DOMAIN_SEPARATOR = "SoapPunk Collectibles"
+const CHILD_CHAIN_MANAGER = "0xb5505a6d998549090530911180f38aC5130101c6"
+
+describe('SoapPunkCollectibles upgrades', () => {
+  it('should upgrade (expected to fail)', async () => {
+    const sp1 = await deployProxy(SoapPunkCollectiblesChild, [URI, DOMAIN_SEPARATOR, CHILD_CHAIN_MANAGER], { unsafeAllowCustomTypes: true });
+    const sp2 = await upgradeProxy(sp1.address, SoapPunkCollectiblesChildV2, { unsafeAllowCustomTypes: true });
+
+    const uri = await sp2.uri(0);
+    assert.equal(uri, URI);
+  });
+});
+
+describe('SoapPunkCollectibles upgrades', () => {
+  it('should not let set uri (expected to fail)', async () => {
+    const sp1 = await deployProxy(SoapPunkCollectiblesChild, [URI, DOMAIN_SEPARATOR, CHILD_CHAIN_MANAGER], { unsafeAllowCustomTypes: true });
+    const sp2 = await upgradeProxy(sp1.address, SoapPunkCollectiblesChildV2, { unsafeAllowCustomTypes: true });
+
+    let failed = false;
+    try {
+        await sp2.setURI("test", 0)
+    } catch {
+        failed = true
+    };
+    assert.equal(failed, true);
+  });
+});
 
 contract("SoapPunkCollectiblesChild test", async accounts => {
     const owner = accounts[9]

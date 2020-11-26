@@ -3,7 +3,7 @@ const { admin, deployProxy } = require('@openzeppelin/truffle-upgrades')
 const SoapPunkCollectiblesChild = artifacts.require('SoapPunkCollectiblesChild')
 
 const uri = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
-const domainSeparator = "SoapPunk Collectibles V1"
+const domainSeparator = "SoapPunk Collectibles"
 
 module.exports = async function (deployer, network, accounts) {
     console.log(network)

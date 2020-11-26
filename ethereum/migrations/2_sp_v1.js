@@ -23,7 +23,7 @@ module.exports = async function (deployer, network, accounts) {
     console.log('SoapPunkCollectibles Deployed', instance.address)
 
     let owner
-    if (network === "test") {
+    if (network === "test" || network === "develop") {
         owner = accounts[9]
     } else {
         owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
