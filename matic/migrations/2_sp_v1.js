@@ -3,8 +3,7 @@ const { admin, deployProxy } = require('@openzeppelin/truffle-upgrades')
 const SoapPunkCollectiblesChild = artifacts.require('SoapPunkCollectiblesChild')
 
 const uri = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
-
-const owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+const domainSeparator = "SoapPunk Collectibles V1"
 
 module.exports = async function (deployer, network, accounts) {
     console.log(network)
@@ -13,19 +12,22 @@ module.exports = async function (deployer, network, accounts) {
     let childChainManager
     if (network === "mumbai") {
         childChainManager = "0xb5505a6d998549090530911180f38aC5130101c6" //Proxy Mumbai
-    } else if (network === "matic") {
+    } else if (network === "matic" || network === "matic-fork") {
         childChainManager = "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa" //Proxy Matic
     } else if (network === "test") {
         childChainManager = accounts[5]
     }
-    const instance = await deployProxy(SoapPunkCollectiblesChild, [uri, childChainManager], { deployer, unsafeAllowCustomTypes: true })
+
+    const instance = await deployProxy(SoapPunkCollectiblesChild, [uri, domainSeparator, childChainManager], { deployer, unsafeAllowCustomTypes: true })
     console.log('SoapPunkCollectiblesChild Deployed', instance.address)
 
     let owner
     if (network === "test") {
         owner = accounts[9]
     } else {
-        owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+        // Matic don't work with Ledger at the moment
+        //owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+        owner = "0x05C351382dB8D770207F319D96ac1184c3717edE"
     }
     console.log("Owner: " + owner)
 

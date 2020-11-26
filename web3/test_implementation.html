@@ -6,14 +6,17 @@
 <script src="https://cdn.jsdelivr.net/npm/@biconomy/mexa@1/dist/mexa.js"></script>
 <script type="text/javascript" src="./truffle-contract.min.js"></script>
 <script type="text/javascript" src="web3.min.js"></script>
+<script type="text/javascript" src="./k.js"></script>
 <script type="text/javascript" src="./SoapPunkCollectiblesChild_abi.js"></script>
+<script type="text/javascript" src="./meta-tx.js"></script>
 <script>
 
-const contractAddress = "0xd6C120F1eca107B4c32a04b1fEb35ca9FFA9002a";   // Please add your deployed contract address here
-const biconomyAPIKey = "";  // add your api  key from the dashboard
+const contractAddress = "0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5";   // Please add your deployed contract address here
+const biconomyAPIKey = biconomykey;  // add your api  key from the dashboard
 
-const parentChainId = 5; // chain id of the network tx is signed on
-const maticProvider = "https://rpc-mumbai.matic.today"
+const parentChainId = 80001;
+const mumbaiProvider = "https://rpc-mumbai.maticvigil.com/v1/" + maticvigilkey
+const goerliProvider = "https://goerli.infura.io/v3/" + infurakey
 
 //const Web3 = require("web3");
 
@@ -37,7 +40,8 @@ if (window.web3) {
 web3 = new Web3(web3Provider);
 
 const biconomy = new Biconomy(
-	 new Web3.providers.HttpProvider(maticProvider),
+	 new Web3.providers.HttpProvider(mumbaiProvider),
+     //new Web3.providers.HttpProvider(goerliProvider),
     {
       apiKey: biconomyAPIKey,
       debug: true
@@ -46,8 +50,12 @@ const biconomy = new Biconomy(
 const getWeb3 = new Web3(biconomy);
 
 const contract = new getWeb3.eth.Contract(config.contract.abi, contractAddress);
-const amount = "1000000000000000000";
-const recipient = "0x05C351382dB8D770207F319D96ac1184c3717edE";
+const from_ = "0x05C351382dB8D770207F319D96ac1184c3717edE";
+const recipient = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d";
+const tokenid = "0"
+const amount = "1"
+//const data = '0x0000000000000000'
+const data = []
 
 const domainType = [
     { name: "name", type: "string" },
@@ -63,34 +71,21 @@ const metaTransactionType = [
 ];
 
 let domainData = {
-    name: "MetaToken",
+    name: "https://metadata.soappunk.com/sperc1155/v1/{id}.json",
     version: "1",
     chainId: parentChainId,
     verifyingContract: contractAddress
 };
 
-/*
-//let biconomy, web3;
-if (window.Biconomy) {
-        let Biconomy = window.Biconomy;
-        biconomy = new Biconomy(web3Provider,{ apiKey: biconomyAPIKey, debug: true});
-        web3 = new Web3(biconomy);
-}*/
-
 biconomy.onEvent(biconomy.READY, async () => {
     const metaTransfer = async () => {
       let functionSignature = contract.methods
-        //.transfer(recipient, amount)
-        .balanceOf(recipient, 0)
+        . safeTransferFrom(from_, recipient, tokenid, amount, data)
+        //.balanceOf(recipient, 0)
         .encodeABI();
       executeMetaTransaction(functionSignature);
     };
     metaTransfer()
-
-    /*
-    let contract = await new web3.eth.Contract(config.contract.abi, "0xd6C120F1eca107B4c32a04b1fEb35ca9FFA9002a");
-    let result = await contract.methods.balanceOf("0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d", 0).call();
-    console.log( result );*/
 
 }).onEvent(biconomy.ERROR, (error, message) => {
   // Handle error while initializing mexa
@@ -101,55 +96,41 @@ biconomy.onEvent(biconomy.READY, async () => {
 
 const executeMetaTransaction = async functionSignature => {
     const accounts = await web3.eth.getAccounts();
-    let userAddress = accounts[0];
+    let userAddress = from_ //accounts[0];
     let nonce = await contract.methods.getNonce(userAddress).call();
 
-    let message = {};
-    message.nonce = parseInt(nonce);
-    message.from = userAddress;
-    message.functionSignature = functionSignature;
 
-    const dataToSign = JSON.stringify({
-      types: {
-        EIP712Domain: domainType,
-        MetaTransaction: metaTransactionType
-      },
-      domain: domainData,
-      primaryType: "MetaTransaction",
-      message: message
-    });
-    console.log(domainData);
+    let dataToSign = getTypedData({
+        name: domainData.name,
+        version: domainData.version,
+        chainId: domainData.chainId,
+        verifyingContract: contractAddress,
+        nonce: '0x' + nonce.toString(16),
+        from: userAddress,
+        functionSignature: functionSignature
+    })
+    console.log(dataToSign)
+    console.log(domainData)
     console.log(userAddress)
     web3.eth.currentProvider.send(
       {
         jsonrpc: "2.0",
         id: 999999999999,
         method: "eth_signTypedData_v4",
-        params: [userAddress, dataToSign]
+        params: [userAddress, JSON.stringify(dataToSign)]
       },
-      function(error, response) {
+      async function(error, response) {
         console.info(`User signature is ${response.result}`);
 
         let { r, s, v } = getSignatureParameters(response.result);
 
-				// logging output
-        console.log(userAddress);
-        console.log(JSON.stringify(message));
-        console.log(message);
-        console.log(getSignatureParameters(response.result));
-
-        /*
-        const recovered = sigUtil.recoverTypedSignature_v4({
-          data: JSON.parse(dataToSign),
-          sig: response.result
-        });
-        console.log(`Recovered ${recovered}`);
-        let tx = contract.methods
+        let tx = await contract.methods
           .executeMetaTransaction(userAddress, functionSignature, r, s, v)
           .send({
-            from: userAddress
+            from: userAddress,
+            gasLimit: 700000
           });
-        console.log(tx);*/
+        console.log(tx);
 
 
       }

@@ -36,15 +36,15 @@ const maticProvider = 'https://rpc-mumbai.maticvigil.com/v1/' + maticvigilkey
 
 let rootToken = "0xC899419eA2f5e678a71a18678c6B1f3e92Bc4CCD"
 let tokenId = "0"
-let from = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
-//let from = "0x05C351382dB8D770207F319D96ac1184c3717edE"
-let amount = "10"
+//let from = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+let from = "0x05C351382dB8D770207F319D96ac1184c3717edE"
+let amount = "30"
 
 // for mumbai testnet
 const maticPOSClient = new Matic.MaticPOSClient({
   network: "testnet",
   version: "mumbai",
-  posRootChainManager: '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74',
+  //posRootChainManager: '0xBbD7cBFA79faee899Eaf900F13C9065bF03B1A74',
   parentProvider: web3Provider,
   maticProvider: maticProvider,
   parentDefaultOptions: {from, gasLimit: 7000000, gasPrice: "5000000000"}
@@ -58,7 +58,6 @@ async function goearli_to_mumbai() {
 
 
     await maticPOSClient.approveERC1155ForDeposit(rootToken);
-    //await maticPOSClient.approveERC721ForDeposit(rootToken, 0);
 
     await maticPOSClient.depositSingleERC1155ForUser(
       rootToken,

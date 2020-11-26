@@ -12,12 +12,12 @@ contract SoapPunkCollectiblesChild is
     bytes32 public constant DEPOSITOR_ROLE = keccak256("DEPOSITOR_ROLE");
     mapping (uint256 => bool) public withdrawnTokens;
 
-    function initialize(string memory newuri, address childChainManager) initializer public {
+    function initialize(string memory newuri, string memory domainSeparator, address childChainManager) initializer public {
         __ERC1155PresetMinterPauser_init(newuri);
 
         _setupRole(DEPOSITOR_ROLE, childChainManager);
 
-        _initializeEIP712(newuri);
+        _initializeEIP712(domainSeparator);
      }
 
      function setURI(string memory newuri, uint256 id) public {
@@ -26,7 +26,6 @@ contract SoapPunkCollectiblesChild is
          emit URI(newuri, id);
 
          _setURI(newuri);
-         _setDomainSeperator(newuri);
      }
 
 

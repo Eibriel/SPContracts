@@ -13,6 +13,7 @@ const DEFAULT_ADMIN_ROLE = "0x00"
 const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
 const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
 const URI = "https://metadata.soappunk.com/sperc1155/v1/{id}.json"
+const DOMAIN_SEPARATOR = "SoapPunk Collectibles V1"
 
 contract("SoapPunkCollectiblesChild test", async accounts => {
     const owner = accounts[9]
@@ -221,10 +222,10 @@ contract("SoapPunkCollectiblesChild meta transactions tests", async accounts => 
         const web3ChildERC1155 = new web3.eth.Contract(SoapPunkCollectiblesChild.abi)
         const functionSignature = await web3ChildERC1155.methods.safeTransferFrom(user, accounts[2], 0, 10, []).encodeABI()
 
-        const name = await instance.uri(0)
+        const name = DOMAIN_SEPARATOR
         const chainId = await instance.getChainId()
         const nonce = await instance.getNonce(user)
-        const sig = sigUtils.signTypedData(userPK, {
+        const sig = sigUtils.signTypedData_v4(userPK, {
             data: getTypedData({
                 name,
                 version: '1',
@@ -248,10 +249,10 @@ contract("SoapPunkCollectiblesChild meta transactions tests", async accounts => 
 
         const functionSignature = web3ChildERC1155.methods.withdrawSingle(0, "10").encodeABI()
 
-        const name = await instance.uri(0)
+        const name = DOMAIN_SEPARATOR
         const chainId = await instance.getChainId()
         const nonce = await instance.getNonce(user)
-        const sig = sigUtils.signTypedData(userPK, {
+        const sig = sigUtils.signTypedData_v4(userPK, {
             data: getTypedData({
                 name,
                 version: '1',

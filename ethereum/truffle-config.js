@@ -88,6 +88,12 @@ module.exports = {
         skipDryRun: true
         //gas: 4600000
     },
+    mainnet: {
+        provider: () => new HDWalletProvider(mnemonic, "https://mainnet.infura.io/v3/"+infurakey),
+        network_id: 1,
+        confirmations: 1,
+        gasPrice: 35000000000 // 35 gwei
+    },
   },
 
   // Set default mocha options here, use special reporters etc.

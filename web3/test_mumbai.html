@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+
+<script type="text/javascript" src="./truffle-contract.min.js"></script>
+<script type="text/javascript" src="web3.min.js"></script>
+<script type="text/javascript" src="./SoapPunkCollectiblesChild_abi.js"></script>
+<script type="text/javascript" src="./meta-tx.js"></script>
+<script>
+
+const ethEnabled = () => {
+    if (window.ethereum) {
+        window.web3 = new Web3(window.ethereum);
+        window.ethereum.enable();
+        return true;
+    }
+    return false;
+}
+
+console.log(ethEnabled());
+
+if (window.web3) {
+  web3Provider = window.web3.currentProvider;
+}
+
+web3 = new Web3(web3Provider);
+
+//let from = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+let from = "0x05C351382dB8D770207F319D96ac1184c3717edE"
+//let to = "0x05C351382dB8D770207F319D96ac1184c3717edE"
+let to = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
+const contractAddress = "0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5"
+let tokenId = "0"
+let amount = "5"
+//let data = '0x0000000000000000'
+let data = []
+
+const domainType = [
+    { name: "name", type: "string" },
+    { name: "version", type: "string" },
+    { name: "chainId", type: "uint256" },
+    { name: "verifyingContract", type: "address" }
+];
+
+const metaTransactionType = [
+    { name: "nonce", type: "uint256" },
+    { name: "from", type: "address" },
+    { name: "functionSignature", type: "bytes" }
+];
+
+let domainData = {
+    name: "https://metadata.soappunk.com/sperc1155/v1/{id}.json",
+    version: "1",
+    chainId: 80001,
+    verifyingContract: contractAddress
+};
+
+async function app() {
+    const accounts = await web3.eth.getAccounts();
+    let userAddress = accounts[0];
+    web3.eth.defaultAccount = userAddress;
+    console.log(web3.eth.defaultAccount);
+
+
+    const contract = new web3.eth.Contract(config.contract.abi, contractAddress);
+    contract.options.from = userAddress
+    console.log(contract)
+    //await contract.methods.safeTransferFrom(from, to, tokenId, amount, data).send()
+
+    let functionSignature = contract.methods
+      . safeTransferFrom(from, to, tokenId, amount, data)
+      .encodeABI();
+
+    let nonce = 2//await contract.methods.getNonce(userAddress).call();
+
+    /*let message = {};
+    message.nonce = '0x' + nonce.toString(16), //parseInt(nonce);
+    message.from = userAddress;
+    message.functionSignature = functionSignature;
+
+    const dataToSign = JSON.stringify({
+      types: {
+        EIP712Domain: domainType,
+        MetaTransaction: metaTransactionType
+      },
+      domain: domainData,
+      primaryType: "MetaTransaction",
+      message: message
+    });*/
+
+    let dataToSign = getTypedData({
+        name: domainData.name,
+        version: domainData.version,
+        chainId: domainData.chainId,
+        verifyingContract: contractAddress,
+        nonce: '0x' + nonce.toString(16),
+        from: userAddress,
+        functionSignature: functionSignature
+    })
+
+    const metamask_signature = await web3.eth.currentProvider.send(
+      {
+        jsonrpc: "2.0",
+        id: 999999999999,
+        method: "eth_signTypedData_v4",
+        params: [userAddress, JSON.stringify(dataToSign)]
+    },
+    async function(error, response) {
+        let { r, s, v } = getSignatureParameters(response.result);
+        console.log(functionSignature)
+        console.log(r)
+        console.log(s)
+        console.log(v)
+
+        let tx = await contract.methods
+          .executeMetaTransaction(userAddress, functionSignature, r, s, v)
+          .send({
+            from: userAddress,
+            gasLimit: 700000
+          });
+        console.log(tx);
+    });
+
+
+}
+
+const getSignatureParameters = signature => {
+  if (!web3.utils.isHexStrict(signature)) {
+    throw new Error(
+      'Given value "'.concat(signature, '" is not a valid hex string.')
+    );
+  }
+  var r = signature.slice(0, 66);
+  var s = "0x".concat(signature.slice(66, 130));
+  var v = "0x".concat(signature.slice(130, 132));
+  v = web3.utils.hexToNumber(v);
+  if (![27, 28].includes(v)) v += 27;
+  return {
+    r: r,
+    s: s,
+    v: v
+  };
+};
+
+app();
+
+
+</script>
+
+</body>
+
+</html>
