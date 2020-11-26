@@ -1,4 +1,4 @@
-pragma solidity 0.6.6;
+pragma solidity ^0.6.0;
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/Initializable.sol";
 

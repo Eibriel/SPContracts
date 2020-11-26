@@ -1,7 +1,7 @@
 {
   "contractName": "ContextUpgradeable",
   "abi": [],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol\":\"ContextUpgradeable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol\":{\"keccak256\":\"0xca5ef6ed50c212be4cffea0fd7974d659e92b1328906069f7a14e2cc1bedfbfe\",\"urls\":[\"bzz-raw://b1edd6602dadeb1c00d8bd54aa6cee379dae83846e5b613feefbc8cdcdae42b0\",\"dweb:/ipfs/QmbpZvED3aj3x7fr2pdUC5iDU6x5ehDxKQyj3pm2NegbhM\"]},\"@openzeppelin/contracts-upgradeable/proxy/Initializable.sol\":{\"keccak256\":\"0x8eee8bd8c216a3e437bf7a4c9844348f47a2d990e5b06cd96d250e33ab04c25a\",\"urls\":[\"bzz-raw://c6bb2af880b12be26b148ee99ac3a984168e7fc74721bab9cd44598a0669b038\",\"dweb:/ipfs/QmPfFDaXZbThJgaVim7nvxrw1RuD2xKWCG89K6pznmC8pJ\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol\":\"ContextUpgradeable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol\":{\"keccak256\":\"0xca5ef6ed50c212be4cffea0fd7974d659e92b1328906069f7a14e2cc1bedfbfe\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b1edd6602dadeb1c00d8bd54aa6cee379dae83846e5b613feefbc8cdcdae42b0\",\"dweb:/ipfs/QmbpZvED3aj3x7fr2pdUC5iDU6x5ehDxKQyj3pm2NegbhM\"]},\"@openzeppelin/contracts-upgradeable/proxy/Initializable.sol\":{\"keccak256\":\"0x8eee8bd8c216a3e437bf7a4c9844348f47a2d990e5b06cd96d250e33ab04c25a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c6bb2af880b12be26b148ee99ac3a984168e7fc74721bab9cd44598a0669b038\",\"dweb:/ipfs/QmPfFDaXZbThJgaVim7nvxrw1RuD2xKWCG89K6pznmC8pJ\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -17,6 +17,7 @@
       ]
     },
     "id": 899,
+    "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -36,7 +37,7 @@
         "id": 856,
         "nodeType": "ImportDirective",
         "scope": 899,
-        "sourceUnit": 1791,
+        "sourceUnit": 1794,
         "src": "57:36:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -51,10 +52,10 @@
               "id": 857,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1790,
+              "referencedDeclaration": 1793,
               "src": "635:13:6",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$1790",
+                "typeIdentifier": "t_contract$_Initializable_$1793",
                 "typeString": "contract Initializable"
               }
             },
@@ -64,7 +65,7 @@
           }
         ],
         "contractDependencies": [
-          1790
+          1793
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -72,7 +73,7 @@
         "id": 898,
         "linearizedBaseContracts": [
           898,
-          1790
+          1793
         ],
         "name": "ContextUpgradeable",
         "nodeType": "ContractDefinition",
@@ -135,7 +136,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "690:11:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -188,7 +189,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "796:11:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -505,6 +506,7 @@
       ]
     },
     "id": 899,
+    "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -524,7 +526,7 @@
         "id": 856,
         "nodeType": "ImportDirective",
         "scope": 899,
-        "sourceUnit": 1791,
+        "sourceUnit": 1794,
         "src": "57:36:6",
         "symbolAliases": [],
         "unitAlias": ""
@@ -539,10 +541,10 @@
               "id": 857,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1790,
+              "referencedDeclaration": 1793,
               "src": "635:13:6",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$1790",
+                "typeIdentifier": "t_contract$_Initializable_$1793",
                 "typeString": "contract Initializable"
               }
             },
@@ -552,7 +554,7 @@
           }
         ],
         "contractDependencies": [
-          1790
+          1793
         ],
         "contractKind": "contract",
         "documentation": null,
@@ -560,7 +562,7 @@
         "id": 898,
         "linearizedBaseContracts": [
           898,
-          1790
+          1793
         ],
         "name": "ContextUpgradeable",
         "nodeType": "ContractDefinition",
@@ -623,7 +625,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "690:11:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -676,7 +678,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "796:11:6",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -987,15 +989,19 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.6.6+commit.6c089d02.Emscripten.clang"
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.3.2",
-  "updatedAt": "2020-11-26T01:47:22.420Z",
+  "updatedAt": "2020-11-26T14:04:58.336Z",
   "devdoc": {
-    "methods": {}
+    "kind": "dev",
+    "methods": {},
+    "version": 1
   },
   "userdoc": {
-    "methods": {}
+    "kind": "user",
+    "methods": {},
+    "version": 1
   }
 }

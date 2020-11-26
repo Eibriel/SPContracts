@@ -1,0 +1,130 @@
+SoapPunkCollectiblesChild
+0xF4b22A8FAd1abb8cF42Cf71d6adF8a175FB643eF
+
+ProxyAdmin
+0xe6dB8EF646B9b65D3e6a8bA452afc564caaC5004
+
+AdminUpgradeabilityProxy
+0xa724c55580A0f716e6A65a4aC1774712F5F709d6
+
+
+> Compiled successfully using:
+   - solc: 0.6.12+commit.27d51765.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      137
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+matic
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xc16f683279ee024190ca84b215e22b20275dbb3a3492de78452051e0f99db024
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x7879b0009AfCb02870D4e60D128FCe11593cAc5a
+   > block number:        7534150
+   > block timestamp:     1606399509
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.92051283
+   > gas used:            153694 (0x2585e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00076847 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7534152)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00076847 ETH
+
+
+2_sp_v1.js
+==========
+matic
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+childChainManager 0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa
+
+   Deploying 'SoapPunkCollectiblesChild'
+   -------------------------------------
+   > transaction hash:    0x7de315371cd7d98edd6c376a8f10eb72e485b577ef64d132ebddf75a726222b9
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xF4b22A8FAd1abb8cF42Cf71d6adF8a175FB643eF
+   > block number:        7534163
+   > block timestamp:     1606399535
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.9006675
+   > gas used:            3926811 (0x3beb1b)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.019634055 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7534165)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0xaae0f98361e4842ce310b2d83cd1c28be214d996a4a88f1c3184c434cd059a38
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xe6dB8EF646B9b65D3e6a8bA452afc564caaC5004
+   > block number:        7534169
+   > block timestamp:     1606399547
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.89626775
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00439975 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7534172)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x34753f930f4f6e06e71297a0f67eb07478a88b8cce0203ba73cf2e30659fcffd
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xa724c55580A0f716e6A65a4aC1774712F5F709d6
+   > block number:        7534175
+   > block timestamp:     1606399559
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.891002945
+   > gas used:            1052961 (0x101121)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.005264805 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7534178)
+SoapPunkCollectiblesChild Deployed 0xa724c55580A0f716e6A65a4aC1774712F5F709d6
+Owner: 0x05C351382dB8D770207F319D96ac1184c3717edE
+grantRole MINTER_ROLE
+renounceRole MINTER_ROLE
+grantRole PAUSER_ROLE
+renounceRole PAUSER_ROLE
+grantRole DEFAULT_ADMIN_ROLE
+renounceRole DEFAULT_ADMIN_ROLE
+transferProxyAdminOwnership
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.02929861 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.03006708 ETH

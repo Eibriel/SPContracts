@@ -1,0 +1,134 @@
+SoapPunkCollectiblesChild
+0x3708D543B9def4609FB325219b4083a13f0C9eA0
+https://explorer-mainnet.maticvigil.com/address/0x3708D543B9def4609FB325219b4083a13f0C9eA0
+
+ProxyAdmin
+0xf48f2061CEc79C9B7B19B5Ec86bb97C3818D75c2
+https://explorer-mainnet.maticvigil.com/address/0xf48f2061CEc79C9B7B19B5Ec86bb97C3818D75c2
+
+AdminUpgradeabilityProxy
+0x0CB78E942ebaA46468113912901c6AB3CDb771C9
+https://explorer-mainnet.maticvigil.com/address/0x0CB78E942ebaA46468113912901c6AB3CDb771C9
+
+
+
+> Compiled successfully using:
+   - solc: 0.6.6+commit.6c089d02.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      137
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+matic
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xcbe1bb3e4658bc98fe123547858a85a0d5dedd34e7b3881315d6160a452c619f
+   > Blocks: 2            Seconds: 6
+   > contract address:    0xBc3A98dCF9e97EAb5e3782075F44c46A48b9E4bA
+   > block number:        7516425
+   > block timestamp:     1606362951
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.952844675
+   > gas used:            153706 (0x2586a)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00076853 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7516428)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00076853 ETH
+
+
+2_sp_v1.js
+==========
+matic
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+childChainManager 0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa
+
+   Deploying 'SoapPunkCollectiblesChild'
+   -------------------------------------
+   > transaction hash:    0x4c628f26b9cfe34e3b29aed5b566c4f3e0e18bbfa147cdf856a077bbe529d9a7
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x3708D543B9def4609FB325219b4083a13f0C9eA0
+   > block number:        7516434
+   > block timestamp:     1606362969
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.93282388
+   > gas used:            3961904 (0x3c7430)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.01980952 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 7516438)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0x9a953d72464078d3df57b784bfec01647ec77b423ca8cdb9bb504599b2b976c6
+   > Blocks: 0            Seconds: 0
+   > contract address:    0xf48f2061CEc79C9B7B19B5Ec86bb97C3818D75c2
+   > block number:        7516441
+   > block timestamp:     1606362983
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.92842413
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00439975 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 7516444)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x5909d47768a94bf60520cc2389b3469c55b15e3e4711bb5bfe35929d3951b1ec
+   > Blocks: 0            Seconds: 0
+   > contract address:    0x0CB78E942ebaA46468113912901c6AB3CDb771C9
+   > block number:        7516447
+   > block timestamp:     1606362995
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.923158255
+   > gas used:            1053175 (0x1011f7)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.005265875 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 7516449)
+SoapPunkCollectiblesChild Deployed 0x0CB78E942ebaA46468113912901c6AB3CDb771C9
+Owner: 0x05C351382dB8D770207F319D96ac1184c3717edE
+grantRole MINTER_ROLE
+renounceRole MINTER_ROLE
+grantRole PAUSER_ROLE
+renounceRole PAUSER_ROLE
+grantRole DEFAULT_ADMIN_ROLE
+renounceRole DEFAULT_ADMIN_ROLE
+transferProxyAdminOwnership
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.029475145 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.030243675 ETH

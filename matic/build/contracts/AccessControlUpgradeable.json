@@ -230,7 +230,7 @@
       "type": "function"
     }
   ],
-  "metadata": "{\"compiler\":{\"version\":\"0.6.6+commit.6c089d02\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getRoleMember\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleMemberCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Contract module that allows children to implement role-based access control mechanisms. * Roles are referred to by their `bytes32` identifier. These should be exposed in the external API and be unique. The best way to achieve this is by using `public constant` hash digests: * ``` bytes32 public constant MY_ROLE = keccak256(\\\"MY_ROLE\\\"); ``` * Roles can be used to represent a set of permissions. To restrict access to a function call, use {hasRole}: * ``` function foo() public {    require(hasRole(MY_ROLE, msg.sender));    ... } ``` * Roles can be granted and revoked dynamically via the {grantRole} and {revokeRole} functions. Each role has an associated admin role, and only accounts that have a role's admin role can call {grantRole} and {revokeRole}. * By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means that only accounts with this role will be able to grant or revoke other roles. More complex role relationships can be created by using {_setRoleAdmin}. * WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role. Extra precautions should be taken to secure accounts that have been granted it.\",\"methods\":{\"getRoleAdmin(bytes32)\":{\"details\":\"Returns the admin role that controls `role`. See {grantRole} and {revokeRole}.     * To change a role's admin, use {_setRoleAdmin}.\"},\"getRoleMember(bytes32,uint256)\":{\"details\":\"Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive.     * Role bearers are not sorted in any particular way, and their ordering may change at any point.     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information.\"},\"getRoleMemberCount(bytes32)\":{\"details\":\"Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role.\"},\"grantRole(bytes32,address)\":{\"details\":\"Grants `role` to `account`.     * If `account` had not been already granted `role`, emits a {RoleGranted} event.     * Requirements:     * - the caller must have ``role``'s admin role.\"},\"hasRole(bytes32,address)\":{\"details\":\"Returns `true` if `account` has been granted `role`.\"},\"renounceRole(bytes32,address)\":{\"details\":\"Revokes `role` from the calling account.     * Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced).     * If the calling account had been granted `role`, emits a {RoleRevoked} event.     * Requirements:     * - the caller must be `account`.\"},\"revokeRole(bytes32,address)\":{\"details\":\"Revokes `role` from `account`.     * If `account` had been granted `role`, emits a {RoleRevoked} event.     * Requirements:     * - the caller must have ``role``'s admin role.\"}}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol\":\"AccessControlUpgradeable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol\":{\"keccak256\":\"0xca5ef6ed50c212be4cffea0fd7974d659e92b1328906069f7a14e2cc1bedfbfe\",\"urls\":[\"bzz-raw://b1edd6602dadeb1c00d8bd54aa6cee379dae83846e5b613feefbc8cdcdae42b0\",\"dweb:/ipfs/QmbpZvED3aj3x7fr2pdUC5iDU6x5ehDxKQyj3pm2NegbhM\"]},\"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol\":{\"keccak256\":\"0x8c037e108e6db1410af9f33b3ecd147ce1ed3b1c94a8b6d25d06043cc085a1fb\",\"urls\":[\"bzz-raw://ce07d8d6da06c0d68278acdffff121d598ad554803719c6d0130757fc93ee72f\",\"dweb:/ipfs/QmNQTDqGc3Lsv7iiNYNNkMp2cURaii9bVT6Dfv31RdxSp9\"]},\"@openzeppelin/contracts-upgradeable/proxy/Initializable.sol\":{\"keccak256\":\"0x8eee8bd8c216a3e437bf7a4c9844348f47a2d990e5b06cd96d250e33ab04c25a\",\"urls\":[\"bzz-raw://c6bb2af880b12be26b148ee99ac3a984168e7fc74721bab9cd44598a0669b038\",\"dweb:/ipfs/QmPfFDaXZbThJgaVim7nvxrw1RuD2xKWCG89K6pznmC8pJ\"]},\"@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol\":{\"keccak256\":\"0x21d0ea14543f00187a5015b87993127dcf56d4ed40406f5a32a671a103209213\",\"urls\":[\"bzz-raw://0c8229a6611766c940789e0cb9a847398b9002a5ed557918ee8bfeb18ea36603\",\"dweb:/ipfs/QmfUbx4y6gjb9oj8V2qe9W5Eph31kimDdtpSGXa9po4u3L\"]},\"@openzeppelin/contracts-upgradeable/utils/EnumerableSetUpgradeable.sol\":{\"keccak256\":\"0x3f53ff087805b132a913a678d9b261853b83adee630355e536361873e5b8dca1\",\"urls\":[\"bzz-raw://754e29970105b56cabadf6e528f6903f1e3d6ae02820dd2757515f515f134231\",\"dweb:/ipfs/QmNvBijMwtWLP8szNyANTeuPGMD6gdbrXERMoZykAHhXtq\"]}},\"version\":1}",
+  "metadata": "{\"compiler\":{\"version\":\"0.6.12+commit.27d51765\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"previousAdminRole\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"newAdminRole\",\"type\":\"bytes32\"}],\"name\":\"RoleAdminChanged\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleGranted\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":true,\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"},{\"indexed\":true,\"internalType\":\"address\",\"name\":\"sender\",\"type\":\"address\"}],\"name\":\"RoleRevoked\",\"type\":\"event\"},{\"inputs\":[],\"name\":\"DEFAULT_ADMIN_ROLE\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleAdmin\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"uint256\",\"name\":\"index\",\"type\":\"uint256\"}],\"name\":\"getRoleMember\",\"outputs\":[{\"internalType\":\"address\",\"name\":\"\",\"type\":\"address\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"}],\"name\":\"getRoleMemberCount\",\"outputs\":[{\"internalType\":\"uint256\",\"name\":\"\",\"type\":\"uint256\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"grantRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"hasRole\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"renounceRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[{\"internalType\":\"bytes32\",\"name\":\"role\",\"type\":\"bytes32\"},{\"internalType\":\"address\",\"name\":\"account\",\"type\":\"address\"}],\"name\":\"revokeRole\",\"outputs\":[],\"stateMutability\":\"nonpayable\",\"type\":\"function\"}],\"devdoc\":{\"details\":\"Contract module that allows children to implement role-based access control mechanisms. Roles are referred to by their `bytes32` identifier. These should be exposed in the external API and be unique. The best way to achieve this is by using `public constant` hash digests: ``` bytes32 public constant MY_ROLE = keccak256(\\\"MY_ROLE\\\"); ``` Roles can be used to represent a set of permissions. To restrict access to a function call, use {hasRole}: ``` function foo() public {     require(hasRole(MY_ROLE, msg.sender));     ... } ``` Roles can be granted and revoked dynamically via the {grantRole} and {revokeRole} functions. Each role has an associated admin role, and only accounts that have a role's admin role can call {grantRole} and {revokeRole}. By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means that only accounts with this role will be able to grant or revoke other roles. More complex role relationships can be created by using {_setRoleAdmin}. WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role. Extra precautions should be taken to secure accounts that have been granted it.\",\"events\":{\"RoleAdminChanged(bytes32,bytes32,bytes32)\":{\"details\":\"Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole` `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite {RoleAdminChanged} not being emitted signaling this. _Available since v3.1._\"},\"RoleGranted(bytes32,address,address)\":{\"details\":\"Emitted when `account` is granted `role`. `sender` is the account that originated the contract call, an admin role bearer except when using {_setupRole}.\"},\"RoleRevoked(bytes32,address,address)\":{\"details\":\"Emitted when `account` is revoked `role`. `sender` is the account that originated the contract call:   - if using `revokeRole`, it is the admin role bearer   - if using `renounceRole`, it is the role bearer (i.e. `account`)\"}},\"kind\":\"dev\",\"methods\":{\"getRoleAdmin(bytes32)\":{\"details\":\"Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}.\"},\"getRoleMember(bytes32,uint256)\":{\"details\":\"Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive. Role bearers are not sorted in any particular way, and their ordering may change at any point. WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information.\"},\"getRoleMemberCount(bytes32)\":{\"details\":\"Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role.\"},\"grantRole(bytes32,address)\":{\"details\":\"Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role.\"},\"hasRole(bytes32,address)\":{\"details\":\"Returns `true` if `account` has been granted `role`.\"},\"renounceRole(bytes32,address)\":{\"details\":\"Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`.\"},\"revokeRole(bytes32,address)\":{\"details\":\"Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role.\"}},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol\":\"AccessControlUpgradeable\"},\"evmVersion\":\"istanbul\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":1},\"remappings\":[]},\"sources\":{\"@openzeppelin/contracts-upgradeable/GSN/ContextUpgradeable.sol\":{\"keccak256\":\"0xca5ef6ed50c212be4cffea0fd7974d659e92b1328906069f7a14e2cc1bedfbfe\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://b1edd6602dadeb1c00d8bd54aa6cee379dae83846e5b613feefbc8cdcdae42b0\",\"dweb:/ipfs/QmbpZvED3aj3x7fr2pdUC5iDU6x5ehDxKQyj3pm2NegbhM\"]},\"@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol\":{\"keccak256\":\"0x8c037e108e6db1410af9f33b3ecd147ce1ed3b1c94a8b6d25d06043cc085a1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://ce07d8d6da06c0d68278acdffff121d598ad554803719c6d0130757fc93ee72f\",\"dweb:/ipfs/QmNQTDqGc3Lsv7iiNYNNkMp2cURaii9bVT6Dfv31RdxSp9\"]},\"@openzeppelin/contracts-upgradeable/proxy/Initializable.sol\":{\"keccak256\":\"0x8eee8bd8c216a3e437bf7a4c9844348f47a2d990e5b06cd96d250e33ab04c25a\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c6bb2af880b12be26b148ee99ac3a984168e7fc74721bab9cd44598a0669b038\",\"dweb:/ipfs/QmPfFDaXZbThJgaVim7nvxrw1RuD2xKWCG89K6pznmC8pJ\"]},\"@openzeppelin/contracts-upgradeable/utils/AddressUpgradeable.sol\":{\"keccak256\":\"0x21d0ea14543f00187a5015b87993127dcf56d4ed40406f5a32a671a103209213\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://0c8229a6611766c940789e0cb9a847398b9002a5ed557918ee8bfeb18ea36603\",\"dweb:/ipfs/QmfUbx4y6gjb9oj8V2qe9W5Eph31kimDdtpSGXa9po4u3L\"]},\"@openzeppelin/contracts-upgradeable/utils/EnumerableSetUpgradeable.sol\":{\"keccak256\":\"0x3f53ff087805b132a913a678d9b261853b83adee630355e536361873e5b8dca1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://754e29970105b56cabadf6e528f6903f1e3d6ae02820dd2757515f515f134231\",\"dweb:/ipfs/QmNvBijMwtWLP8szNyANTeuPGMD6gdbrXERMoZykAHhXtq\"]}},\"version\":1}",
   "bytecode": "0x",
   "deployedBytecode": "0x",
   "immutableReferences": {},
@@ -246,6 +246,7 @@
       ]
     },
     "id": 1207,
+    "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -265,7 +266,7 @@
         "id": 901,
         "nodeType": "ImportDirective",
         "scope": 1207,
-        "sourceUnit": 3783,
+        "sourceUnit": 3786,
         "src": "58:47:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -276,7 +277,7 @@
         "id": 902,
         "nodeType": "ImportDirective",
         "scope": 1207,
-        "sourceUnit": 3388,
+        "sourceUnit": 3391,
         "src": "106:41:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -298,7 +299,7 @@
         "id": 904,
         "nodeType": "ImportDirective",
         "scope": 1207,
-        "sourceUnit": 1791,
+        "sourceUnit": 1794,
         "src": "188:36:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -313,10 +314,10 @@
               "id": 906,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1790,
+              "referencedDeclaration": 1793,
               "src": "1549:13:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$1790",
+                "typeIdentifier": "t_contract$_Initializable_$1793",
                 "typeString": "contract Initializable"
               }
             },
@@ -345,21 +346,21 @@
         ],
         "contractDependencies": [
           898,
-          1790
+          1793
         ],
         "contractKind": "contract",
         "documentation": {
           "id": 905,
           "nodeType": "StructuredDocumentation",
           "src": "226:1276:7",
-          "text": "@dev Contract module that allows children to implement role-based access\ncontrol mechanisms.\n * Roles are referred to by their `bytes32` identifier. These should be exposed\nin the external API and be unique. The best way to achieve this is by\nusing `public constant` hash digests:\n * ```\nbytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\");\n```\n * Roles can be used to represent a set of permissions. To restrict access to a\nfunction call, use {hasRole}:\n * ```\nfunction foo() public {\n    require(hasRole(MY_ROLE, msg.sender));\n    ...\n}\n```\n * Roles can be granted and revoked dynamically via the {grantRole} and\n{revokeRole} functions. Each role has an associated admin role, and only\naccounts that have a role's admin role can call {grantRole} and {revokeRole}.\n * By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means\nthat only accounts with this role will be able to grant or revoke other\nroles. More complex role relationships can be created by using\n{_setRoleAdmin}.\n * WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to\ngrant and revoke this role. Extra precautions should be taken to secure\naccounts that have been granted it."
+          "text": " @dev Contract module that allows children to implement role-based access\n control mechanisms.\n Roles are referred to by their `bytes32` identifier. These should be exposed\n in the external API and be unique. The best way to achieve this is by\n using `public constant` hash digests:\n ```\n bytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\");\n ```\n Roles can be used to represent a set of permissions. To restrict access to a\n function call, use {hasRole}:\n ```\n function foo() public {\n     require(hasRole(MY_ROLE, msg.sender));\n     ...\n }\n ```\n Roles can be granted and revoked dynamically via the {grantRole} and\n {revokeRole} functions. Each role has an associated admin role, and only\n accounts that have a role's admin role can call {grantRole} and {revokeRole}.\n By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means\n that only accounts with this role will be able to grant or revoke other\n roles. More complex role relationships can be created by using\n {_setRoleAdmin}.\n WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to\n grant and revoke this role. Extra precautions should be taken to secure\n accounts that have been granted it."
         },
         "fullyImplemented": true,
         "id": 1206,
         "linearizedBaseContracts": [
           1206,
           898,
-          1790
+          1793
         ],
         "name": "AccessControlUpgradeable",
         "nodeType": "ContractDefinition",
@@ -458,7 +459,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "1630:11:7",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -511,7 +512,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "1784:11:7",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -550,10 +551,10 @@
               "id": 928,
               "name": "EnumerableSetUpgradeable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3782,
+              "referencedDeclaration": 3785,
               "src": "1814:24:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EnumerableSetUpgradeable_$3782",
+                "typeIdentifier": "t_contract$_EnumerableSetUpgradeable_$3785",
                 "typeString": "library EnumerableSetUpgradeable"
               }
             },
@@ -564,10 +565,10 @@
               "id": 929,
               "name": "EnumerableSetUpgradeable.AddressSet",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3578,
+              "referencedDeclaration": 3581,
               "src": "1843:35:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_AddressSet_$3578_storage_ptr",
+                "typeIdentifier": "t_struct$_AddressSet_$3581_storage_ptr",
                 "typeString": "struct EnumerableSetUpgradeable.AddressSet"
               }
             }
@@ -579,10 +580,10 @@
               "id": 931,
               "name": "AddressUpgradeable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3387,
+              "referencedDeclaration": 3390,
               "src": "1890:18:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_AddressUpgradeable_$3387",
+                "typeIdentifier": "t_contract$_AddressUpgradeable_$3390",
                 "typeString": "library AddressUpgradeable"
               }
             },
@@ -616,7 +617,7 @@
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_AddressSet_$3578_storage_ptr",
+                  "typeIdentifier": "t_struct$_AddressSet_$3581_storage_ptr",
                   "typeString": "struct EnumerableSetUpgradeable.AddressSet"
                 },
                 "typeName": {
@@ -624,10 +625,10 @@
                   "id": 934,
                   "name": "EnumerableSetUpgradeable.AddressSet",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 3578,
+                  "referencedDeclaration": 3581,
                   "src": "1953:35:7",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_AddressSet_$3578_storage_ptr",
+                    "typeIdentifier": "t_struct$_AddressSet_$3581_storage_ptr",
                     "typeString": "struct EnumerableSetUpgradeable.AddressSet"
                   }
                 },
@@ -770,7 +771,7 @@
               "id": 946,
               "nodeType": "StructuredDocumentation",
               "src": "2143:292:7",
-              "text": "@dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`\n     * `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite\n{RoleAdminChanged} not being emitted signaling this.\n     * _Available since v3.1._"
+              "text": " @dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`\n `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite\n {RoleAdminChanged} not being emitted signaling this.\n _Available since v3.1._"
             },
             "id": 954,
             "name": "RoleAdminChanged",
@@ -877,7 +878,7 @@
               "id": 955,
               "nodeType": "StructuredDocumentation",
               "src": "2556:198:7",
-              "text": "@dev Emitted when `account` is granted `role`.\n     * `sender` is the account that originated the contract call, an admin role\nbearer except when using {_setupRole}."
+              "text": " @dev Emitted when `account` is granted `role`.\n `sender` is the account that originated the contract call, an admin role\n bearer except when using {_setupRole}."
             },
             "id": 963,
             "name": "RoleGranted",
@@ -986,7 +987,7 @@
               "id": 964,
               "nodeType": "StructuredDocumentation",
               "src": "2854:275:7",
-              "text": "@dev Emitted when `account` is revoked `role`.\n     * `sender` is the account that originated the contract call:\n  - if using `revokeRole`, it is the admin role bearer\n  - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+              "text": " @dev Emitted when `account` is revoked `role`.\n `sender` is the account that originated the contract call:\n   - if using `revokeRole`, it is the admin role bearer\n   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
             },
             "id": 972,
             "name": "RoleRevoked",
@@ -1172,7 +1173,7 @@
                         "referencedDeclaration": 935,
                         "src": "3402:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -1183,10 +1184,10 @@
                       "lValueRequested": false,
                       "memberName": "contains",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3647,
+                      "referencedDeclaration": 3650,
                       "src": "3402:29:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3578_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3581_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,address) view returns (bool)"
                       }
                     },
@@ -1216,7 +1217,7 @@
               "id": 973,
               "nodeType": "StructuredDocumentation",
               "src": "3229:76:7",
-              "text": "@dev Returns `true` if `account` has been granted `role`."
+              "text": " @dev Returns `true` if `account` has been granted `role`."
             },
             "functionSelector": "91d14854",
             "id": 991,
@@ -1395,7 +1396,7 @@
                         "referencedDeclaration": 935,
                         "src": "3704:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -1406,10 +1407,10 @@
                       "lValueRequested": false,
                       "memberName": "length",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3661,
+                      "referencedDeclaration": 3664,
                       "src": "3704:27:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3578_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3581_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer) view returns (uint256)"
                       }
                     },
@@ -1439,7 +1440,7 @@
               "id": 992,
               "nodeType": "StructuredDocumentation",
               "src": "3453:157:7",
-              "text": "@dev Returns the number of accounts that have `role`. Can be used\ntogether with {getRoleMember} to enumerate all bearers of a role."
+              "text": " @dev Returns the number of accounts that have `role`. Can be used\n together with {getRoleMember} to enumerate all bearers of a role."
             },
             "functionSelector": "ca15c873",
             "id": 1007,
@@ -1608,7 +1609,7 @@
                         "referencedDeclaration": 935,
                         "src": "4424:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -1619,10 +1620,10 @@
                       "lValueRequested": false,
                       "memberName": "at",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3684,
+                      "referencedDeclaration": 3687,
                       "src": "4424:23:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3578_storage_ptr_$_t_uint256_$returns$_t_address_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3581_storage_ptr_$_t_uint256_$returns$_t_address_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,uint256) view returns (address)"
                       }
                     },
@@ -1652,7 +1653,7 @@
               "id": 1008,
               "nodeType": "StructuredDocumentation",
               "src": "3746:574:7",
-              "text": "@dev Returns one of the accounts that have `role`. `index` must be a\nvalue between 0 and {getRoleMemberCount}, non-inclusive.\n     * Role bearers are not sorted in any particular way, and their ordering may\nchange at any point.\n     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure\nyou perform all queries on the same block. See the following\nhttps://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post]\nfor more information."
+              "text": " @dev Returns one of the accounts that have `role`. `index` must be a\n value between 0 and {getRoleMemberCount}, non-inclusive.\n Role bearers are not sorted in any particular way, and their ordering may\n change at any point.\n WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure\n you perform all queries on the same block. See the following\n https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post]\n for more information."
             },
             "functionSelector": "9010d07c",
             "id": 1026,
@@ -1841,7 +1842,7 @@
               "id": 1027,
               "nodeType": "StructuredDocumentation",
               "src": "4467:170:7",
-              "text": "@dev Returns the admin role that controls `role`. See {grantRole} and\n{revokeRole}.\n     * To change a role's admin, use {_setRoleAdmin}."
+              "text": " @dev Returns the admin role that controls `role`. See {grantRole} and\n {revokeRole}.\n To change a role's admin, use {_setRoleAdmin}."
             },
             "functionSelector": "248a9ca3",
             "id": 1040,
@@ -2206,7 +2207,7 @@
               "id": 1041,
               "nodeType": "StructuredDocumentation",
               "src": "4760:239:7",
-              "text": "@dev Grants `role` to `account`.\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\nevent.\n     * Requirements:\n     * - the caller must have ``role``'s admin role."
+              "text": " @dev Grants `role` to `account`.\n If `account` had not been already granted `role`, emits a {RoleGranted}\n event.\n Requirements:\n - the caller must have ``role``'s admin role."
             },
             "functionSelector": "2f2ff15d",
             "id": 1066,
@@ -2571,7 +2572,7 @@
               "id": 1067,
               "nodeType": "StructuredDocumentation",
               "src": "5233:223:7",
-              "text": "@dev Revokes `role` from `account`.\n     * If `account` had been granted `role`, emits a {RoleRevoked} event.\n     * Requirements:\n     * - the caller must have ``role``'s admin role."
+              "text": " @dev Revokes `role` from `account`.\n If `account` had been granted `role`, emits a {RoleRevoked} event.\n Requirements:\n - the caller must have ``role``'s admin role."
             },
             "functionSelector": "d547741f",
             "id": 1092,
@@ -2871,7 +2872,7 @@
               "id": 1093,
               "nodeType": "StructuredDocumentation",
               "src": "5693:480:7",
-              "text": "@dev Revokes `role` from the calling account.\n     * Roles are often managed via {grantRole} and {revokeRole}: this function's\npurpose is to provide a mechanism for accounts to lose their privileges\nif they are compromised (such as when a trusted device is misplaced).\n     * If the calling account had been granted `role`, emits a {RoleRevoked}\nevent.\n     * Requirements:\n     * - the caller must be `account`."
+              "text": " @dev Revokes `role` from the calling account.\n Roles are often managed via {grantRole} and {revokeRole}: this function's\n purpose is to provide a mechanism for accounts to lose their privileges\n if they are compromised (such as when a trusted device is misplaced).\n If the calling account had been granted `role`, emits a {RoleRevoked}\n event.\n Requirements:\n - the caller must be `account`."
             },
             "functionSelector": "36568abe",
             "id": 1114,
@@ -3041,7 +3042,7 @@
               "id": 1115,
               "nodeType": "StructuredDocumentation",
               "src": "6389:554:7",
-              "text": "@dev Grants `role` to `account`.\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\nevent. Note that unlike {grantRole}, this function doesn't perform any\nchecks on the calling account.\n     * [WARNING]\n====\nThis function should only be called from the constructor when setting\nup the initial roles for the system.\n     * Using this function in any other way is effectively circumventing the admin\nsystem imposed by {AccessControl}.\n===="
+              "text": " @dev Grants `role` to `account`.\n If `account` had not been already granted `role`, emits a {RoleGranted}\n event. Note that unlike {grantRole}, this function doesn't perform any\n checks on the calling account.\n [WARNING]\n ====\n This function should only be called from the constructor when setting\n up the initial roles for the system.\n Using this function in any other way is effectively circumventing the admin\n system imposed by {AccessControl}.\n ===="
             },
             "id": 1128,
             "implemented": true,
@@ -3359,7 +3360,7 @@
               "id": 1129,
               "nodeType": "StructuredDocumentation",
               "src": "7064:114:7",
-              "text": "@dev Sets `adminRole` as ``role``'s admin role.\n     * Emits a {RoleAdminChanged} event."
+              "text": " @dev Sets `adminRole` as ``role``'s admin role.\n Emits a {RoleAdminChanged} event."
             },
             "id": 1153,
             "implemented": true,
@@ -3526,7 +3527,7 @@
                         "referencedDeclaration": 935,
                         "src": "7458:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -3537,10 +3538,10 @@
                       "lValueRequested": false,
                       "memberName": "add",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3601,
+                      "referencedDeclaration": 3604,
                       "src": "7458:24:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3578_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3581_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,address) returns (bool)"
                       }
                     },
@@ -3847,7 +3848,7 @@
                         "referencedDeclaration": 935,
                         "src": "7649:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -3858,10 +3859,10 @@
                       "lValueRequested": false,
                       "memberName": "remove",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3624,
+                      "referencedDeclaration": 3627,
                       "src": "7649:27:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3578_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3581_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,address) returns (bool)"
                       }
                     },
@@ -4155,6 +4156,7 @@
       ]
     },
     "id": 1207,
+    "license": "MIT",
     "nodeType": "SourceUnit",
     "nodes": [
       {
@@ -4174,7 +4176,7 @@
         "id": 901,
         "nodeType": "ImportDirective",
         "scope": 1207,
-        "sourceUnit": 3783,
+        "sourceUnit": 3786,
         "src": "58:47:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4185,7 +4187,7 @@
         "id": 902,
         "nodeType": "ImportDirective",
         "scope": 1207,
-        "sourceUnit": 3388,
+        "sourceUnit": 3391,
         "src": "106:41:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4207,7 +4209,7 @@
         "id": 904,
         "nodeType": "ImportDirective",
         "scope": 1207,
-        "sourceUnit": 1791,
+        "sourceUnit": 1794,
         "src": "188:36:7",
         "symbolAliases": [],
         "unitAlias": ""
@@ -4222,10 +4224,10 @@
               "id": 906,
               "name": "Initializable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 1790,
+              "referencedDeclaration": 1793,
               "src": "1549:13:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_Initializable_$1790",
+                "typeIdentifier": "t_contract$_Initializable_$1793",
                 "typeString": "contract Initializable"
               }
             },
@@ -4254,21 +4256,21 @@
         ],
         "contractDependencies": [
           898,
-          1790
+          1793
         ],
         "contractKind": "contract",
         "documentation": {
           "id": 905,
           "nodeType": "StructuredDocumentation",
           "src": "226:1276:7",
-          "text": "@dev Contract module that allows children to implement role-based access\ncontrol mechanisms.\n * Roles are referred to by their `bytes32` identifier. These should be exposed\nin the external API and be unique. The best way to achieve this is by\nusing `public constant` hash digests:\n * ```\nbytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\");\n```\n * Roles can be used to represent a set of permissions. To restrict access to a\nfunction call, use {hasRole}:\n * ```\nfunction foo() public {\n    require(hasRole(MY_ROLE, msg.sender));\n    ...\n}\n```\n * Roles can be granted and revoked dynamically via the {grantRole} and\n{revokeRole} functions. Each role has an associated admin role, and only\naccounts that have a role's admin role can call {grantRole} and {revokeRole}.\n * By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means\nthat only accounts with this role will be able to grant or revoke other\nroles. More complex role relationships can be created by using\n{_setRoleAdmin}.\n * WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to\ngrant and revoke this role. Extra precautions should be taken to secure\naccounts that have been granted it."
+          "text": " @dev Contract module that allows children to implement role-based access\n control mechanisms.\n Roles are referred to by their `bytes32` identifier. These should be exposed\n in the external API and be unique. The best way to achieve this is by\n using `public constant` hash digests:\n ```\n bytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\");\n ```\n Roles can be used to represent a set of permissions. To restrict access to a\n function call, use {hasRole}:\n ```\n function foo() public {\n     require(hasRole(MY_ROLE, msg.sender));\n     ...\n }\n ```\n Roles can be granted and revoked dynamically via the {grantRole} and\n {revokeRole} functions. Each role has an associated admin role, and only\n accounts that have a role's admin role can call {grantRole} and {revokeRole}.\n By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means\n that only accounts with this role will be able to grant or revoke other\n roles. More complex role relationships can be created by using\n {_setRoleAdmin}.\n WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to\n grant and revoke this role. Extra precautions should be taken to secure\n accounts that have been granted it."
         },
         "fullyImplemented": true,
         "id": 1206,
         "linearizedBaseContracts": [
           1206,
           898,
-          1790
+          1793
         ],
         "name": "AccessControlUpgradeable",
         "nodeType": "ContractDefinition",
@@ -4367,7 +4369,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "1630:11:7",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4420,7 +4422,7 @@
                   "name": "initializer",
                   "nodeType": "Identifier",
                   "overloadedDeclarations": [],
-                  "referencedDeclaration": 1767,
+                  "referencedDeclaration": 1770,
                   "src": "1784:11:7",
                   "typeDescriptions": {
                     "typeIdentifier": "t_modifier$__$",
@@ -4459,10 +4461,10 @@
               "id": 928,
               "name": "EnumerableSetUpgradeable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3782,
+              "referencedDeclaration": 3785,
               "src": "1814:24:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_EnumerableSetUpgradeable_$3782",
+                "typeIdentifier": "t_contract$_EnumerableSetUpgradeable_$3785",
                 "typeString": "library EnumerableSetUpgradeable"
               }
             },
@@ -4473,10 +4475,10 @@
               "id": 929,
               "name": "EnumerableSetUpgradeable.AddressSet",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3578,
+              "referencedDeclaration": 3581,
               "src": "1843:35:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_AddressSet_$3578_storage_ptr",
+                "typeIdentifier": "t_struct$_AddressSet_$3581_storage_ptr",
                 "typeString": "struct EnumerableSetUpgradeable.AddressSet"
               }
             }
@@ -4488,10 +4490,10 @@
               "id": 931,
               "name": "AddressUpgradeable",
               "nodeType": "UserDefinedTypeName",
-              "referencedDeclaration": 3387,
+              "referencedDeclaration": 3390,
               "src": "1890:18:7",
               "typeDescriptions": {
-                "typeIdentifier": "t_contract$_AddressUpgradeable_$3387",
+                "typeIdentifier": "t_contract$_AddressUpgradeable_$3390",
                 "typeString": "library AddressUpgradeable"
               }
             },
@@ -4525,7 +4527,7 @@
                 "stateVariable": false,
                 "storageLocation": "default",
                 "typeDescriptions": {
-                  "typeIdentifier": "t_struct$_AddressSet_$3578_storage_ptr",
+                  "typeIdentifier": "t_struct$_AddressSet_$3581_storage_ptr",
                   "typeString": "struct EnumerableSetUpgradeable.AddressSet"
                 },
                 "typeName": {
@@ -4533,10 +4535,10 @@
                   "id": 934,
                   "name": "EnumerableSetUpgradeable.AddressSet",
                   "nodeType": "UserDefinedTypeName",
-                  "referencedDeclaration": 3578,
+                  "referencedDeclaration": 3581,
                   "src": "1953:35:7",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_AddressSet_$3578_storage_ptr",
+                    "typeIdentifier": "t_struct$_AddressSet_$3581_storage_ptr",
                     "typeString": "struct EnumerableSetUpgradeable.AddressSet"
                   }
                 },
@@ -4679,7 +4681,7 @@
               "id": 946,
               "nodeType": "StructuredDocumentation",
               "src": "2143:292:7",
-              "text": "@dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`\n     * `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite\n{RoleAdminChanged} not being emitted signaling this.\n     * _Available since v3.1._"
+              "text": " @dev Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole`\n `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite\n {RoleAdminChanged} not being emitted signaling this.\n _Available since v3.1._"
             },
             "id": 954,
             "name": "RoleAdminChanged",
@@ -4786,7 +4788,7 @@
               "id": 955,
               "nodeType": "StructuredDocumentation",
               "src": "2556:198:7",
-              "text": "@dev Emitted when `account` is granted `role`.\n     * `sender` is the account that originated the contract call, an admin role\nbearer except when using {_setupRole}."
+              "text": " @dev Emitted when `account` is granted `role`.\n `sender` is the account that originated the contract call, an admin role\n bearer except when using {_setupRole}."
             },
             "id": 963,
             "name": "RoleGranted",
@@ -4895,7 +4897,7 @@
               "id": 964,
               "nodeType": "StructuredDocumentation",
               "src": "2854:275:7",
-              "text": "@dev Emitted when `account` is revoked `role`.\n     * `sender` is the account that originated the contract call:\n  - if using `revokeRole`, it is the admin role bearer\n  - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+              "text": " @dev Emitted when `account` is revoked `role`.\n `sender` is the account that originated the contract call:\n   - if using `revokeRole`, it is the admin role bearer\n   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
             },
             "id": 972,
             "name": "RoleRevoked",
@@ -5081,7 +5083,7 @@
                         "referencedDeclaration": 935,
                         "src": "3402:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -5092,10 +5094,10 @@
                       "lValueRequested": false,
                       "memberName": "contains",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3647,
+                      "referencedDeclaration": 3650,
                       "src": "3402:29:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3578_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3581_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,address) view returns (bool)"
                       }
                     },
@@ -5125,7 +5127,7 @@
               "id": 973,
               "nodeType": "StructuredDocumentation",
               "src": "3229:76:7",
-              "text": "@dev Returns `true` if `account` has been granted `role`."
+              "text": " @dev Returns `true` if `account` has been granted `role`."
             },
             "functionSelector": "91d14854",
             "id": 991,
@@ -5304,7 +5306,7 @@
                         "referencedDeclaration": 935,
                         "src": "3704:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -5315,10 +5317,10 @@
                       "lValueRequested": false,
                       "memberName": "length",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3661,
+                      "referencedDeclaration": 3664,
                       "src": "3704:27:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3578_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3581_storage_ptr_$returns$_t_uint256_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer) view returns (uint256)"
                       }
                     },
@@ -5348,7 +5350,7 @@
               "id": 992,
               "nodeType": "StructuredDocumentation",
               "src": "3453:157:7",
-              "text": "@dev Returns the number of accounts that have `role`. Can be used\ntogether with {getRoleMember} to enumerate all bearers of a role."
+              "text": " @dev Returns the number of accounts that have `role`. Can be used\n together with {getRoleMember} to enumerate all bearers of a role."
             },
             "functionSelector": "ca15c873",
             "id": 1007,
@@ -5517,7 +5519,7 @@
                         "referencedDeclaration": 935,
                         "src": "4424:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -5528,10 +5530,10 @@
                       "lValueRequested": false,
                       "memberName": "at",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3684,
+                      "referencedDeclaration": 3687,
                       "src": "4424:23:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3578_storage_ptr_$_t_uint256_$returns$_t_address_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_AddressSet_$3581_storage_ptr_$_t_uint256_$returns$_t_address_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,uint256) view returns (address)"
                       }
                     },
@@ -5561,7 +5563,7 @@
               "id": 1008,
               "nodeType": "StructuredDocumentation",
               "src": "3746:574:7",
-              "text": "@dev Returns one of the accounts that have `role`. `index` must be a\nvalue between 0 and {getRoleMemberCount}, non-inclusive.\n     * Role bearers are not sorted in any particular way, and their ordering may\nchange at any point.\n     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure\nyou perform all queries on the same block. See the following\nhttps://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post]\nfor more information."
+              "text": " @dev Returns one of the accounts that have `role`. `index` must be a\n value between 0 and {getRoleMemberCount}, non-inclusive.\n Role bearers are not sorted in any particular way, and their ordering may\n change at any point.\n WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure\n you perform all queries on the same block. See the following\n https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post]\n for more information."
             },
             "functionSelector": "9010d07c",
             "id": 1026,
@@ -5750,7 +5752,7 @@
               "id": 1027,
               "nodeType": "StructuredDocumentation",
               "src": "4467:170:7",
-              "text": "@dev Returns the admin role that controls `role`. See {grantRole} and\n{revokeRole}.\n     * To change a role's admin, use {_setRoleAdmin}."
+              "text": " @dev Returns the admin role that controls `role`. See {grantRole} and\n {revokeRole}.\n To change a role's admin, use {_setRoleAdmin}."
             },
             "functionSelector": "248a9ca3",
             "id": 1040,
@@ -6115,7 +6117,7 @@
               "id": 1041,
               "nodeType": "StructuredDocumentation",
               "src": "4760:239:7",
-              "text": "@dev Grants `role` to `account`.\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\nevent.\n     * Requirements:\n     * - the caller must have ``role``'s admin role."
+              "text": " @dev Grants `role` to `account`.\n If `account` had not been already granted `role`, emits a {RoleGranted}\n event.\n Requirements:\n - the caller must have ``role``'s admin role."
             },
             "functionSelector": "2f2ff15d",
             "id": 1066,
@@ -6480,7 +6482,7 @@
               "id": 1067,
               "nodeType": "StructuredDocumentation",
               "src": "5233:223:7",
-              "text": "@dev Revokes `role` from `account`.\n     * If `account` had been granted `role`, emits a {RoleRevoked} event.\n     * Requirements:\n     * - the caller must have ``role``'s admin role."
+              "text": " @dev Revokes `role` from `account`.\n If `account` had been granted `role`, emits a {RoleRevoked} event.\n Requirements:\n - the caller must have ``role``'s admin role."
             },
             "functionSelector": "d547741f",
             "id": 1092,
@@ -6780,7 +6782,7 @@
               "id": 1093,
               "nodeType": "StructuredDocumentation",
               "src": "5693:480:7",
-              "text": "@dev Revokes `role` from the calling account.\n     * Roles are often managed via {grantRole} and {revokeRole}: this function's\npurpose is to provide a mechanism for accounts to lose their privileges\nif they are compromised (such as when a trusted device is misplaced).\n     * If the calling account had been granted `role`, emits a {RoleRevoked}\nevent.\n     * Requirements:\n     * - the caller must be `account`."
+              "text": " @dev Revokes `role` from the calling account.\n Roles are often managed via {grantRole} and {revokeRole}: this function's\n purpose is to provide a mechanism for accounts to lose their privileges\n if they are compromised (such as when a trusted device is misplaced).\n If the calling account had been granted `role`, emits a {RoleRevoked}\n event.\n Requirements:\n - the caller must be `account`."
             },
             "functionSelector": "36568abe",
             "id": 1114,
@@ -6950,7 +6952,7 @@
               "id": 1115,
               "nodeType": "StructuredDocumentation",
               "src": "6389:554:7",
-              "text": "@dev Grants `role` to `account`.\n     * If `account` had not been already granted `role`, emits a {RoleGranted}\nevent. Note that unlike {grantRole}, this function doesn't perform any\nchecks on the calling account.\n     * [WARNING]\n====\nThis function should only be called from the constructor when setting\nup the initial roles for the system.\n     * Using this function in any other way is effectively circumventing the admin\nsystem imposed by {AccessControl}.\n===="
+              "text": " @dev Grants `role` to `account`.\n If `account` had not been already granted `role`, emits a {RoleGranted}\n event. Note that unlike {grantRole}, this function doesn't perform any\n checks on the calling account.\n [WARNING]\n ====\n This function should only be called from the constructor when setting\n up the initial roles for the system.\n Using this function in any other way is effectively circumventing the admin\n system imposed by {AccessControl}.\n ===="
             },
             "id": 1128,
             "implemented": true,
@@ -7268,7 +7270,7 @@
               "id": 1129,
               "nodeType": "StructuredDocumentation",
               "src": "7064:114:7",
-              "text": "@dev Sets `adminRole` as ``role``'s admin role.\n     * Emits a {RoleAdminChanged} event."
+              "text": " @dev Sets `adminRole` as ``role``'s admin role.\n Emits a {RoleAdminChanged} event."
             },
             "id": 1153,
             "implemented": true,
@@ -7435,7 +7437,7 @@
                         "referencedDeclaration": 935,
                         "src": "7458:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -7446,10 +7448,10 @@
                       "lValueRequested": false,
                       "memberName": "add",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3601,
+                      "referencedDeclaration": 3604,
                       "src": "7458:24:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3578_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3581_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,address) returns (bool)"
                       }
                     },
@@ -7756,7 +7758,7 @@
                         "referencedDeclaration": 935,
                         "src": "7649:20:7",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_AddressSet_$3578_storage",
+                          "typeIdentifier": "t_struct$_AddressSet_$3581_storage",
                           "typeString": "struct EnumerableSetUpgradeable.AddressSet storage ref"
                         }
                       },
@@ -7767,10 +7769,10 @@
                       "lValueRequested": false,
                       "memberName": "remove",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 3624,
+                      "referencedDeclaration": 3627,
                       "src": "7649:27:7",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3578_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3578_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_AddressSet_$3581_storage_ptr_$_t_address_$returns$_t_bool_$bound_to$_t_struct$_AddressSet_$3581_storage_ptr_$",
                         "typeString": "function (struct EnumerableSetUpgradeable.AddressSet storage pointer,address) returns (bool)"
                       }
                     },
@@ -8058,38 +8060,53 @@
   },
   "compiler": {
     "name": "solc",
-    "version": "0.6.6+commit.6c089d02.Emscripten.clang"
+    "version": "0.6.12+commit.27d51765.Emscripten.clang"
   },
   "networks": {},
   "schemaVersion": "3.3.2",
-  "updatedAt": "2020-11-26T01:47:22.424Z",
+  "updatedAt": "2020-11-26T14:04:58.337Z",
   "devdoc": {
-    "details": "Contract module that allows children to implement role-based access control mechanisms. * Roles are referred to by their `bytes32` identifier. These should be exposed in the external API and be unique. The best way to achieve this is by using `public constant` hash digests: * ``` bytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\"); ``` * Roles can be used to represent a set of permissions. To restrict access to a function call, use {hasRole}: * ``` function foo() public {    require(hasRole(MY_ROLE, msg.sender));    ... } ``` * Roles can be granted and revoked dynamically via the {grantRole} and {revokeRole} functions. Each role has an associated admin role, and only accounts that have a role's admin role can call {grantRole} and {revokeRole}. * By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means that only accounts with this role will be able to grant or revoke other roles. More complex role relationships can be created by using {_setRoleAdmin}. * WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role. Extra precautions should be taken to secure accounts that have been granted it.",
+    "details": "Contract module that allows children to implement role-based access control mechanisms. Roles are referred to by their `bytes32` identifier. These should be exposed in the external API and be unique. The best way to achieve this is by using `public constant` hash digests: ``` bytes32 public constant MY_ROLE = keccak256(\"MY_ROLE\"); ``` Roles can be used to represent a set of permissions. To restrict access to a function call, use {hasRole}: ``` function foo() public {     require(hasRole(MY_ROLE, msg.sender));     ... } ``` Roles can be granted and revoked dynamically via the {grantRole} and {revokeRole} functions. Each role has an associated admin role, and only accounts that have a role's admin role can call {grantRole} and {revokeRole}. By default, the admin role for all roles is `DEFAULT_ADMIN_ROLE`, which means that only accounts with this role will be able to grant or revoke other roles. More complex role relationships can be created by using {_setRoleAdmin}. WARNING: The `DEFAULT_ADMIN_ROLE` is also its own admin: it has permission to grant and revoke this role. Extra precautions should be taken to secure accounts that have been granted it.",
+    "events": {
+      "RoleAdminChanged(bytes32,bytes32,bytes32)": {
+        "details": "Emitted when `newAdminRole` is set as ``role``'s admin role, replacing `previousAdminRole` `DEFAULT_ADMIN_ROLE` is the starting admin for all roles, despite {RoleAdminChanged} not being emitted signaling this. _Available since v3.1._"
+      },
+      "RoleGranted(bytes32,address,address)": {
+        "details": "Emitted when `account` is granted `role`. `sender` is the account that originated the contract call, an admin role bearer except when using {_setupRole}."
+      },
+      "RoleRevoked(bytes32,address,address)": {
+        "details": "Emitted when `account` is revoked `role`. `sender` is the account that originated the contract call:   - if using `revokeRole`, it is the admin role bearer   - if using `renounceRole`, it is the role bearer (i.e. `account`)"
+      }
+    },
+    "kind": "dev",
     "methods": {
       "getRoleAdmin(bytes32)": {
-        "details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}.     * To change a role's admin, use {_setRoleAdmin}."
+        "details": "Returns the admin role that controls `role`. See {grantRole} and {revokeRole}. To change a role's admin, use {_setRoleAdmin}."
       },
       "getRoleMember(bytes32,uint256)": {
-        "details": "Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive.     * Role bearers are not sorted in any particular way, and their ordering may change at any point.     * WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information."
+        "details": "Returns one of the accounts that have `role`. `index` must be a value between 0 and {getRoleMemberCount}, non-inclusive. Role bearers are not sorted in any particular way, and their ordering may change at any point. WARNING: When using {getRoleMember} and {getRoleMemberCount}, make sure you perform all queries on the same block. See the following https://forum.openzeppelin.com/t/iterating-over-elements-on-enumerableset-in-openzeppelin-contracts/2296[forum post] for more information."
       },
       "getRoleMemberCount(bytes32)": {
         "details": "Returns the number of accounts that have `role`. Can be used together with {getRoleMember} to enumerate all bearers of a role."
       },
       "grantRole(bytes32,address)": {
-        "details": "Grants `role` to `account`.     * If `account` had not been already granted `role`, emits a {RoleGranted} event.     * Requirements:     * - the caller must have ``role``'s admin role."
+        "details": "Grants `role` to `account`. If `account` had not been already granted `role`, emits a {RoleGranted} event. Requirements: - the caller must have ``role``'s admin role."
       },
       "hasRole(bytes32,address)": {
         "details": "Returns `true` if `account` has been granted `role`."
       },
       "renounceRole(bytes32,address)": {
-        "details": "Revokes `role` from the calling account.     * Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced).     * If the calling account had been granted `role`, emits a {RoleRevoked} event.     * Requirements:     * - the caller must be `account`."
+        "details": "Revokes `role` from the calling account. Roles are often managed via {grantRole} and {revokeRole}: this function's purpose is to provide a mechanism for accounts to lose their privileges if they are compromised (such as when a trusted device is misplaced). If the calling account had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must be `account`."
       },
       "revokeRole(bytes32,address)": {
-        "details": "Revokes `role` from `account`.     * If `account` had been granted `role`, emits a {RoleRevoked} event.     * Requirements:     * - the caller must have ``role``'s admin role."
+        "details": "Revokes `role` from `account`. If `account` had been granted `role`, emits a {RoleRevoked} event. Requirements: - the caller must have ``role``'s admin role."
       }
-    }
+    },
+    "version": 1
   },
   "userdoc": {
-    "methods": {}
+    "kind": "user",
+    "methods": {},
+    "version": 1
   }
 }
