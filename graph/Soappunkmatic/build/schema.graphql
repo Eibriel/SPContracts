@@ -1,0 +1,18 @@
+type Collectible @entity {
+  id: ID!
+  owners: [AccountCollectible]! @derivedFrom(field: "collectible")
+}
+
+
+type Account @entity {
+  id: ID!
+  collectibles: [AccountCollectible!] @derivedFrom(field: "account")
+}
+
+
+type AccountCollectible @entity {
+  id: ID!   # Set to `${account.id}-${collectible.id}`
+  account: Account!
+  collectible: Collectible!
+  amount: BigInt!
+}
