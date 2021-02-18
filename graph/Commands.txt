@@ -1,3 +1,5 @@
 Init Mumbai
 
 graph init --from-contract 0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5 --network mumbai --abi "../matic/build/contracts/SoapPunkCollectiblesChild.json" SoapPunk/collectiblesv1-mumbai
+
+yarn deploy

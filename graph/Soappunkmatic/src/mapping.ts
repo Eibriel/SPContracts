@@ -1,4 +1,4 @@
-import { BigInt } from "@graphprotocol/graph-ts"
+import { BigInt, Address } from "@graphprotocol/graph-ts"
 import {
   SoapPunkCollectiblesV1,
   ApprovalForAll,
@@ -101,40 +101,10 @@ export function handleTransferBatch(event: TransferBatch): void {
     // To
     let account_to = new Account(event.params.to.toHex())
     account_to.save()
-
     for (let n=0; n<event.params.ids.length; n++) {
         let ids = event.params.ids
         let values = event.params.values
-
-        // Collectible
-        let collectible = new Collectible(ids[n].toHex())
-        collectible.save()
-        //
-        let accountCollectibleFrom_id = event.params.from.toHexString() + "-" + ids[n].toHexString()
-        let accountCollectibleFrom = AccountCollectible.load(accountCollectibleFrom_id)
-        if (accountCollectibleFrom == null) {
-            //This sould only happen for 0x0
-            accountCollectibleFrom = new AccountCollectible(accountCollectibleFrom_id)
-            accountCollectibleFrom.amount = BigInt.fromI32(0)
-            accountCollectibleFrom.account = event.params.from.toHex()
-            accountCollectibleFrom.collectible = ids[n].toHex()
-        }
-        if (accountCollectibleFrom.amount < values[n]) {
-            accountCollectibleFrom.amount = accountCollectibleFrom.amount - BigInt.fromI32(values[n].toI32())
-        }
-        // Saves here in case from == to
-        accountCollectibleFrom.save()
-        //
-        let accountCollectibleTo_id = event.params.to.toHexString() + "-" + ids[n].toHexString()
-        let accountCollectibleTo = AccountCollectible.load(accountCollectibleTo_id)
-        if (accountCollectibleTo == null) {
-            accountCollectibleTo = new AccountCollectible(accountCollectibleTo_id)
-            accountCollectibleTo.amount = BigInt.fromI32(0)
-            accountCollectibleTo.account = event.params.from.toHex()
-            accountCollectibleTo.collectible = ids[n].toHex()
-        }
-        accountCollectibleTo.amount = accountCollectibleTo.amount + BigInt.fromI32(values[n].toI32())
-        accountCollectibleTo.save()
+        handleTransfer(event.params.from, event.params.to, ids[n], values[n])
     }
 }
 
@@ -151,33 +121,37 @@ export function handleTransferSingle(event: TransferSingle): void {
     // To
     let account_to = new Account(event.params.to.toHex())
     account_to.save()
+    handleTransfer(event.params.from, event.params.to, event.params.id, event.params.value)
+}
+
+function handleTransfer(from: Address, to: Address, id: BigInt, value: BigInt): void {
     // Collectible
-    let collectible = new Collectible(event.params.id.toHex())
+    let collectible = new Collectible(id.toHex())
     collectible.save()
     //
-    let accountCollectibleFrom_id = event.params.from.toHexString() + "-" + event.params.id.toHexString()
+    let accountCollectibleFrom_id = from.toHexString() + "-" + id.toHexString()
     let accountCollectibleFrom = AccountCollectible.load(accountCollectibleFrom_id)
     if (accountCollectibleFrom == null) {
         //This sould only happen for 0x0
         accountCollectibleFrom = new AccountCollectible(accountCollectibleFrom_id)
         accountCollectibleFrom.amount = BigInt.fromI32(0)
-        accountCollectibleFrom.account = event.params.from.toHex()
-        accountCollectibleFrom.collectible = event.params.id.toHex()
+        accountCollectibleFrom.account = from.toHex()
+        accountCollectibleFrom.collectible = id.toHex()
     }
-    if (accountCollectibleFrom.amount < event.params.value) {
-        accountCollectibleFrom.amount = accountCollectibleFrom.amount - BigInt.fromI32(event.params.value.toI32())
+    if (accountCollectibleFrom.amount >= value) {
+        accountCollectibleFrom.amount = accountCollectibleFrom.amount - BigInt.fromI32(value.toI32())
     }
     accountCollectibleFrom.save()
     //
-    let accountCollectibleTo_id = event.params.to.toHexString() + "-" + event.params.id.toHexString()
+    let accountCollectibleTo_id = to.toHexString() + "-" + id.toHexString()
     let accountCollectibleTo = AccountCollectible.load(accountCollectibleTo_id)
     if (accountCollectibleTo == null) {
         accountCollectibleTo = new AccountCollectible(accountCollectibleTo_id)
         accountCollectibleTo.amount = BigInt.fromI32(0)
-        accountCollectibleTo.account = event.params.to.toHex()
-        accountCollectibleTo.collectible = event.params.id.toHex()
+        accountCollectibleTo.account = to.toHex()
+        accountCollectibleTo.collectible = id.toHex()
     }
-    accountCollectibleTo.amount = accountCollectibleTo.amount + BigInt.fromI32(event.params.value.toI32())
+    accountCollectibleTo.amount = accountCollectibleTo.amount + BigInt.fromI32(value.toI32())
     accountCollectibleTo.save()
 }
 
