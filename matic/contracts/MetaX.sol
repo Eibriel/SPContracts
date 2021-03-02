@@ -15,134 +15,126 @@ contract MetaX is
 {
     using SafeMathUpgradeable for uint256;
 
-    uint256 private _metasCount;
-    uint256 private _lastSaleTime;
+    uint256 private _tokenCount;
+    uint256 private _startTime;
+    uint256 private _endTime;
     //
-    uint256 private _price;
-    uint256 private _minPrice;
     uint256 private _multPrice;
-    uint256 private _increaseBySecond;
     uint256 private _refundByCatch;
     //
     uint8 private _maxVotes;
     //
-    uint16 private _totalMetaAmount;
-    uint8 private _totalTokenAmount;
+    uint16 private _totalArtworkAmount;
+    uint32 private _totalTokenAmount;
 
-    // Mapping from token to vote
-    mapping (uint256 => address) private _tokenVote;
+    // Mapping from artwork id to voting address
+    mapping (uint256 => address) private _artworkVote;
 
-    mapping (uint256 => bool) private _tokenVoteExists;
+    // Mapping from artwork id to boolean
+    mapping (uint256 => bool) private _artworkVoteExists;
 
     // Mapping from address to vote count
     mapping (address => uint8) private _accountVoteCount;
 
     // Mapping from address to amount of refunded money
-    mapping (address => uint256) private _accountCatchRefund;
+    mapping (address => uint256) private _accountRefundAmount;
 
 
     function initialize(string memory name, string memory symbol, string memory baseURI, string memory domainSeparator) initializer public {
         __ERC721PresetMinterPauserAutoId_init(name, symbol, baseURI);
 
         _initializeEIP712(domainSeparator);
-        _metasCount = 0;
+        _tokenCount = 0;
         //
-        _lastSaleTime = block.timestamp;
-        _price =    1000000000000000000000;
-        _minPrice =  500000000000000000000;
-        _multPrice =  10000000000000000000;
-        _increaseBySecond = 10000;
-        _refundByCatch = 200000000000000000000;
+        _startTime = block.timestamp;
+        _endTime = _startTime.add(2592000);
+        _multPrice =      10000000000000000000; // 10 Matic
+        _refundByCatch =   1000000000000000000; // 1 Matic
         //
         _maxVotes = 100;
         //
-        _totalMetaAmount = 10000;
-        _totalTokenAmount = 100;
-     }
+        _totalArtworkAmount = 10000;
+        _totalTokenAmount = 1000;
+    }
 
-     function setBaseURI(string memory baseURI, uint256 id) external {
-         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
+    function setBaseURI(string memory baseURI, uint256 id) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
-         _setBaseURI(baseURI);
-     }
+        _setBaseURI(baseURI);
+    }
 
-     function setPrices(uint256 price, uint256 minPrice, uint256 multPrice, uint256 increaseBySecond) external {
-         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
+    function setPrice(uint256 multPrice) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
-         _price = price;
-         _minPrice =  minPrice;
-         _multPrice = multPrice;
-         _increaseBySecond = increaseBySecond;
+        _multPrice = multPrice;
 
-         emit PriceSet(price, minPrice, multPrice, increaseBySecond);
-     }
+        emit PriceSet(multPrice);
+    }
 
-     function getMetaverse(uint256 id) public view returns(string memory) {
-         // Check if id is within expected limits
-         return string(abi.encodePacked(baseURI(), id.toString(), ".json"));
-     }
+    function getMetaverse(uint256 id) public view returns(string memory) {
+        // Check if id is within expected limits
+        return string(abi.encodePacked(baseURI(), id.toString(), ".json"));
+    }
 
-     function mint(address to) public override {
-         require(false, "MetaX: mint is not allowed");
-         // Nobody can mint
-     }
+    function mint(address to) public override {
+        require(false, "MetaX: mint is not allowed");
+        // Nobody can call mint()
+    }
 
-     function getPrice() public view returns(uint256 price) {
-         uint256 bside = _price.add(_metasCount.mul(_multPrice)); // B side of the function
-         if (block.timestamp <= _lastSaleTime) {
-             return bside;
-         }
-         uint256 timeDiff = block.timestamp.sub(_lastSaleTime); // Time diff
-
-         if (timeDiff > bside) {
-             return _minPrice;
-         }
-         uint256 timePrice = bside.sub(timeDiff.mul(_increaseBySecond));
-
-         //timePrice = _price + (_metasCount * _multPrice)) - ()(block.timestamp - _lastSaleTime) * _increaseBySecond)
-
-         if (timePrice < _minPrice) {
-             timePrice = _minPrice;
-         }
-
-         return timePrice;
-     }
-
-
-     function _getPrice() private returns(uint256 price) {
-         uint256 timePrice = getPrice();
-
-         if (_accountCatchRefund[_msgSender()] > 0) {
-             if (_accountCatchRefund[_msgSender()] > timePrice) {
-                 timePrice = 0;
-                 _accountCatchRefund[_msgSender()] -= timePrice;
-             } else {
-                 timePrice = timePrice.sub(_accountCatchRefund[_msgSender()]);
-                 _accountCatchRefund[_msgSender()] = 0;
-             }
-         }
-
-         return timePrice;
-     }
-
-
-     function vote(uint256 id) external {
-        /*require(!_tokenVotes[id][_msgSender()], "MetaX: Vote already exists");
-        _tokenVotes[id][_msgSender()] = true;
-        _accountVotes[_msgSender()][id] = true;*/
-        require(!_tokenVoteExists[id], "MetaX: vote already exists");
-        require(_accountVoteCount[_msgSender()] < _maxVotes, "MetaX: max votes reached");
-        _tokenVote[id] = _msgSender();
-        _accountVoteCount[_msgSender()] += 1;
-        _tokenVoteExists[id] = true;
-     }
+    function getPrice() public view returns(uint256 price) {
+        if (_tokenCount < 400) {
+            return _multPrice.mul(10);
+        } else if (_tokenCount < 800) {
+            return _multPrice.mul(25);
+        } else if (_tokenCount < 950) {
+            return _multPrice.mul(45);
+        } else if (_tokenCount < 990) {
+            return _multPrice.mul(85);
+        } else if (_tokenCount < 1000) {
+            return _multPrice.mul(150);
+        }
+        // Just in case
+        return _multPrice.mul(5000);
+    }
 
 
     /**
-    * @dev Creates Marble NFT Candidate. This candidate will go through our processing. If it's suitable, then Marble NFT is created.
-    * @param id URI of resource you want to transform to Marble NFT
+    * @dev Get price, substracting (and updating) the refund.
     */
-    function mintMetaverse(uint256 id)
+    function _getPrice() private returns(uint256 price) {
+        uint256 _price = getPrice();
+
+        if (_accountRefundAmount[_msgSender()] > 0) {
+            if (_accountRefundAmount[_msgSender()] > _price) {
+                _price = 0;
+                _accountRefundAmount[_msgSender()] -= _price;
+            } else {
+                _price = _price.sub(_accountRefundAmount[_msgSender()]);
+                _accountRefundAmount[_msgSender()] = 0;
+            }
+        }
+
+        return _price;
+    }
+
+    /**
+    * @dev Casts a vote on an artwork.
+    * @param id ID of the artwork
+    */
+    function vote(uint256 id) external {
+        require(!_artworkVoteExists[id], "MetaX: vote already exists");
+        require(_accountVoteCount[_msgSender()] < _maxVotes, "MetaX: max votes reached");
+        _artworkVote[id] = _msgSender();
+        _artworkVoteExists[id] = true;
+        _accountVoteCount[_msgSender()] += 1;
+    }
+
+
+    /**
+    * @dev Mints a new artwork from an id.
+    * @param id ID of the artwork
+    */
+    function mintArtwork(uint256 id)
         external
         payable
         price(_getPrice())
@@ -150,15 +142,13 @@ contract MetaX is
     {
         require(!paused(), "MetaX: token mint while paused");
         require(!_exists(id), "MetaX: metaverse id is already minted");
-        require(_metasCount < _totalTokenAmount, "MetaX: contract mint limit reached");
-        require(id >= 0 && id < _totalMetaAmount, "MetaX: metaverse id does not exists");
+        require(_tokenCount < _totalTokenAmount, "MetaX: contract mint limit reached");
+        require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
 
-        _metasCount = _metasCount.add(1);
+        _tokenCount = _tokenCount.add(1);
 
-        _lastSaleTime = block.timestamp;
-
-        if (_tokenVoteExists[id]) {
-            _accountCatchRefund[_tokenVote[id]] += _refundByCatch;
+        if (_artworkVoteExists[id]) {
+            _accountRefundAmount[_artworkVote[id]] += _refundByCatch;
         }
 
         _mint(_msgSender(), id);
@@ -167,27 +157,19 @@ contract MetaX is
     }
 
 
-     /**
-    * @dev Emits when owner take ETH out of contract
-    * @param balance - amount of ETh sent out from contract
-    */
-    event Withdraw(uint256 balance);
-
-    event PriceSet(uint256 price, uint256 minPrice, uint256 multPrice, uint256 increaseBySecond);
-
-
     /*
     * @dev Remove all Ether from the contract, and transfer it to account of owner
     */
     function withdrawBalance() external {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to withdraw");
         uint256 balance = address(this).balance;
-        //msg.sender.transfer(balance);
         _msgSender().transfer(balance);
 
-        // Tell everyone !!!!!!!!!!!!!!!!!!!!!!
         emit Withdraw(balance);
     }
+
+
+    // Modifiers
 
 
     /**
@@ -199,16 +181,24 @@ contract MetaX is
         require(msg.value >= _amount, "MetaX: Not enough Ether provided.");
         _;
         if (msg.value > _amount) {
-            //msg.sender.transfer(msg.value.sub(_amount));
             _msgSender().transfer(msg.value.sub(_amount));
         }
     }
 
 
-    /*modifier updateUp() {
-        if (getNextUp() == 0) {
-            _lastUpTime = block.timestamp;
-        }
-    }*/
+    // Events
+
+
+    /**
+    * @dev Emits when owner take ETH out of contract
+    * @param balance - amount of ETh sent out from contract
+    */
+    event Withdraw(uint256 balance);
+
+    /**
+    * @dev Emits when a new price is set
+    * @param multPrice - a multiplier for the price
+    */
+    event PriceSet(uint256 multPrice);
 
 }

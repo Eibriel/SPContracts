@@ -45,40 +45,39 @@ contract("MetaX test", async accounts => {
     })
 
 
-    it("getPrice is 1000 Matic", async () => {
+    it("getPrice is 100 Matic", async () => {
         const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call()
-        //console.log(Number(price))
-        assert.equal(Number(price), toWei(1000))
+        assert.equal(Number(price), toWei(100))
     })
 
 
     it("can setPrice", async () => {
         const instance = await MetaX.deployed()
 
-        //uint256 price, uint256 minPrice, uint256 multPrice, uint256 increaseBySecond
-        truffleAssert.passes(await instance.setPrices(String(toWei(10)), String(toWei(5)), String(toWei(30)), String(toWei(1))))
+        // uint256 multPrice
+        truffleAssert.passes(await instance.setPrice(String(toWei(0.01))))
     })
 
 
-    it("getPrice is 8 Matic", async () => {
+    it("getPrice is 10 Wei Matic", async () => {
         const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call()
-        assert.equal(Number(price), toWei(8))
+        assert.equal(Number(price), 100000000000000000)
     })
 
 
-    it("after mintMetaverse balance should be 1", async () => {
+    it("after mintArtwork balance should be 1", async () => {
         const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call()
 
         const tokenId = 0
-        truffleAssert.passes(await instance.mintMetaverse(tokenId, {
+        truffleAssert.passes(await instance.mintArtwork(tokenId, {
             from: owner,
-            value: price //toWei(10)
+            value: price
         }))
         const balance = await instance.balanceOf.call(owner)
         assert.equal(Number(balance), 1)
@@ -87,26 +86,8 @@ contract("MetaX test", async accounts => {
         assert.equal(owner1, owner)
     })
 
-    it("getPrice is 11 Matic, with 1 NFT", async () => {
-        const instance = await MetaX.deployed()
 
-        const price = await instance.getPrice.call()
-        assert.equal(Number(price), toWei(40))
-    })
-
-
-    /*it("getPrice is 15 Matic, after 5 seconds", async () => {
-        const instance = await MetaX.deployed()
-
-        sleep(5)
-
-        const price = await instance.getPrice.call()
-        console.log(Number(price))
-        assert.equal(Number(price), toWei(40))
-    })*/
-
-
-    it("minting should always fail", async () => {
+    it("calling mint() should always fail", async () => {
         const instance = await MetaX.deployed()
 
         truffleAssert.fails(instance.mint(owner, {
@@ -114,32 +95,53 @@ contract("MetaX test", async accounts => {
         }))
     })
 
-    it("cant mint the same two times", async () => {
+
+    it("cant mint the same artwork two times", async () => {
         const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call()
 
-        const tokenId = 111
-        truffleAssert.passes(await instance.mintMetaverse(tokenId, {
+        const tokenId = 1
+        truffleAssert.passes(await instance.mintArtwork(tokenId, {
             from: accounts[5],
-            value: price //toWei(10)
+            value: price
         }))
 
-        const owner1 = await instance.ownerOf.call(tokenId)
-        assert.equal(owner1, accounts[5])
+        const owner_token = await instance.ownerOf.call(tokenId)
+        assert.equal(owner_token, accounts[5])
 
         const balance_a = await instance.balanceOf.call(owner)
         assert.equal(Number(balance_a), 1)
 
-        truffleAssert.fails(instance.mintMetaverse(tokenId, {
+        //
+        const price_b = await instance.getPrice.call()
+
+        truffleAssert.fails(instance.mintArtwork(tokenId, {
             from: owner,
-            value: toWei(10)
+            value: price_b
         }))
         const balance_b = await instance.balanceOf(owner)
         assert.equal(Number(balance_b), 1)
     })
 
-    it("no admin calling withdraw should fail", async () => {
+
+    it("after minting 400 artworks getPrice is 25 Wei Matic", async () => {
+        const instance = await MetaX.deployed()
+
+        const price_a = await instance.getPrice.call()
+        for (let tokenId=2; tokenId<400; tokenId++) {
+            await instance.mintArtwork(tokenId, {
+                from: accounts[5],
+                value: price_a
+            })
+        }
+
+        const price_b = await instance.getPrice.call()
+        assert.equal(Number(price_b), 250000000000000000)
+    })
+
+
+    it("call to withdraw, from account that is not admin, should fail", async () => {
         const instance = await MetaX.deployed()
         const not_owner = accounts[1]
 
@@ -151,24 +153,13 @@ contract("MetaX test", async accounts => {
     it("admin calling withdraw should increase balance", async () => {
         const instance = await MetaX.deployed()
 
-        //console.log(await getBalance(instance.address))
-
         const balance_a = await getBalance(owner)
-        //console.log(balance_a)
-        //assert.ok(Number(balance_a) < toWei(90))
-
-        /*let cc = await instance.withdrawBalance({
-            from: owner
-        })
-        console.log(cc)*/
 
         truffleAssert.passes(await instance.withdrawBalance({
             from: owner
         }))
         const balance_b = await getBalance(owner)
-        //console.log(balance_b)
-        //99772221260000000000
-        // Gas costs makes this difficult
+        // console.log(Number(balance_a), Number(balance_b))
         assert.ok(Number(balance_a) < Number(balance_b))
     })
 
