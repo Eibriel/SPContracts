@@ -15,6 +15,10 @@ Contracts for the SoupPunk project.
 
 ### Goerli
 ```
+truffle develop
+
+migrate --f 4
+
 truffle console --network goerli
 
 
@@ -34,7 +38,11 @@ await mycontract.mint("0x05C351382dB8D770207F319D96ac1184c3717edE", 0, 10, [])
 
 ### Mumbai
 ```
+truffle test
+
 truffle console --network mumbai
+
+truffle migrate --reset --compile-all --network mumbai
 
 migrate --reset --compile-all
 
