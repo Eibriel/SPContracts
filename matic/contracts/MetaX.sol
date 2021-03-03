@@ -27,17 +27,20 @@ contract MetaX is
     uint16 private _totalArtworkAmount;
     uint32 private _totalTokenAmount;
 
-    // Mapping from artwork id to voting address
-    mapping (uint256 => address) private _artworkVote;
-
-    // Mapping from artwork id to boolean
-    mapping (uint256 => bool) private _artworkVoteExists;
-
     // Mapping from address to vote count
     mapping (address => uint8) private _accountVoteCount;
 
-    // Mapping from address to amount of refunded money
-    mapping (address => uint256) private _accountRefundAmount;
+    // Mapping from token id to minter
+    mapping (uint256 => address) private _artworkMinterAccount;
+
+    // Mapping from token id to boolean -> true if arwork is minted
+    mapping (uint256 => bool) private _artworkMinted;
+
+    // Mapping from address to votes array
+    mapping (address => uint256[10]) private _accountVoteArtwork;
+
+    // Mapping from address to boolean -> true if refund was used
+    mapping (address => bool) private _accountRefundUsed;
 
 
     function initialize(string memory name, string memory symbol, string memory baseURI, string memory domainSeparator) initializer public {
@@ -48,10 +51,9 @@ contract MetaX is
         //
         _startTime = block.timestamp;
         _endTime = _startTime.add(2592000);
-        _multPrice =      10000000000000000000; // 10 Matic
-        _refundByCatch =   1000000000000000000; // 1 Matic
+        _multPrice =      5000000000000000000; // 5 Matic
         //
-        _maxVotes = 100;
+        _maxVotes = 10;
         //
         _totalArtworkAmount = 10000;
         _totalTokenAmount = 1000;
@@ -81,20 +83,42 @@ contract MetaX is
         // Nobody can call mint()
     }
 
-    function getPrice() public view returns(uint256 price) {
-        if (_tokenCount < 400) {
-            return _multPrice.mul(10);
-        } else if (_tokenCount < 800) {
-            return _multPrice.mul(25);
-        } else if (_tokenCount < 950) {
-            return _multPrice.mul(45);
-        } else if (_tokenCount < 990) {
-            return _multPrice.mul(85);
-        } else if (_tokenCount < 1000) {
-            return _multPrice.mul(150);
+    function getPrice() public view returns(uint256 price, bool willUseRefund) {
+        //
+        bool willUseRefund = false;
+        // If user didn't used the refund
+        if (!_accountRefundUsed[_msgSender()]) {
+            // Iterate over votes
+            for (uint i=0; i<_accountVoteCount[_msgSender()]; i++) {
+                if (_artworkMinterAccount[_accountVoteArtwork[_msgSender()][i]] == _msgSender()) {
+                    continue;
+                }
+                // If the voted artwork was minted
+                if (_exists(_accountVoteArtwork[_msgSender()][i])) {
+                    willUseRefund = true;
+                    break;
+                }
+            }
         }
-        // Just in case
-        return _multPrice.mul(5000);
+        //
+        uint256 tmpPrice = _multPrice.mul(5000);
+        if (_tokenCount < 400) {
+            tmpPrice = _multPrice.mul(10);
+        } else if (_tokenCount < 800) {
+            tmpPrice = _multPrice.mul(25);
+        } else if (_tokenCount < 950) {
+            tmpPrice = _multPrice.mul(45);
+        } else if (_tokenCount < 990) {
+            tmpPrice = _multPrice.mul(85);
+        } else if (_tokenCount < 1000) {
+            tmpPrice = _multPrice.mul(150);
+        }
+        if (!willUseRefund) {
+            // Price cut in half
+            tmpPrice = tmpPrice.mul(2);
+        }
+        //
+        return (tmpPrice, willUseRefund);
     }
 
 
@@ -102,19 +126,14 @@ contract MetaX is
     * @dev Get price, substracting (and updating) the refund.
     */
     function _getPrice() private returns(uint256 price) {
-        uint256 _price = getPrice();
+        (uint256 tmpPrice, bool willUseRefund) = getPrice();
 
-        if (_accountRefundAmount[_msgSender()] > 0) {
-            if (_accountRefundAmount[_msgSender()] > _price) {
-                _price = 0;
-                _accountRefundAmount[_msgSender()] -= _price;
-            } else {
-                _price = _price.sub(_accountRefundAmount[_msgSender()]);
-                _accountRefundAmount[_msgSender()] = 0;
-            }
+        // Mark refund as used
+        if (willUseRefund) {
+            _accountRefundUsed[_msgSender()] = true;
         }
 
-        return _price;
+        return tmpPrice;
     }
 
     /**
@@ -122,11 +141,17 @@ contract MetaX is
     * @param id ID of the artwork
     */
     function vote(uint256 id) external {
-        require(!_artworkVoteExists[id], "MetaX: vote already exists");
+        // To keep gas low it will not check duplicated votes
+        require(!paused(), "MetaX: vote while paused");
+        require(!_artworkMinted[id], "MetaX: artwork already minted");
+        require(_tokenCount < _totalTokenAmount, "MetaX: contract mint limit reached");
         require(_accountVoteCount[_msgSender()] < _maxVotes, "MetaX: max votes reached");
-        _artworkVote[id] = _msgSender();
-        _artworkVoteExists[id] = true;
+        require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
+
+        _accountVoteArtwork[ _msgSender() ][ _accountVoteCount[_msgSender()] ] = id;
         _accountVoteCount[_msgSender()] += 1;
+
+        emit Vote(id, _msgSender());
     }
 
 
@@ -141,15 +166,15 @@ contract MetaX is
         returns(uint256 index)
     {
         require(!paused(), "MetaX: token mint while paused");
-        require(!_exists(id), "MetaX: metaverse id is already minted");
+        require(!_artworkMinted[id], "MetaX: metaverse id is already minted");
         require(_tokenCount < _totalTokenAmount, "MetaX: contract mint limit reached");
         require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
 
         _tokenCount = _tokenCount.add(1);
 
-        if (_artworkVoteExists[id]) {
-            _accountRefundAmount[_artworkVote[id]] += _refundByCatch;
-        }
+        _artworkMinterAccount[id] = _msgSender();
+
+        _artworkMinted[id] = true;
 
         _mint(_msgSender(), id);
 
@@ -200,5 +225,12 @@ contract MetaX is
     * @param multPrice - a multiplier for the price
     */
     event PriceSet(uint256 multPrice);
+
+    /**
+    * @dev Emits when an artwork is voted
+    * @param id - an artwork id
+    * @param account - an account address
+    */
+    event Vote(uint256 id, address account);
 
 }
