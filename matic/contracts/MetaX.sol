@@ -83,7 +83,7 @@ contract MetaX is
         // Nobody can call mint()
     }
 
-    function getPrice() public view returns(uint256 price, bool willUseRefund) {
+    function getPrice() public view returns(uint256 price, bool use_refund) {
         //
         bool willUseRefund = false;
         // If user didn't used the refund
@@ -94,7 +94,7 @@ contract MetaX is
                     continue;
                 }
                 // If the voted artwork was minted
-                if (_exists(_accountVoteArtwork[_msgSender()][i])) {
+                if (_artworkMinted[_accountVoteArtwork[_msgSender()][i]]) { //_exists(_accountVoteArtwork[_msgSender()][i])) {
                     willUseRefund = true;
                     break;
                 }

@@ -95,7 +95,7 @@ contract("MetaX test", async accounts => {
     })
 
 
-    it("getPrice's refund is false", async () => {
+    it("getPrice's refund is true", async () => {
         const instance = await MetaX.deployed()
 
         // Get price before
@@ -120,13 +120,34 @@ contract("MetaX test", async accounts => {
         assert.ok(Number(price_a[0]) > Number(price_b[0]))
     })
 
-    it("cant mint or vote for a burned artwork", async () => {
+
+    it("after using refund, refund is false", async () => {
+        const instance = await MetaX.deployed()
+
+        const tokenId = 901
+
+        // Get price before
+        const price_a = await instance.getPrice.call()
+        assert.equal(Number(price_a[1]), true)
+
+        // Mint token id
+        truffleAssert.passes(await instance.mintArtwork(tokenId, {
+            value: price_a[0]
+        }))
+
+        // Get price after
+        const price_b = await instance.getPrice.call()
+        assert.equal(Number(price_b[1]), false)
+    })
+
+
+    it("cant mint or vote a burned artwork", async () => {
         const instance = await MetaX.deployed()
 
         const tokenId = 950
         // Mint toke id
         const price = await instance.getPrice.call()
-        truffleAssert.fails(instance.mintArtwork(tokenId, {
+        truffleAssert.passes(await instance.mintArtwork(tokenId, {
             value: price[0]
         }))
 
@@ -147,7 +168,7 @@ contract("MetaX test", async accounts => {
         const instance = await MetaX.deployed()
 
         const tokenId = 950000
-        
+
         // Vote for token id
         truffleAssert.fails(instance.vote(tokenId))
 
