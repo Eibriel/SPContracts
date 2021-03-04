@@ -7,6 +7,7 @@ import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 import {NativeMetaTransaction} from "../../common/NativeMetaTransaction.sol";
 import {ContextMixin} from "../../common/ContextMixin.sol";
 
+import { SoapPunkCollectiblesChild } from "./SoupPunk_child.sol";
 
 contract MetaX is
     ERC721PresetMinterPauserAutoIdUpgradeable,
@@ -26,6 +27,10 @@ contract MetaX is
     //
     uint16 private _totalArtworkAmount;
     uint32 private _totalTokenAmount;
+    //
+    string private _contractURI;
+
+    SoapPunkCollectiblesChild private _spContract;
 
     // Mapping from address to vote count
     mapping (address => uint8) private _accountVoteCount;
@@ -57,12 +62,37 @@ contract MetaX is
         //
         _totalArtworkAmount = 10000;
         _totalTokenAmount = 1000;
+        //
+        _contractURI = "ipfs://contract-metadata";
+    }
+
+
+    /**
+    * @dev the URL to a JSON file with contract metadata for OpenSea.
+    */
+    function contractURI() public view returns (string memory) {
+        return _contractURI;
+    }
+
+    /**
+    * @dev Returns the address of the current owner, OpenSea uses this information.
+    */
+    function owner() public view returns (address) {
+        return getRoleMember(DEFAULT_ADMIN_ROLE, 0);
     }
 
     function setBaseURI(string memory baseURI, uint256 id) external {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
         _setBaseURI(baseURI);
+    }
+
+    function setContractURI(string memory contractURI) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
+
+        _contractURI = contractURI;
+
+        ContractURISet(contractURI);
     }
 
     function setPrice(uint256 multPrice) external {
@@ -83,20 +113,33 @@ contract MetaX is
         // Nobody can call mint()
     }
 
-    function getPrice() public view returns(uint256 price, bool use_refund) {
+    function setSPContract(address spAddress) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to set SP contract address");
+
+        _spContract = SoapPunkCollectiblesChild(spAddress);
+
+        SPAddressSet(spAddress);
+    }
+
+    function getPrice(address for_account) public view returns(uint256 price, bool use_refund) {
         //
         bool willUseRefund = false;
         // If user didn't used the refund
-        if (!_accountRefundUsed[_msgSender()]) {
-            // Iterate over votes
-            for (uint i=0; i<_accountVoteCount[_msgSender()]; i++) {
-                if (_artworkMinterAccount[_accountVoteArtwork[_msgSender()][i]] == _msgSender()) {
-                    continue;
-                }
-                // If the voted artwork was minted
-                if (_artworkMinted[_accountVoteArtwork[_msgSender()][i]]) { //_exists(_accountVoteArtwork[_msgSender()][i])) {
-                    willUseRefund = true;
-                    break;
+        if (!_accountRefundUsed[for_account]) {
+            // Check if owns Soaps
+            if (_spContract.balanceOf(for_account, 0)>0) {
+                willUseRefund = true;
+            } else {
+                // Iterate over votes
+                for (uint i=0; i<_accountVoteCount[for_account]; i++) {
+                    if (_artworkMinterAccount[_accountVoteArtwork[for_account][i]] == for_account) {
+                        continue;
+                    }
+                    // If the voted artwork was minted
+                    if (_artworkMinted[_accountVoteArtwork[for_account][i]]) {
+                        willUseRefund = true;
+                        break;
+                    }
                 }
             }
         }
@@ -126,7 +169,7 @@ contract MetaX is
     * @dev Get price, substracting (and updating) the refund.
     */
     function _getPrice() private returns(uint256 price) {
-        (uint256 tmpPrice, bool willUseRefund) = getPrice();
+        (uint256 tmpPrice, bool willUseRefund) = getPrice(_msgSender());
 
         // Mark refund as used
         if (willUseRefund) {
@@ -233,4 +276,27 @@ contract MetaX is
     */
     event Vote(uint256 id, address account);
 
+    /**
+    * @dev Emits when the SoapPunk contract address is set
+    * @param spAddress - an address
+    */
+    event SPAddressSet(address spAddress);
+
+    /**
+    * @dev Emits when the contract URI is set
+    * @param contractURI - an URL to the metadata
+    */
+    event ContractURISet(string contractURI);
+
+
+    // This is to support Native meta transactions
+    // never use msg.sender directly, use _msgSender() instead
+    function _msgSender()
+        internal
+        override
+        view
+        returns (address payable sender)
+        {
+            return ContextMixin.msgSender();
+    }
 }
