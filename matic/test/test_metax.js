@@ -25,12 +25,12 @@ contract("MetaX test", async accounts => {
     const owner = accounts[0]
     //const instance = await MetaX.deployed()
 
-    it("metaverse uri for 0 should be ipfs://0.json", async () => {
+    it("metaverse uri for 0 should be ipfs://0", async () => {
         const instance = await MetaX.deployed()
 
         let metaverse_uri = await instance.getMetaverse.call(0)
         //console.log(metaverse_uri)
-        assert.equal(metaverse_uri, "ipfs://0.json")
+        assert.equal(metaverse_uri, "ipfs://0")
     })
 
 

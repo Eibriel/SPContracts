@@ -17,13 +17,14 @@ contract MetaX is
     using SafeMathUpgradeable for uint256;
 
     uint256 private _tokenCount;
-    uint256 private _startTime;
+    //uint256 private _startTime;
     uint256 private _endTime;
     //
     uint256 private _multPrice;
     uint256 private _refundByCatch;
     //
     uint8 private _maxVotes;
+    uint8 private _maxMintByAccount;
     //
     uint16 private _totalArtworkAmount;
     uint32 private _totalTokenAmount;
@@ -34,6 +35,9 @@ contract MetaX is
 
     // Mapping from address to vote count
     mapping (address => uint8) private _accountVoteCount;
+
+    // Mapping from address to amount of mints
+    mapping (address => uint8) private _accountMintCount;
 
     // Mapping from token id to minter
     mapping (uint256 => address) private _artworkMinterAccount;
@@ -53,17 +57,19 @@ contract MetaX is
 
         _initializeEIP712(domainSeparator);
         _tokenCount = 0;
-        //
-        _startTime = block.timestamp;
-        _endTime = _startTime.add(2592000);
-        _multPrice =      5000000000000000000; // 5 Matic
-        //
+
+        uint256 _startTime = block.timestamp;
+        setEndTime(_startTime.add(2592000));
+        setPrice(5000000000000000000); // 5 Matic
+
         _maxVotes = 10;
-        //
-        _totalArtworkAmount = 10000;
-        _totalTokenAmount = 1000;
-        //
-        _contractURI = "ipfs://contract-metadata";
+
+        _totalArtworkAmount = 4096;
+        _totalTokenAmount = 1024;
+
+        _maxMintByAccount = 16;
+
+        setContractURI("ipfs://contract-metadata");
     }
 
 
@@ -82,20 +88,21 @@ contract MetaX is
     }
 
     function setBaseURI(string memory baseURI, uint256 id) external {
+    //function setBaseURI(string memory baseURI) external {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
         _setBaseURI(baseURI);
     }
 
-    function setContractURI(string memory contractURI) external {
+    function setContractURI(string memory __contractURI) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
-        _contractURI = contractURI;
+        _contractURI = __contractURI;
 
-        ContractURISet(contractURI);
+        ContractURISet(__contractURI);
     }
 
-    function setPrice(uint256 multPrice) external {
+    function setPrice(uint256 multPrice) public {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
         _multPrice = multPrice;
@@ -103,10 +110,23 @@ contract MetaX is
         emit PriceSet(multPrice);
     }
 
-    function getMetaverse(uint256 id) public view returns(string memory) {
-        // Check if id is within expected limits
-        return string(abi.encodePacked(baseURI(), id.toString(), ".json"));
+    function setEndTime(uint256 endTime) public {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change end time");
+
+        _endTime = endTime;
+
+        emit EndTimeSet(endTime);
     }
+
+    function getMetaverse(uint256 id) public view returns(string memory) {
+        require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
+        
+        return string(abi.encodePacked(baseURI(), id.toString()));
+    }
+
+    /*function tokenURI(uint256 id) public view override {
+        return string(abi.encodePacked(baseURI(), id.toString(), ".json"));
+    }*/
 
     function mint(address to) public override {
         require(false, "MetaX: mint is not allowed");
@@ -153,11 +173,11 @@ contract MetaX is
             tmpPrice = _multPrice.mul(45);
         } else if (_tokenCount < 990) {
             tmpPrice = _multPrice.mul(85);
-        } else if (_tokenCount < 1000) {
+        } else if (_tokenCount < 1023) {
             tmpPrice = _multPrice.mul(150);
         }
         if (!willUseRefund) {
-            // Price cut in half
+            // Price not cut in half
             tmpPrice = tmpPrice.mul(2);
         }
         //
@@ -166,7 +186,7 @@ contract MetaX is
 
 
     /**
-    * @dev Get price, substracting (and updating) the refund.
+    * @dev Get price, setting the refund as used.
     */
     function _getPrice() private returns(uint256 price) {
         (uint256 tmpPrice, bool willUseRefund) = getPrice(_msgSender());
@@ -209,15 +229,19 @@ contract MetaX is
         returns(uint256 index)
     {
         require(!paused(), "MetaX: token mint while paused");
+        require(block.timestamp < _endTime, "MetaX: minting event ended");
         require(!_artworkMinted[id], "MetaX: metaverse id is already minted");
         require(_tokenCount < _totalTokenAmount, "MetaX: contract mint limit reached");
         require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
+        require(_accountMintCount[_msgSender()] < _maxMintByAccount, "MetaX: max mints reached");
 
         _tokenCount = _tokenCount.add(1);
 
         _artworkMinterAccount[id] = _msgSender();
 
         _artworkMinted[id] = true;
+
+        _accountMintCount[_msgSender()] += 1;
 
         _mint(_msgSender(), id);
 
@@ -251,6 +275,8 @@ contract MetaX is
         if (msg.value > _amount) {
             _msgSender().transfer(msg.value.sub(_amount));
         }
+        // Split earnings
+
     }
 
 
@@ -287,6 +313,12 @@ contract MetaX is
     * @param contractURI - an URL to the metadata
     */
     event ContractURISet(string contractURI);
+
+    /**
+    * @dev Emits when the end time is set
+    * @param endTime - the event end time
+    */
+    event EndTimeSet(uint256 endTime);
 
 
     // This is to support Native meta transactions
