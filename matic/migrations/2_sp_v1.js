@@ -40,6 +40,7 @@ module.exports = async function (deployer, network, accounts) {
     console.log("Owner: " + owner)
 
     // Set implementation ownership
+    /*
     const DEFAULT_ADMIN_ROLE = "0x00"
     const PAUSER_ROLE = web3.utils.sha3("PAUSER_ROLE")
     const MINTER_ROLE = web3.utils.sha3("MINTER_ROLE")
@@ -65,5 +66,5 @@ module.exports = async function (deployer, network, accounts) {
     // Set Proxy Admin ownership
     await sleep(sleep_time)
     await admin.transferProxyAdminOwnership(owner)
-    console.log("transferProxyAdminOwnership")
+    console.log("transferProxyAdminOwnership")*/
 };

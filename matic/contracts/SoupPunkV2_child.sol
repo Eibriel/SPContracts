@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.6.0;
 
 import "@openzeppelin/contracts-upgradeable/presets/ERC1155PresetMinterPauserUpgradeable.sol";
@@ -29,9 +30,9 @@ contract SoapPunkCollectiblesChildV2 is
      }
 
 
-    function contractURI() public view returns (string memory) {
+    /*function contractURI() public view returns (string memory) {
         return _uri;
-    }
+    }*/
 
 
      // Disable minting
