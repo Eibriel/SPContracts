@@ -95,7 +95,7 @@ contract MetaX is
     }
 
     function setContractURI(string memory __contractURI) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change contract uri");
 
         _contractURI = __contractURI;
 
@@ -103,7 +103,7 @@ contract MetaX is
     }
 
     function setPrice(uint256 multPrice) public {
-        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to set price");
 
         _multPrice = multPrice;
 
@@ -120,7 +120,7 @@ contract MetaX is
 
     function getMetaverse(uint256 id) public view returns(string memory) {
         require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
-        
+
         return string(abi.encodePacked(baseURI(), id.toString()));
     }
 
@@ -173,7 +173,7 @@ contract MetaX is
             tmpPrice = _multPrice.mul(45);
         } else if (_tokenCount < 990) {
             tmpPrice = _multPrice.mul(85);
-        } else if (_tokenCount < 1023) {
+        } else if (_tokenCount < 1024) {
             tmpPrice = _multPrice.mul(150);
         }
         if (!willUseRefund) {

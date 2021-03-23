@@ -38,7 +38,7 @@ await mycontract.mint("0x05C351382dB8D770207F319D96ac1184c3717edE", 0, 10, [])
 
 ### Mumbai
 ```
-truffle test
+truffle test ./test/test_metax.js
 
 truffle console --network mumbai
 

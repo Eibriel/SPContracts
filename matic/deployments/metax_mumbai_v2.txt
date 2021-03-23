@@ -1,0 +1,123 @@
+> Compiled successfully using:
+   - solc: 0.6.12+commit.27d51765.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+mumbai
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+
+   Replacing 'Migrations'
+   ----------------------
+   > transaction hash:    0x14bf7c0243e60c97bc9fedab5e4a98ce4058a52175ae3ed709650c093cc2fa47
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x73948847369C70514fD9b3260b49E03C3C574315
+   > block number:        11840011
+   > block timestamp:     1616387023
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.33528169
+   > gas used:            153694 (0x2585e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00076847 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11840014)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00076847 ETH
+
+
+2_sp_v1.js
+==========
+mumbai
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+childChainManager 0xb5505a6d998549090530911180f38aC5130101c6
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0xd7289864016272f6d512f673ba4c8680d6d47360805a35e3f3d6adad3950a327
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xD670c989FB1cc3E2061a4bB2942Aed6b2973A753
+   > block number:        11840021
+   > block timestamp:     1616387043
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.32980561
+   > gas used:            1052961 (0x101121)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.005264805 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11840024)
+SoapPunkCollectiblesChild Deployed 0xD670c989FB1cc3E2061a4bB2942Aed6b2973A753
+Owner: 0x05C351382dB8D770207F319D96ac1184c3717edE
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.005264805 ETH
+
+
+4_metax.js
+==========
+
+   Replacing 'MetaX'
+   -----------------
+   > transaction hash:    0x9ef694c11e24a32e7bca2460b2c55f0f269893b8112532b566798858e480f273
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x8aa035Ac900feD50Afcdb6686B4614d703B339e3
+   > block number:        11840029
+   > block timestamp:     1616387059
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.3069854
+   > gas used:            4536787 (0x4539d3)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.022683935 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11840032)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x181a05d82a1bdc28f67eeee3adab3d6d74f0c3f783b3a5e991cb3e409248ad17
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xcBA48Ba6e0F484EDFF0A21Fa6C1bBb92384dCD2F
+   > block number:        11840036
+   > block timestamp:     1616387073
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.30146711
+   > gas used:            1103658 (0x10d72a)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00551829 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 11840039)
+MetaX Deployed 0xcBA48Ba6e0F484EDFF0A21Fa6C1bBb92384dCD2F
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.028202225 ETH
+
+
+Summary
+=======
+> Total deployments:   4
+> Final cost:          0.0342355 ETH

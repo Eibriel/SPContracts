@@ -1,0 +1,171 @@
+> Compiled successfully using:
+   - solc: 0.6.12+commit.27d51765.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+1_initial_migration.js
+======================
+mumbai
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+
+   Deploying 'Migrations'
+   ----------------------
+   > transaction hash:    0xea5eb09ca3842f287165057c6af0781ec1b2c31cc7320638de123ab2152f999a
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x57e07D9C2538981D17342f94746678ef734dda6D
+   > block number:        11154876
+   > block timestamp:     1614801897
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.495613735
+   > gas used:            153694 (0x2585e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00076847 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11154878)
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.00076847 ETH
+
+
+2_sp_v1.js
+==========
+mumbai
+0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+childChainManager 0xb5505a6d998549090530911180f38aC5130101c6
+
+Warning: Potentially unsafe deployment of SoapPunkCollectiblesChild
+
+    You are using the `unsafeAllowCustomTypes` flag to skip storage checks for structs and enums.
+    Make sure you have manually checked the storage layout for incompatibilities.
+
+
+   Deploying 'SoapPunkCollectiblesChild'
+   -------------------------------------
+   > transaction hash:    0x87503ad186ca58a721dfd1a7022235931cde53d778f17b394bed06a50103460c
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xe8B0F0544eeFE00c6A81eA99656DBdcE934f1446
+   > block number:        11154884
+   > block timestamp:     1614801917
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.475768405
+   > gas used:            3926811 (0x3beb1b)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.019634055 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11154887)
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > transaction hash:    0x671d1d61c0fde4ebbbc9727595e6859fb58f17d0182cdad0eec1197b5f94c6e8
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x6D5eD9D02D9fCf6b0ba089eAD9d235b1f1eA732B
+   > block number:        11154890
+   > block timestamp:     1614801929
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.471368655
+   > gas used:            879950 (0xd6d4e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00439975 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11154893)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x7aa517ae28f0dad816437d2431fb03b2d741acd6fb2fd2bb30bfde668508bc43
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xfF83592Be43148d9DC952a4D1957cc16D3b009a4
+   > block number:        11154896
+   > block timestamp:     1614801941
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.46610385
+   > gas used:            1052961 (0x101121)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.005264805 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 11154899)
+SoapPunkCollectiblesChild Deployed 0xfF83592Be43148d9DC952a4D1957cc16D3b009a4
+Owner: 0x05C351382dB8D770207F319D96ac1184c3717edE
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.02929861 ETH
+
+
+4_metax.js
+==========
+
+Warning: Potentially unsafe deployment of MetaX
+
+    You are using the `unsafeAllowCustomTypes` flag to skip storage checks for structs and enums.
+    Make sure you have manually checked the storage layout for incompatibilities.
+
+
+   Deploying 'MetaX'
+   -----------------
+   > transaction hash:    0x7c3f3018c0ac145e045cc6bab2efe33167f12785afe1146a1d4ebbb05b220072
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x6a9ebA0399f7D505dE3B0C34f4EBfC1D1Ca851f2
+   > block number:        11154904
+   > block timestamp:     1614801957
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.44401131
+   > gas used:            4391253 (0x430155)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.021956265 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 11154907)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x1894b700484f790a8dbc3c48d490a476e113f802e93f05ac9e1a52a55dc2eaaa
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x893B2Cc90E6865e2B5721dD83cf4cBd82B8337c2
+   > block number:        11154911
+   > block timestamp:     1614801971
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.438431835
+   > gas used:            1115895 (0x1106f7)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.005579475 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 3 (block: 11154914)
+MetaX Deployed 0x893B2Cc90E6865e2B5721dD83cf4cBd82B8337c2
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:          0.02753574 ETH
+
+
+Summary
+=======
+> Total deployments:   6
+> Final cost:          0.05760282 ETH

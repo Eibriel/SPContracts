@@ -37,7 +37,7 @@ module.exports = async function (deployer, network, accounts) {
     console.log("Current owner: ", await instance2.getRoleMember(DEFAULT_ADMIN_ROLE, 0))
     console.log("Account 0: ", accounts[0])
     await sleep(sleep_time)
-    await instance2.grantRole(MINTER_ROLE, owner, {from: accounts[0]})
+    await instance.grantRole(MINTER_ROLE, owner, {from: accounts[0]})
     console.log("grantRole MINTER_ROLE")
     await sleep(sleep_time)
     await instance.renounceRole(MINTER_ROLE, accounts[0])

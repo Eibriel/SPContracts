@@ -1,0 +1,132 @@
+> Compiled successfully using:
+   - solc: 0.6.12+commit.27d51765.Emscripten.clang
+
+truffle(matic)> migrate --dry-run
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Migrations dry-run (simulation)
+===============================
+> Network name:    'matic-fork'
+> Network id:      137
+> Block gas limit: 20000000 (0x1312d00)
+
+
+4_metax.js
+==========
+
+   Deploying 'MetaX'
+   -----------------
+   > block number:        12342267
+   > block timestamp:     1616451945
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.86644228
+   > gas used:            4536787 (0x4539d3)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.022683935 ETH
+
+
+   Deploying 'ProxyAdmin'
+   ----------------------
+   > block number:        12342268
+   > block timestamp:     1616451950
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.86211753
+   > gas used:            864950 (0xd32b6)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00432475 ETH
+
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > block number:        12342269
+   > block timestamp:     1616452014
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.8585073
+   > gas used:            722046 (0xb047e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00361023 ETH
+
+MetaX Deployed 0x142d2C7D4f686934B6A10a653041BC9A10f317F3
+   -------------------------------------
+   > Total cost:         0.030618915 ETH
+
+
+Summary
+=======
+> Total deployments:   3
+> Final cost:          0.030618915 ETH
+
+
+truffle(matic)> migrate
+
+Compiling your contracts...
+===========================
+> Everything is up to date, there is nothing to compile.
+
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      137
+> Block gas limit: 20000000 (0x1312d00)
+
+
+4_metax.js
+==========
+
+   Deploying 'MetaX'
+   -----------------
+   > transaction hash:    0x1bb7c651ca21228a2b882a5edd5d96e0baaccd93a0a8873c544662926fd9da56
+   > Blocks: 2            Seconds: 4
+   > contract address:    0xeFEb14aA627526484c1600f16642F20Fb2F24D5d
+   > block number:        12342429
+   > block timestamp:     1616452271
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.86644228
+   > gas used:            4536787 (0x4539d3)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.022683935 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 12342432)
+
+   Deploying 'AdminUpgradeabilityProxy'
+   ------------------------------------
+   > transaction hash:    0x9d387ab9f06d1397711342ea3f19c50b119c0d76645094244b75f9f0ac6e4ed8
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x5E574d4FE3B09B45D39877823542F5E222C2D448
+   > block number:        12342438
+   > block timestamp:     1616452289
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.86092405
+   > gas used:            1103646 (0x10d71e)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.00551823 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 12342441)
+MetaX Deployed 0x5E574d4FE3B09B45D39877823542F5E222C2D448
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.028202165 ETH
+
+
+Summary
+=======
+> Total deployments:   2
+> Final cost:          0.028202165 ETH
