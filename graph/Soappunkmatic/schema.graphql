@@ -4,9 +4,20 @@ type Collectible @entity {
 }
 
 
+type MetaX @entity {
+  id: ID!
+  owner: Account!
+  votes: [AccountMetaXVote]! @derivedFrom(field: "metax")
+  # owners: [AccountMetaX]! @derivedFrom(field: "metax")
+}
+
+
 type Account @entity {
   id: ID!
   collectibles: [AccountCollectible!] @derivedFrom(field: "account")
+  metaxs: [MetaX!] @derivedFrom(field: "owner")
+  #metaxs: [AccountMetaX!] @derivedFrom(field: "account")
+  metaxvotes: [AccountMetaXVote!] @derivedFrom(field: "account")
 }
 
 
@@ -15,4 +26,17 @@ type AccountCollectible @entity {
   account: Account!
   collectible: Collectible!
   amount: BigInt!
+}
+
+#type AccountMetaX @entity {
+#  id: ID!   # Set to `${account.id}-${metax.id}`
+#  account: Account!
+#  metax: MetaX!
+#}
+
+type AccountMetaXVote @entity {
+  id: ID!   # Set to `${account.id}-${metax.id}`
+  account: Account!
+  metax: MetaX!
+  # amount: BigInt!
 }

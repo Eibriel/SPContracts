@@ -52,6 +52,55 @@ export class Collectible extends Entity {
   }
 }
 
+export class MetaX extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save MetaX entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save MetaX entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("MetaX", id.toString(), this);
+  }
+
+  static load(id: string): MetaX | null {
+    return store.get("MetaX", id) as MetaX | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get owner(): string {
+    let value = this.get("owner");
+    return value.toString();
+  }
+
+  set owner(value: string) {
+    this.set("owner", Value.fromString(value));
+  }
+
+  get votes(): Array<string | null> {
+    let value = this.get("votes");
+    return value.toStringArray();
+  }
+
+  set votes(value: Array<string | null>) {
+    this.set("votes", Value.fromStringArray(value));
+  }
+}
+
 export class Account extends Entity {
   constructor(id: string) {
     super();
@@ -96,6 +145,40 @@ export class Account extends Entity {
       this.unset("collectibles");
     } else {
       this.set("collectibles", Value.fromStringArray(value as Array<string>));
+    }
+  }
+
+  get metaxs(): Array<string> | null {
+    let value = this.get("metaxs");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set metaxs(value: Array<string> | null) {
+    if (value === null) {
+      this.unset("metaxs");
+    } else {
+      this.set("metaxs", Value.fromStringArray(value as Array<string>));
+    }
+  }
+
+  get metaxvotes(): Array<string> | null {
+    let value = this.get("metaxvotes");
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toStringArray();
+    }
+  }
+
+  set metaxvotes(value: Array<string> | null) {
+    if (value === null) {
+      this.unset("metaxvotes");
+    } else {
+      this.set("metaxvotes", Value.fromStringArray(value as Array<string>));
     }
   }
 }
@@ -155,5 +238,54 @@ export class AccountCollectible extends Entity {
 
   set amount(value: BigInt) {
     this.set("amount", Value.fromBigInt(value));
+  }
+}
+
+export class AccountMetaXVote extends Entity {
+  constructor(id: string) {
+    super();
+    this.set("id", Value.fromString(id));
+  }
+
+  save(): void {
+    let id = this.get("id");
+    assert(id !== null, "Cannot save AccountMetaXVote entity without an ID");
+    assert(
+      id.kind == ValueKind.STRING,
+      "Cannot save AccountMetaXVote entity with non-string ID. " +
+        'Considering using .toHex() to convert the "id" to a string.'
+    );
+    store.set("AccountMetaXVote", id.toString(), this);
+  }
+
+  static load(id: string): AccountMetaXVote | null {
+    return store.get("AccountMetaXVote", id) as AccountMetaXVote | null;
+  }
+
+  get id(): string {
+    let value = this.get("id");
+    return value.toString();
+  }
+
+  set id(value: string) {
+    this.set("id", Value.fromString(value));
+  }
+
+  get account(): string {
+    let value = this.get("account");
+    return value.toString();
+  }
+
+  set account(value: string) {
+    this.set("account", Value.fromString(value));
+  }
+
+  get metax(): string {
+    let value = this.get("metax");
+    return value.toString();
+  }
+
+  set metax(value: string) {
+    this.set("metax", Value.fromString(value));
   }
 }
