@@ -1,0 +1,44 @@
+> Compiled successfully using:
+   - solc: 0.6.12+commit.27d51765.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'matic'
+> Network id:      137
+> Block gas limit: 20000000 (0x1312d00)
+
+
+5_metaxv2.js
+============
+
+   Deploying 'MetaXV2'
+   -------------------
+   > transaction hash:    0xc943b40110c2368ade8b2a224551fd23709ef3bffb726fec9e8f174c758a85e4
+   > Blocks: 2            Seconds: 4
+   > contract address:    0x7e7F3A2E14E125F264412368f487E7dA31c70cc0
+   > block number:        12632141
+   > block timestamp:     1617064345
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.835738785
+   > gas used:            4691149 (0x4794cd)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.023455745 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 2 (block: 12632144)
+Upgraded 0x5E574d4FE3B09B45D39877823542F5E222C2D448
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.023455745 ETH
+
+
+Summary
+=======
+> Total deployments:   1
+> Final cost:          0.023455745 ETH

@@ -4,12 +4,14 @@ pragma solidity ^0.6.0;
 import "@openzeppelin/contracts-upgradeable/presets/ERC721PresetMinterPauserAutoIdUpgradeable.sol";
 import "@openzeppelin/contracts-upgradeable/math/SafeMathUpgradeable.sol";
 
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 import {NativeMetaTransaction} from "../../common/NativeMetaTransaction.sol";
 import {ContextMixin} from "../../common/ContextMixin.sol";
 
 import { SoapPunkCollectiblesChild } from "./SoupPunk_child.sol";
 
-contract MetaX is
+contract MetaXV3 is
     ERC721PresetMinterPauserAutoIdUpgradeable,
     NativeMetaTransaction,
     ContextMixin
@@ -50,6 +52,8 @@ contract MetaX is
     // Mapping from address to boolean -> true if refund was used
     mapping (address => bool) private _accountRefundUsed;
 
+    IERC20 private _tokenERC20;
+
 
     function initialize(string memory name, string memory symbol, string memory baseURI, string memory domainSeparator) initializer public {
         __ERC721PresetMinterPauserAutoId_init(name, symbol, baseURI);
@@ -86,8 +90,13 @@ contract MetaX is
         return getRoleMember(DEFAULT_ADMIN_ROLE, 0);
     }
 
+    function setERC20(IERC20 token) external {
+        require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to set token");
+
+        _tokenERC20 = token;
+    }
+
     function setBaseURI(string memory baseURI, uint256 id) external {
-    //function setBaseURI(string memory baseURI) external {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to change uri");
 
         _setBaseURI(baseURI);
@@ -223,7 +232,7 @@ contract MetaX is
     */
     function mintArtwork(uint256 id)
         external
-        payable
+        //payable
         price(_getPrice())
         returns(uint256 index)
     {
@@ -253,8 +262,8 @@ contract MetaX is
     */
     function withdrawBalance() external {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to withdraw");
-        uint256 balance = address(this).balance;
-        _msgSender().transfer(balance);
+        uint256 balance = _tokenERC20.balanceOf(address(this));
+        _tokenERC20.transfer(_msgSender(), balance);
 
         emit Withdraw(balance);
     }
@@ -269,13 +278,12 @@ contract MetaX is
     * @param _amount - ether needed to call the function
     */
     modifier price(uint256 _amount) {
-        require(msg.value >= _amount, "MetaX: Not enough Ether provided.");
-        _;
-        if (msg.value > _amount) {
-            _msgSender().transfer(msg.value.sub(_amount));
-        }
-        // Split earnings
+        require(_tokenERC20.balanceOf(_msgSender()) >= _amount, "MetaX: Not enough ERC20 tokens.");
+        require(_tokenERC20.allowance(_msgSender(), address(this)) >= _amount, "MetaX: Not enough ERC20 token allowance.");
 
+        _;
+
+        _tokenERC20.transferFrom(_msgSender(), address(this), _amount);
     }
 
 

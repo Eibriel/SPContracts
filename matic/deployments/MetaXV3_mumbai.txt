@@ -1,0 +1,45 @@
+> Compiled successfully using:
+   - solc: 0.6.12+commit.27d51765.Emscripten.clang
+
+
+
+Starting migrations...
+======================
+> Network name:    'mumbai'
+> Network id:      80001
+> Block gas limit: 20000000 (0x1312d00)
+
+
+6_metaxv3.js
+============
+
+   Deploying 'MetaXV3'
+   -------------------
+   > transaction hash:    0x340f170d7415c311456cb67e077f758be95789d4490cd96ebbbe5796715a6ca6
+   > Blocks: 1            Seconds: 4
+   > contract address:    0xd5140d7b09B5DFB0C17e9bAb6EC8a7875B19367C
+   > block number:        12139696
+   > block timestamp:     1617083683
+   > account:             0x881Ad3331EBc91A1EDCCc2d8C6254764fc44d75c
+   > balance:             0.741337695
+   > gas used:            4691161 (0x4794d9)
+   > gas price:           5 gwei
+   > value sent:          0 ETH
+   > total cost:          0.023455805 ETH
+
+   Pausing for 2 confirmations...
+   ------------------------------
+   > confirmation number: 1 (block: 12139697)
+   > confirmation number: 2 (block: 12139698)
+Upgraded 0x8aC976B71E38745a6b30c836da5D6aAD4Ba8BdEc
+
+   > Saving migration to chain.
+   > Saving artifacts
+   -------------------------------------
+   > Total cost:         0.023455805 ETH
+
+
+Summary
+=======
+> Total deployments:   1
+> Final cost:          0.023455805 ETH

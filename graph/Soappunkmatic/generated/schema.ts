@@ -82,13 +82,21 @@ export class MetaX extends Entity {
     this.set("id", Value.fromString(value));
   }
 
-  get owner(): string {
+  get owner(): string | null {
     let value = this.get("owner");
-    return value.toString();
+    if (value === null || value.kind == ValueKind.NULL) {
+      return null;
+    } else {
+      return value.toString();
+    }
   }
 
-  set owner(value: string) {
-    this.set("owner", Value.fromString(value));
+  set owner(value: string | null) {
+    if (value === null) {
+      this.unset("owner");
+    } else {
+      this.set("owner", Value.fromString(value as string));
+    }
   }
 
   get votes(): Array<string | null> {
@@ -98,6 +106,15 @@ export class MetaX extends Entity {
 
   set votes(value: Array<string | null>) {
     this.set("votes", Value.fromStringArray(value));
+  }
+
+  get vote_count(): i32 {
+    let value = this.get("vote_count");
+    return value.toI32();
+  }
+
+  set vote_count(value: i32) {
+    this.set("vote_count", Value.fromI32(value));
   }
 }
 
@@ -180,6 +197,15 @@ export class Account extends Entity {
     } else {
       this.set("metaxvotes", Value.fromStringArray(value as Array<string>));
     }
+  }
+
+  get correct_votes(): i32 {
+    let value = this.get("correct_votes");
+    return value.toI32();
+  }
+
+  set correct_votes(value: i32) {
+    this.set("correct_votes", Value.fromI32(value));
   }
 }
 

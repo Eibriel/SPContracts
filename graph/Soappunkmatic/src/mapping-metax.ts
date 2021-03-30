@@ -1,4 +1,4 @@
-import { BigInt, Address } from "@graphprotocol/graph-ts"
+//import { BigInt, Address } from "@graphprotocol/graph-ts"
 import {
     //Withdraw,
     //PriceSet,
@@ -17,13 +17,19 @@ export function handleVote(event: Vote): void {
     from.save()
 
     // MetaX id
-    let metax = new MetaX(event.params.id.toHex())
+    let metax = MetaX.load(event.params.id.toHex())
+    if (metax == null) {
+        metax = new MetaX(event.params.id.toHex())
+        metax.vote_count = 0
+    }
+    metax.vote_count += 1
     metax.save()
 
     let accountMetaXVote_id = event.params.account.toHexString() + "-" + event.params.id.toHexString()
 
     let accountMetaXVote = AccountMetaXVote.load(accountMetaXVote_id)
     if (accountMetaXVote == null) {
+        accountMetaXVote = new AccountMetaXVote(accountMetaXVote_id)
         accountMetaXVote.account = event.params.account.toHex()
         accountMetaXVote.metax = event.params.id.toHex()
     }
@@ -45,6 +51,18 @@ export function handleTransfer(event: Transfer): void {
 
     // MetaX id
     let metax = new MetaX(event.params.tokenId.toHex())
+    if (metax.owner == null) {
+        for (let n=0; n<metax.votes.length; n++) {
+            let votes = metax.votes
+            let accountMetaXVote = AccountMetaXVote.load(votes[n])
+            let account = Account.load(accountMetaXVote.account)
+            if (account.correct_votes == null) {
+                account.correct_votes = 0
+            }
+            account.correct_votes += 1
+            account.save()
+        }
+    }
     metax.owner = event.params.to.toHex()
     metax.save()
 }
