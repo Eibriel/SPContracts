@@ -35,6 +35,9 @@ contract("MetaxV2 test", async accounts => {
         instance = await upgradeProxy(metax.address, MetaXV2, { unsafeAllowCustomTypes: true });
 
         erc20 = await DummyERC20.deployed()
+
+        await erc20.transfer(accounts[3], String(toWei(10)))
+        await erc20.transfer(accounts[5], String(toWei(10)))
     })
 
     it("call to setERC20, from account that is not admin, should fail", async () => {
@@ -46,6 +49,11 @@ contract("MetaxV2 test", async accounts => {
           }),
           "MetaX: must have admin role to set token"
       )
+    })
+
+    it("setERC20 from admin should work", async () => {
+
+      await truffleAssert.passes(instance.setERC20(erc20.address))
     })
 
     it("metaverse uri for 0 should be ipfs://0", async () => {
@@ -203,15 +211,12 @@ contract("MetaxV2 test", async accounts => {
 
 
     it("after mintArtwork balance should be 1", async () => {
-        //const instance = await MetaX.deployed()
-
         const price = await instance.getPrice.call(owner)
 
+        await erc20.increaseAllowance(instance.address, price[0])
+
         const tokenId = 0
-        await truffleAssert.passes(instance.mintArtwork(tokenId, {
-            from: owner,
-            value: price[0]
-        }))
+        await truffleAssert.passes(instance.mintArtwork(tokenId))
         const balance = await instance.balanceOf.call(owner)
         assert.equal(Number(balance), 1)
 
@@ -233,9 +238,11 @@ contract("MetaxV2 test", async accounts => {
         await truffleAssert.passes(instance.vote(tokenId))
 
         // Mint token id
+        await erc20.increaseAllowance(instance.address, price_a[0], {
+            from: accounts[5]
+        })
         await truffleAssert.passes(instance.mintArtwork(tokenId, {
-            from: accounts[5],
-            value: price_a[0]
+            from: accounts[5]
         }))
 
         // Get price after
@@ -256,9 +263,8 @@ contract("MetaxV2 test", async accounts => {
         assert.equal(Number(price_a[1]), true)
 
         // Mint token id
-        await truffleAssert.passes(instance.mintArtwork(tokenId, {
-            value: price_a[0]
-        }))
+        await erc20.increaseAllowance(instance.address, price_a[0])
+        await truffleAssert.passes(instance.mintArtwork(tokenId))
 
         // Get price after
         const price_b = await instance.getPrice.call(owner)
@@ -272,9 +278,8 @@ contract("MetaxV2 test", async accounts => {
         const tokenId = 950
         // Mint toke id
         const price = await instance.getPrice.call(owner)
-        await truffleAssert.passes(instance.mintArtwork(tokenId, {
-            value: price[0]
-        }))
+        await erc20.increaseAllowance(instance.address, price[0])
+        await truffleAssert.passes(instance.mintArtwork(tokenId))
 
         // Burn toke id
         await truffleAssert.passes(instance.burn(tokenId))
@@ -287,9 +292,8 @@ contract("MetaxV2 test", async accounts => {
         )
 
         // Mint token id
-        await truffleAssert.reverts(instance.mintArtwork(tokenId, {
-                value: price[0]
-            }),
+        await erc20.increaseAllowance(instance.address, price[0])
+        await truffleAssert.reverts(instance.mintArtwork(tokenId),
             "MetaX: metaverse id is already minted",
             "mintArtwork on a minted and burned token should fail"
         )
@@ -310,9 +314,8 @@ contract("MetaxV2 test", async accounts => {
 
         // Mint token id
         const price = await instance.getPrice.call(owner)
-        await truffleAssert.reverts(instance.mintArtwork(tokenId, {
-                value: price[0]
-            }),
+        await erc20.increaseAllowance(instance.address, price[0])
+        await truffleAssert.reverts(instance.mintArtwork(tokenId),
             "MetaX: metaverse id does not exists",
             "mintArtwork on unexisting id should fail"
         )
@@ -336,9 +339,11 @@ contract("MetaxV2 test", async accounts => {
         const price = await instance.getPrice.call(accounts[5])
 
         const tokenId = 1
+        await erc20.increaseAllowance(instance.address, price[0], {
+            from: accounts[5]
+        })
         await truffleAssert.passes(instance.mintArtwork(tokenId, {
-            from: accounts[5],
-            value: price[0]
+            from: accounts[5]
         }))
 
         const owner_token = await instance.ownerOf.call(tokenId)
@@ -349,10 +354,8 @@ contract("MetaxV2 test", async accounts => {
         //
         const price_b = await instance.getPrice.call(owner)
 
-        await truffleAssert.reverts(instance.mintArtwork(tokenId, {
-                from: owner,
-                value: price_b[0]
-            }),
+        await erc20.increaseAllowance(instance.address, price_b[0])
+        await truffleAssert.reverts(instance.mintArtwork(tokenId),
             "MetaX: metaverse id is already minted"
         )
         const balance_b = await instance.balanceOf(owner)
@@ -375,13 +378,13 @@ contract("MetaxV2 test", async accounts => {
     it("admin calling withdraw should increase balance", async () => {
         //const instance = await MetaX.deployed()
 
-        const balance_a = await getBalance(owner)
+        const balance_a = await erc20.balanceOf(owner)
 
         await truffleAssert.passes(instance.withdrawBalance({
             from: owner
         }))
-        const balance_b = await getBalance(owner)
-        // console.log(Number(balance_a), Number(balance_b))
+        const balance_b = await erc20.balanceOf(owner)
+
         assert.ok(Number(balance_a) < Number(balance_b))
     })
 
@@ -392,10 +395,9 @@ contract("MetaxV2 test", async accounts => {
         await instance.pause()
 
         const price = await instance.getPrice.call(owner)
+        await erc20.increaseAllowance(instance.address, price[0])
         await truffleAssert.reverts(
-                instance.mintArtwork(800, {
-                value: price[0]
-            }),
+                instance.mintArtwork(800),
             "MetaX: token mint while paused",
             "mintArtwork while paused should fail"
         )
@@ -409,25 +411,46 @@ contract("MetaxV2 test", async accounts => {
         await instance.unpause()
     })
 
+    it("cant mint without allowance", async () => {
+        const allowance = await erc20.allowance.call(accounts[0], instance.address)
+        await erc20.decreaseAllowance(instance.address, allowance)
+        await truffleAssert.reverts(
+            instance.mintArtwork(410),
+            "MetaX: Not enough ERC20 token allowance."
+        )
+    })
+
+    it("cant mint without enough balance", async () => {
+        const price = await instance.getPrice.call(accounts[6])
+        await erc20.increaseAllowance(instance.address, price[0], {from: accounts[6]})
+        await truffleAssert.reverts(
+                instance.mintArtwork(410,
+                {from: accounts[6]}),
+                "MetaX: Not enough ERC20 tokens."
+            )
+        await erc20.decreaseAllowance(instance.address, price[0], {from: accounts[6]})
+    })
+
     it("a single account can't mint more than 16 times", async () => {
         //const instance = await MetaX.deployed()
 
         // Mint 16 tokens on account 3, should pass
         for (let tokenId=410; tokenId<426; tokenId++) {
             const price = await instance.getPrice.call(accounts[3])
+            await erc20.increaseAllowance(instance.address, price[0], {
+                from: accounts[3]
+            })
             await truffleAssert.passes(instance.mintArtwork(tokenId, {
-                from: accounts[3],
-                value: price[0]
-            }))
+                from: accounts[3]}))
         }
 
         // Mint 17th token on account 3, should fail
         const price = await instance.getPrice.call(accounts[3])
+        await erc20.increaseAllowance(instance.address, price[0], {
+            from: accounts[3]
+        })
         await truffleAssert.reverts(
-            instance.mintArtwork(429, {
-                from: accounts[3],
-                value: price[0]
-            }),
+            instance.mintArtwork(429, {from: accounts[3]}),
             "MetaX: max mints reached",
             "mintArtwork for 429 should fail"
         )
@@ -461,10 +484,9 @@ contract("MetaxV2 test", async accounts => {
         await truffleAssert.passes(instance.setEndTime(100))
 
         const price = await instance.getPrice.call(owner)
+        await erc20.increaseAllowance(instance.address, price[0])
         await truffleAssert.reverts(
-            instance.mintArtwork(801, {
-                value: price[0]
-            }),
+            instance.mintArtwork(801),
             "MetaX: minting event ended.",
             "mintArtwork should fail"
         )

@@ -231,8 +231,8 @@ contract MetaXV2 is
     */
     function mintArtwork(uint256 id)
         external
-        payable
-        //price(_getPrice())
+        //payable
+        price(_getPrice())
         returns(uint256 index)
     {
         require(!paused(), "MetaX: token mint while paused");
@@ -241,8 +241,6 @@ contract MetaXV2 is
         require(_tokenCount < _totalTokenAmount, "MetaX: contract mint limit reached");
         require(id >= 0 && id < _totalArtworkAmount, "MetaX: metaverse id does not exists");
         require(_accountMintCount[_msgSender()] < _maxMintByAccount, "MetaX: max mints reached");
-
-        _tokenERC20.transferFrom(_msgSender(), address(this), _getPrice());
 
         _tokenCount = _tokenCount.add(1);
 
@@ -263,8 +261,8 @@ contract MetaXV2 is
     */
     function withdrawBalance() external {
         require(hasRole(DEFAULT_ADMIN_ROLE, _msgSender()), "MetaX: must have admin role to withdraw");
-        uint256 balance = address(this).balance;
-        _msgSender().transfer(balance);
+        uint256 balance = _tokenERC20.balanceOf(address(this));
+        _tokenERC20.transfer(_msgSender(), balance);
 
         emit Withdraw(balance);
     }
@@ -279,15 +277,12 @@ contract MetaXV2 is
     * @param _amount - ether needed to call the function
     */
     modifier price(uint256 _amount) {
-        /*require(msg.value >= _amount, "MetaX: Not enough Ether provided.");
+        require(_tokenERC20.balanceOf(_msgSender()) >= _amount, "MetaX: Not enough ERC20 tokens.");
+        require(_tokenERC20.allowance(_msgSender(), address(this)) >= _amount, "MetaX: Not enough ERC20 token allowance.");
+
         _;
-        if (msg.value > _amount) {
-            _msgSender().transfer(msg.value.sub(_amount));
-        }*/
 
         _tokenERC20.transferFrom(_msgSender(), address(this), _amount);
-        _;
-
     }
 
 

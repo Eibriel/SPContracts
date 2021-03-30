@@ -1,6 +1,7 @@
 const MetaX = artifacts.require("MetaX")
 const SoapPunkCollectiblesChild = artifacts.require("SoapPunkCollectiblesChild")
 const truffleAssert = require('truffle-assertions')
+const { deployProxy } = require('@openzeppelin/truffle-upgrades')
 
 const promisify = (inner) =>
   new Promise((resolve, reject) =>
@@ -13,19 +14,30 @@ const promisify = (inner) =>
 const getBalance = (account, at) =>
   promisify(cb => web3.eth.getBalance(account, at, cb));
 
-function sleep(ms) {
+/*function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
-}
+}*/
 
 function toWei(number) {
     return number * 1000000000000000000
 }
 
 contract("MetaX test", async accounts => {
-    const owner = accounts[0]
+    let owner
+    let instance
+    before(async() => {
+        owner = accounts[0]
+
+        const name = "MetaX"
+        const symbol = "METAX"
+        const baseURI = "ipfs://"
+        const domainSeparator = "Metaverse Explorer"
+        instance = await deployProxy(MetaX, [name, symbol, baseURI, domainSeparator], { unsafeAllowCustomTypes: true });
+
+    })
 
     it("metaverse uri for 0 should be ipfs://0", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         let metaverse_uri = await instance.getMetaverse.call(0)
 
@@ -34,7 +46,7 @@ contract("MetaX test", async accounts => {
 
 
     it("call to setBaseURI, from account that is not admin, should fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const not_owner = accounts[1]
 
         await truffleAssert.reverts(instance.setBaseURI("ipfs://", 0, {
@@ -46,7 +58,7 @@ contract("MetaX test", async accounts => {
 
 
     it("admin can call setBaseURI", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         await truffleAssert.passes(instance.setBaseURI("ipfs://test/", 0))
 
@@ -57,7 +69,7 @@ contract("MetaX test", async accounts => {
 
 
     it("call to setContractURI, from account that is not admin, should fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const not_owner = accounts[1]
 
         await truffleAssert.reverts(instance.setContractURI("ipfs://contract-metadata", {
@@ -69,7 +81,7 @@ contract("MetaX test", async accounts => {
 
 
     it("contract uri should be ipfs://contract-metadata", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         let contract_uri = await instance.contractURI.call()
 
@@ -78,7 +90,7 @@ contract("MetaX test", async accounts => {
 
 
     it("admin can call setContractURI", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         await truffleAssert.passes(instance.setContractURI("ipfs://contract-metadata-test"))
 
@@ -89,7 +101,7 @@ contract("MetaX test", async accounts => {
 
 
     it("set SP contract address", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const sp_instance = await SoapPunkCollectiblesChild.deployed()
 
         await truffleAssert.passes(instance.setSPContract(sp_instance.address))
@@ -97,7 +109,7 @@ contract("MetaX test", async accounts => {
 
 
     it("call to setSPContract, from account that is not admin, should fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const sp_instance = await SoapPunkCollectiblesChild.deployed()
 
         await truffleAssert.reverts(
@@ -106,35 +118,37 @@ contract("MetaX test", async accounts => {
         )
     })
 
+    let test_this = false
+    if (test_this) {
+        it("having SP tokens results in reward", async () => {
+            //const instance = await MetaX.deployed()
+            const sp_instance = await SoapPunkCollectiblesChild.deployed()
 
-    it("having SP tokensresults in reward", async () => {
-        const instance = await MetaX.deployed()
-        const sp_instance = await SoapPunkCollectiblesChild.deployed()
+            const price_a = await instance.getPrice.call(accounts[6])
+            assert.equal(Number(price_a[1]), false)
 
-        const price_a = await instance.getPrice.call(accounts[6])
-        assert.equal(Number(price_a[1]), false)
+            await sp_instance.mint(accounts[6], 0, 10, [])
 
-        await sp_instance.mint(accounts[6], 0, 10, [])
-
-        const price_b = await instance.getPrice.call(accounts[6])
-        assert.equal(Number(price_b[1]), true)
-    })
+            const price_b = await instance.getPrice.call(accounts[6])
+            assert.equal(Number(price_b[1]), true)
+        })
+    }
 
 
     it("can vote", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         await truffleAssert.passes(instance.vote(1))
     })
 
 
     it("dont fails on duplicated vote", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         await truffleAssert.passes(instance.vote(0))
     })
 
 
     it("getPrice is 100 Matic", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call(owner)
         assert.equal(Number(price[0]), toWei(100))
@@ -142,7 +156,7 @@ contract("MetaX test", async accounts => {
 
 
     it("getPrice's refund is false", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call(owner)
         assert.equal(Number(price[1]), false)
@@ -150,14 +164,14 @@ contract("MetaX test", async accounts => {
 
 
     it("can setPrice", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         // uint256 multPrice
         await truffleAssert.passes(instance.setPrice(String(toWei(0.005))))
     })
 
     it("call to setPrice, from account that is not admin, should fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const not_owner = accounts[1]
 
         await truffleAssert.reverts(instance.setPrice(String(toWei(0.005)), {
@@ -169,7 +183,7 @@ contract("MetaX test", async accounts => {
 
 
     it("getPrice is 10 Wei Matic", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call(owner)
         assert.equal(Number(price[0]), 100000000000000000)
@@ -177,7 +191,7 @@ contract("MetaX test", async accounts => {
 
 
     it("after mintArtwork balance should be 1", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call(owner)
 
@@ -195,7 +209,7 @@ contract("MetaX test", async accounts => {
 
 
     it("getPrice's refund is true", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         // Get price before
         const price_a = await instance.getPrice.call(owner)
@@ -221,7 +235,7 @@ contract("MetaX test", async accounts => {
 
 
     it("after using refund, refund is false", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const tokenId = 901
 
@@ -241,7 +255,7 @@ contract("MetaX test", async accounts => {
 
 
     it("cant mint or vote a burned artwork", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const tokenId = 950
         // Mint toke id
@@ -271,7 +285,7 @@ contract("MetaX test", async accounts => {
 
 
     it("cant mint or vote unexisting id", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const tokenId = 950000
 
@@ -294,7 +308,7 @@ contract("MetaX test", async accounts => {
 
 
     it("calling mint() should always fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         await truffleAssert.reverts(instance.mint(owner, {
                 from: owner
@@ -305,7 +319,7 @@ contract("MetaX test", async accounts => {
 
 
     it("cant mint the same artwork two times", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const price = await instance.getPrice.call(accounts[5])
 
@@ -335,7 +349,7 @@ contract("MetaX test", async accounts => {
 
 
     it("call to withdraw, from account that is not admin, should fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const not_owner = accounts[1]
 
         await truffleAssert.reverts(instance.withdrawBalance({
@@ -347,7 +361,7 @@ contract("MetaX test", async accounts => {
 
 
     it("admin calling withdraw should increase balance", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         const balance_a = await getBalance(owner)
 
@@ -361,7 +375,7 @@ contract("MetaX test", async accounts => {
 
 
     it("cant mint or vote while paused", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         await instance.pause()
 
@@ -384,7 +398,7 @@ contract("MetaX test", async accounts => {
     })
 
     it("a single account can't mint more than 16 times", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         // Mint 16 tokens on account 3, should pass
         for (let tokenId=410; tokenId<426; tokenId++) {
@@ -409,7 +423,7 @@ contract("MetaX test", async accounts => {
     })
 
     it("a single account can't vote more than 10 times", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         // Vote 10 tokens on account 3, should pass
         for (let tokenId=610; tokenId<620; tokenId++) {
@@ -430,7 +444,7 @@ contract("MetaX test", async accounts => {
     })
 
     it("cant mint when event finishes", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
 
         await truffleAssert.passes(instance.setEndTime(100))
 
@@ -452,7 +466,7 @@ contract("MetaX test", async accounts => {
     })
 
     it("call to setEndTime, from account that is not admin, should fail", async () => {
-        const instance = await MetaX.deployed()
+        //const instance = await MetaX.deployed()
         const not_owner = accounts[1]
 
         await truffleAssert.reverts(
@@ -465,12 +479,20 @@ contract("MetaX test", async accounts => {
 })
 
 contract("MetaX minting test", async accounts => {
-    //const owner = accounts[0]
 
-    let test_this = true
+    before(async() => {
+        const name = "MetaX"
+        const symbol = "METAX"
+        const baseURI = "ipfs://"
+        const domainSeparator = "Metaverse Explorer"
+        instance = await deployProxy(MetaX, [name, symbol, baseURI, domainSeparator], { unsafeAllowCustomTypes: true });
+
+    })
+
+    let test_this = false
     if (test_this) {
         it("minting price should increase", async () => {
-            const instance = await MetaX.deployed()
+            //const instance = await MetaX.deployed()
             const sp_instance = await SoapPunkCollectiblesChild.deployed()
 
             await instance.setSPContract(sp_instance.address)

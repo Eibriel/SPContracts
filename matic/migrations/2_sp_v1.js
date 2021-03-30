@@ -22,7 +22,7 @@ module.exports = async function (deployer, network, accounts) {
         childChainManager = "0xb5505a6d998549090530911180f38aC5130101c6" //Proxy Mumbai
     } else if (network === "matic" || network === "matic-fork") {
         childChainManager = "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa" //Proxy Matic
-    } else if (network === "test") {
+    } else if (network === "test" || network === "develop") {
         childChainManager = accounts[5]
     }
     console.log("childChainManager", childChainManager)
@@ -30,14 +30,14 @@ module.exports = async function (deployer, network, accounts) {
     console.log('SoapPunkCollectiblesChild Deployed', instance.address)
 
     let owner
-    if (network === "test") {
+    if (network === "test" || network === "develop") {
         owner = accounts[9]
     } else {
         // Matic don't work with Ledger at the moment
         //owner = "0xCF10CD8B5Dc2323B1eb6de6164647756BAd4dE4d"
         owner = "0x05C351382dB8D770207F319D96ac1184c3717edE"
     }
-    console.log("Owner: " + owner)
+    //console.log("Owner: " + owner)
 
     // Set implementation ownership
     /*
