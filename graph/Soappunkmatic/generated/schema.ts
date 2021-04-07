@@ -198,15 +198,6 @@ export class Account extends Entity {
       this.set("metaxvotes", Value.fromStringArray(value as Array<string>));
     }
   }
-
-  get correct_votes(): i32 {
-    let value = this.get("correct_votes");
-    return value.toI32();
-  }
-
-  set correct_votes(value: i32) {
-    this.set("correct_votes", Value.fromI32(value));
-  }
 }
 
 export class AccountCollectible extends Entity {

@@ -17,7 +17,6 @@ type Account @entity {
   collectibles: [AccountCollectible!] @derivedFrom(field: "account")
   metaxs: [MetaX!] @derivedFrom(field: "owner")
   metaxvotes: [AccountMetaXVote!] @derivedFrom(field: "account")
-  correct_votes: Int
 }
 
 

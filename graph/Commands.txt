@@ -5,3 +5,10 @@ graph init --from-contract 0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5 --network 
 yarn codegen
 
 yarn deploy
+
+
+# Matic:
+yarn prepare:matic && yarn deploy
+
+# Mumbai:
+yarn prepare:mumbai && yarn deploy

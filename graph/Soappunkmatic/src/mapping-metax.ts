@@ -1,9 +1,5 @@
-//import { BigInt, Address } from "@graphprotocol/graph-ts"
 import {
-    //Withdraw,
-    //PriceSet,
     Vote,
-    //EndTimeSet,
     Transfer
 } from "../generated/MetaX/MetaX"
 import { MetaX, Account, AccountMetaXVote } from "../generated/schema"
@@ -50,18 +46,10 @@ export function handleTransfer(event: Transfer): void {
     to.save()
 
     // MetaX id
-    let metax = new MetaX(event.params.tokenId.toHex())
-    if (metax.owner == null) {
-        for (let n=0; n<metax.votes.length; n++) {
-            let votes = metax.votes
-            let accountMetaXVote = AccountMetaXVote.load(votes[n])
-            let account = Account.load(accountMetaXVote.account)
-            if (account.correct_votes == null) {
-                account.correct_votes = 0
-            }
-            account.correct_votes += 1
-            account.save()
-        }
+    let metax = MetaX.load(event.params.tokenId.toHex())
+    if (metax == null) {
+        metax = new MetaX(event.params.tokenId.toHex())
+        metax.vote_count = 0
     }
     metax.owner = event.params.to.toHex()
     metax.save()

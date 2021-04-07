@@ -1,0 +1,7 @@
+AdminUpgradeablilityProxy
+0xcBA48Ba6e0F484EDFF0A21Fa6C1bBb92384dCD2F
+
+Implementation:
+0xd5140d7b09B5DFB0C17e9bAb6EC8a7875B19367C
+
+await proxyAdmin.methods.upgrade("0xcBA48Ba6e0F484EDFF0A21Fa6C1bBb92384dCD2F", "0xd5140d7b09B5DFB0C17e9bAb6EC8a7875B19367C").send({from: accounts[0]})

@@ -4,11 +4,11 @@ schema:
 dataSources:
   - kind: ethereum/contract
     name: MetaX
-    network: mumbai
+    network: {{network}}
     source:
-      address: "0xcBA48Ba6e0F484EDFF0A21Fa6C1bBb92384dCD2F"
+      address: "{{mx_address}}"
       abi: MetaX
-      startBlock: 11840036
+      startBlock: {{mx_startblock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
@@ -29,11 +29,11 @@ dataSources:
 
   - kind: ethereum/contract
     name: SoapPunkCollectiblesV1
-    network: mumbai
+    network: {{network}}
     source:
-      address: "0xa8CDbdCbF23ed4cB8d72330E201D2EA8b6F68BC5"
+      address: "{{sp_address}}"
       abi: SoapPunkCollectiblesV1
-      startBlock: 7190458
+      startBlock: {{sp_startblock}}
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.4
